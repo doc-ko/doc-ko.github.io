@@ -1,0 +1,12 @@
+---
+import { getEntryBySlug } from 'astro:content';
+
+const entry = await getEntryBySlug('docs','markdoc-test');
+const { Content } = await entry.render();
+---
+
+<!-- Access frontmatter properties with `data` -->
+<h1>{entry.data.title}</h1>
+
+<!-- Render Markdoc contents with the Content component -->
+<Content />
