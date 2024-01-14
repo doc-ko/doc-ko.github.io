@@ -6,7 +6,7 @@ description: "This post will show up on its own!"
 image:
     url: "https://docs.astro.build/default-og-image.png"
     alt: "The word astro against an illustration of planets and stars."
-pubdate: 2024-01-14
+pubDate: 2024-01-14
 tags: ["astro", "successes"]
 ---
 
