@@ -1,5 +1,5 @@
-name: personal-site-docs
-title: 'Documentation for oberio.nz'
+name: personal-site
+title: 'Documentation for docko.dev'
 version: alpha
   
 nav:
@@ -7,6 +7,5 @@ nav:
     
 asciidoc:
   attributes:
-    site-domain: 'oberio.nz'
-    site-url: 'https://oberio.nz'
+    site-domain: 'docko.dev'
     link-repo: 'https://github.com/doc-ko/doc-ko.github.io'
