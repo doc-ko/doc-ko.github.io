@@ -1,17 +1,20 @@
 ---
-const platform = "github";
-const username="doc-ko"
 import Social from './Social.astro'
 ---
 
 <style>
-    footer {
+    footer .socials {
         display: flex;
         gap: 1rem;
         margin-top: 2rem;
     }
+    
 </style>
 
 <footer>
-    <Social platform="github" username="doc-ko" />
+    <p class="copyright">Copyright &copy; 2024 Karl Oberio</p>
+    <div class='socials'>
+        <Social platform="linkedin" username=in/docko />
+        <Social platform="github" username="doc-ko" />
+    </div>
 </footer>
