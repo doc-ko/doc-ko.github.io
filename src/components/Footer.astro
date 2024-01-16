@@ -1,20 +1,23 @@
 ---
-import Social from './Social.astro'
+import LinkButton from './LinkButton.astro'
 ---
 
 <style>
-    footer .socials {
+    .links-container {
         display: flex;
         gap: 1rem;
         margin-top: 2rem;
+        justify-content: center;
     }
-    
+
 </style>
 
 <footer>
     <p class="copyright">Copyright &copy; 2024 Karl Oberio</p>
-    <div class='socials'>
-        <Social platform="linkedin" username=in/docko />
-        <Social platform="github" username="doc-ko" />
+    <div class="links-container">
+        <LinkButton link="https://linkedin.com/in/docko" text="LinkedIn" />
+        <LinkButton link="https://github.com/doc-ko" text="Github" />
+        <LinkButton link="https://github.com/doc-ko/doc-ko.github.io" text="Repo" />
+        <LinkButton link="https://docs.docko.dev" text="Docs" />
     </div>
 </footer>
