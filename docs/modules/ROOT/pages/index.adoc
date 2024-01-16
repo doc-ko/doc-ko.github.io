@@ -11,4 +11,4 @@ The repository for {site-domain} is https://github.com/doc-ko/doc-ko.github.io[^
 
 == Domain
 
-The domain {site-url} is from https://metaname.co.nz[Metaname^].
+The domain `{site-domain}` is from https://metaname.co.nz[Metaname^].

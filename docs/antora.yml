@@ -1,6 +1,6 @@
 name: personal-site
-title: 'Documentation for docko.dev'
-version: alpha
+title: 'Personal Website'
+version: '0.1'
   
 nav:
   - modules/ROOT/nav.adoc
