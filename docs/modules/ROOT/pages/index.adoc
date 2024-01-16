@@ -2,14 +2,13 @@
 
 == Website Build
 
-The website {site-domain} currently uses https://astro.build/[Astro].
-Specifically, this website is an offshoot of the *https://docs.astro.build/en/tutorial/0-introduction/[Build your first Astro blog]* tutorial.
+The website {site-domain} currently uses https://astro.build/[Astro^].
+Specifically, this website is an offshoot of the https://docs.astro.build/en/tutorial/0-introduction/[*Build your first Astro blog*^] tutorial.
 
-== Code Repository
+== Code Repository and Hosting
 
-It is hosted using https://pages.github.com/[GitHub Pages].
-The repository for {site-domain} is https://github.com/doc-ko/doc-ko.github.io[].
+The repository for {site-domain} is https://github.com/doc-ko/doc-ko.github.io[^], and is hosted using https://pages.github.com/[GitHub Pages^].
 
 == Domain
 
-The domain {site-url} is from https://metaname.co.nz[Metaname].
+The domain `{site-domain}` is from https://metaname.co.nz[Metaname^].
