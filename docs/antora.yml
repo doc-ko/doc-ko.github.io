@@ -1,0 +1,12 @@
+name: personal-site-docs
+title: 'Documentation for oberio.nz'
+version: alpha
+  
+nav:
+  - modules/ROOT/nav.adoc
+    
+asciidoc:
+  attributes:
+    site-domain: 'oberio.nz'
+    site-url: 'https://oberio.nz'
+    link-repo: 'https://github.com/doc-ko/doc-ko.github.io'
