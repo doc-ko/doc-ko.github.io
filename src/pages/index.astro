@@ -1,12 +1,101 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const pageTitle = "DocKo's site";
+import LinkButton from '../components/LinkButton.astro';
+
+const pageTitle = 'Karl Oberio | Technical Writer';
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-	<h2>Karl Oberio</h2>
-	
-	<p>Technical writer, haphazard coder.</p>
-	<p>Contact me at <a href="mailto:yarn@docko.dev">yarn@docko.dev</a> or through my socials.</p>
-	
+<BaseLayout
+	pageTitle={pageTitle}
+	description="Karl Oberio is a technical writer focused on API documentation, OpenAPI workflows, and developer-facing content."
+	hideTitle={true}
+>
+	<section class="hero section-band">
+		<div class="section-inner hero-grid">
+			<div class="hero-copy">
+				<p class="eyebrow">Karl Oberio</p>
+				<h1>Technical writing for developer products, backed by engineering fluency.</h1>
+				<p class="hero-lede">
+					I turn API behaviour, OpenAPI specs, and developer workflows into docs that help teams explain the product without sanding off the technical detail.
+				</p>
+				<div class="actions">
+					<LinkButton link="/work/" text="View work" variant="primary" />
+					<LinkButton link="mailto:yarn@docko.dev" text="Email Karl" />
+				</div>
+			</div>
+			<div class="hero-panel" aria-label="Selected profile details">
+				<p class="panel-label">Focus</p>
+				<ul class="clean-list">
+					<li>API documentation and onboarding guides</li>
+					<li>OpenAPI, SwaggerHub, and Redoc workflows</li>
+					<li>Developer-facing content with a practical editor's eye</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-band section-band--muted">
+		<div class="section-inner split-section">
+			<div>
+				<p class="eyebrow">Selected strengths</p>
+				<h2>Documentation that respects the reader's time.</h2>
+			</div>
+			<div class="strength-grid">
+				<article>
+					<h3>Structure</h3>
+					<p>I separate setup, concepts, tasks, and reference material so readers can find the next decision quickly.</p>
+				</article>
+				<article>
+					<h3>Technical accuracy</h3>
+					<p>I work from specs, product behaviour, and engineer feedback rather than relying on surface-level summaries.</p>
+				</article>
+				<article>
+					<h3>Tooling awareness</h3>
+					<p>I am comfortable around Git, static sites, OpenAPI files, and documentation build outputs.</p>
+				</article>
+				<article>
+					<h3>Plain-language judgment</h3>
+					<p>I keep the voice direct and usable without flattening terms that developers need to see.</p>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-band">
+		<div class="section-inner">
+			<div class="section-heading">
+				<p class="eyebrow">Featured work</p>
+				<h2>Writing samples ready for review.</h2>
+			</div>
+			<div class="work-grid">
+				<article class="work-card">
+					<p class="card-kicker">API documentation</p>
+					<h3><a href="/work/api-docs-snippet/">API Docs Snippet</a></h3>
+					<p>A compact introduction for a REST API product, covering authentication, errors, and response conventions.</p>
+				</article>
+				<article class="work-card">
+					<p class="card-kicker">Docs workflow</p>
+					<h3><a href="/work/redoc-openapi/">Building Redoc Output from OpenAPI Specs</a></h3>
+					<p>A procedural guide that turns a SwaggerHub export into publishable Redoc output.</p>
+				</article>
+			</div>
+			<p class="section-note">
+				Coding projects are represented through GitHub for now; I am keeping formal coding case studies unpublished until the scope and outcomes are ready.
+			</p>
+		</div>
+	</section>
+
+	<section class="section-band contact-band">
+		<div class="section-inner contact-strip">
+			<div>
+				<p class="eyebrow">Contact</p>
+				<h2>Available for technical writing roles and documentation work.</h2>
+			</div>
+			<div class="actions">
+				<LinkButton link="mailto:yarn@docko.dev" text="yarn@docko.dev" variant="primary" />
+				<LinkButton link="https://linkedin.com/in/docko" text="LinkedIn" />
+				<LinkButton link="https://github.com/doc-ko" text="GitHub" />
+			</div>
+		</div>
+	</section>
 </BaseLayout>

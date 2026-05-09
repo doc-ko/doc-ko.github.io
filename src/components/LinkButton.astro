@@ -1,14 +1,11 @@
 ---
-const { link, text } = Astro.props;
+const { link, text, variant = 'secondary' } = Astro.props;
+const isExternal = link.startsWith('http');
 ---
 
-<a href={`${link}`}>{text}</a>
-
-<style>
-    a {
-        padding: 0.5rem 1rem;
-        color: white;
-        background-color: #4c1d95;
-        text-decoration: none;
-    }
-</style>
+<a
+    class={variant === 'primary' ? 'button-link' : 'button-link button-link--secondary'}
+    href={link}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noreferrer' : undefined}
+>{text}</a>

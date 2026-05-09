@@ -2,21 +2,17 @@
 import LinkButton from './LinkButton.astro'
 ---
 
-<style>
-    .links-container {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-        justify-content: center;
-    }
-
-</style>
-
-<footer>
-    <p class="copyright">Copyright &copy; 2024 Karl Oberio</p>
-    <div class="links-container">
+<footer class="site-footer">
+    <div>
+        <p class="footer-kicker">Technical writing, API docs, and developer enablement.</p>
+        <p class="copyright">Copyright &copy; 2026 Karl Oberio</p>
+    </div>
+    <div class="footer-links" aria-label="Contact and site links">
+        <a href="/blog/">Blog</a>
+        <a href="/tags/">Tags</a>
+        <a href="mailto:yarn@docko.dev">Email</a>
         <LinkButton link="https://linkedin.com/in/docko" text="LinkedIn" />
-        <LinkButton link="https://github.com/doc-ko" text="Github" />
+        <LinkButton link="https://github.com/doc-ko" text="GitHub" />
         <LinkButton link="https://github.com/doc-ko/doc-ko.github.io" text="Repo" />
         <LinkButton link="https://docs.docko.dev" text="Docs" />
     </div>
