@@ -1,0 +1,11 @@
+---
+const { number, title, note } = Astro.props;
+---
+
+<header class="notebook-section-heading">
+    {number && <p class="section-number">{number}</p>}
+    <div>
+        <h2>{title}</h2>
+        {note && <p>{note}</p>}
+    </div>
+</header>

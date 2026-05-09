@@ -1,0 +1,35 @@
+---
+import AnimatedDiagram from './AnimatedDiagram.astro';
+import MarginNote from './MarginNote.astro';
+
+const { hero } = Astro.props;
+---
+
+<section class="notebook-hero" aria-labelledby="home-title">
+    <div class="notebook-grid notebook-grid--hero">
+        <div class="hero-manuscript">
+            <p class="eyebrow">{hero.kicker}</p>
+            <h1 id="home-title">{hero.headline}</h1>
+            <p class="hero-lede">{hero.lede}</p>
+
+            <article class="lemma-card">
+                <p class="lemma-card__label">
+                    <span>{hero.lemma.label}</span>
+                    <code>{hero.lemma.notation}</code>
+                </p>
+                <p>{hero.lemma.body}</p>
+            </article>
+
+            <nav class="quiet-links" aria-label="Homepage links">
+                {hero.links.map((link) => (
+                    <a href={link.href}>{link.label}</a>
+                ))}
+            </nav>
+        </div>
+
+        <div class="hero-diagram-stack">
+            <AnimatedDiagram />
+            <MarginNote label={hero.margin.label}>{hero.margin.body}</MarginNote>
+        </div>
+    </div>
+</section>

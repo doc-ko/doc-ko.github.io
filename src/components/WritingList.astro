@@ -1,0 +1,16 @@
+---
+const { items = [] } = Astro.props;
+---
+
+<div class="writing-list">
+    {items.map((item) => (
+        <article class={`writing-item writing-item--${item.accent}`}>
+            <div>
+                <p class="writing-item__kind">{item.kind}</p>
+                <h3><a href={item.href}>{item.title}</a></h3>
+                <p>{item.description}</p>
+            </div>
+            <code>{item.notation}</code>
+        </article>
+    ))}
+</div>

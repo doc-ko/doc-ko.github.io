@@ -1,0 +1,12 @@
+---
+const { kind, title, notation, accent = 'amber' } = Astro.props;
+---
+
+<article class={`note-block note-block--${accent}`}>
+    <p class="note-block__label">
+        <span>{kind}</span>
+        {notation && <code>{notation}</code>}
+    </p>
+    <h3>{title}</h3>
+    <p><slot /></p>
+</article>

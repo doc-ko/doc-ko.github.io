@@ -1,0 +1,73 @@
+---
+---
+
+<figure class="animated-diagram" aria-label="Animated mathematical notebook diagram">
+    <svg viewBox="0 0 640 420" role="img" aria-labelledby="hero-diagram-title hero-diagram-desc">
+        <title id="hero-diagram-title">Interlocking diagrams for proof, syntax, and state</title>
+        <desc id="hero-diagram-desc">
+            A slowly animated curve, vector field, proof tree, syntax branch, and state machine.
+        </desc>
+        <defs>
+            <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" />
+            </marker>
+            <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" />
+            </marker>
+        </defs>
+
+        <g class="diagram-grid" aria-hidden="true">
+            <path d="M80 48 V356 M160 48 V356 M240 48 V356 M320 48 V356 M400 48 V356 M480 48 V356 M560 48 V356" />
+            <path d="M64 88 H586 M64 152 H586 M64 216 H586 M64 280 H586 M64 344 H586" />
+        </g>
+
+        <g class="axis-lines" aria-hidden="true">
+            <path d="M68 326 H592" />
+            <path d="M104 366 V48" />
+        </g>
+
+        <path class="trace trace--amber" d="M80 312 C138 210 176 184 226 228 S322 338 390 214 520 94 590 130" />
+        <path class="trace trace--violet" d="M84 260 C158 288 210 170 278 176 S404 262 482 184 572 188 604 238" />
+        <path class="trace trace--cyan" d="M112 324 C154 296 190 260 226 216 C266 166 302 134 352 126" />
+
+        <g class="vector-field" aria-hidden="true">
+            <path d="M140 102 l38 18" />
+            <path d="M218 98 l32 32" />
+            <path d="M294 102 l20 42" />
+            <path d="M374 106 l-18 40" />
+            <path d="M454 112 l-34 26" />
+            <path d="M530 122 l-40 6" />
+        </g>
+
+        <g class="state-machine">
+            <circle cx="424" cy="278" r="24" />
+            <circle cx="512" cy="278" r="24" />
+            <circle cx="468" cy="342" r="24" />
+            <path d="M448 278 H486" />
+            <path d="M501 298 L481 322" />
+            <path d="M454 323 L434 299" />
+            <text x="424" y="283">q₀</text>
+            <text x="512" y="283">q₁</text>
+            <text x="468" y="347">q₂</text>
+        </g>
+
+        <g class="syntax-tree">
+            <path d="M204 272 L156 338 M204 272 L252 338 M156 338 L128 376 M156 338 L184 376 M252 338 L224 376 M252 338 L280 376" />
+            <text x="204" y="264">S</text>
+            <text x="156" y="334">NP</text>
+            <text x="252" y="334">VP</text>
+        </g>
+
+        <g class="moving-points" aria-hidden="true">
+            <circle class="point point--amber" cx="80" cy="312" r="5" />
+            <circle class="point point--cyan" cx="112" cy="324" r="4" />
+            <circle class="point point--violet" cx="84" cy="260" r="4" />
+        </g>
+    </svg>
+    <figcaption>
+        <span>curve</span>
+        <span>syntax</span>
+        <span>state</span>
+        <span>proof</span>
+    </figcaption>
+</figure>

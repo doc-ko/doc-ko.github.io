@@ -1,0 +1,10 @@
+---
+const { label = 'note' } = Astro.props;
+---
+
+<aside class="margin-note">
+    <p class="margin-note__label">{label}</p>
+    <div class="margin-note__body">
+        <slot />
+    </div>
+</aside>

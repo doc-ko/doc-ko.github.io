@@ -1,101 +1,96 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import LinkButton from '../components/LinkButton.astro';
+import FieldDiagram from '../components/FieldDiagram.astro';
+import HomeHero from '../components/HomeHero.astro';
+import MarginNote from '../components/MarginNote.astro';
+import NoteBlock from '../components/NoteBlock.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WritingList from '../components/WritingList.astro';
+import { homepage } from '../data/homepage.js';
 
-const pageTitle = 'Karl Oberio | Technical Writer';
+const { meta, hero, sections, fields, writing, propositions, garden } = homepage;
 ---
 
 <BaseLayout
-	pageTitle={pageTitle}
-	description="Karl Oberio is a technical writer focused on practical API documentation, OpenAPI workflows, and developer-facing content."
+	pageTitle={meta.title}
+	description={meta.description}
 	hideTitle={true}
 >
-	<section class="hero section-band">
-		<div class="section-inner hero-grid">
-			<div class="hero-copy">
-				<p class="eyebrow">Karl Oberio</p>
-				<h1>I write practical documentation for developer tools.</h1>
-				<p class="hero-lede">
-					I write API docs, OpenAPI guides, and developer-facing notes that keep the technical details intact while making the next step easier to see.
-				</p>
-				<div class="actions">
-					<LinkButton link="/work/" text="Read samples" variant="primary" />
-					<LinkButton link="mailto:yarn@docko.dev" text="Send an email" />
+	<div class="notebook-home">
+		<HomeHero hero={hero} />
+
+		<section class="notebook-section" aria-labelledby="fields-title">
+			<div class="notebook-grid">
+				<div>
+					<SectionHeading
+						number={sections.fields.number}
+						title={sections.fields.title}
+						note={sections.fields.note}
+					/>
+					<FieldDiagram fields={fields} />
+				</div>
+				<MarginNote label={sections.fields.marginLabel}>{sections.fields.margin}</MarginNote>
+			</div>
+		</section>
+
+		<section class="notebook-section notebook-section--ruled" aria-labelledby="writing-title">
+			<div class="notebook-grid">
+				<div>
+					<SectionHeading
+						number={sections.writing.number}
+						title={sections.writing.title}
+						note={sections.writing.note}
+					/>
+					<WritingList items={writing} />
+				</div>
+				<MarginNote label={sections.writing.marginLabel}>{sections.writing.margin}</MarginNote>
+			</div>
+		</section>
+
+		<section class="notebook-section" aria-labelledby="method-title">
+			<div class="notebook-grid">
+				<div>
+					<SectionHeading
+						number={sections.method.number}
+						title={sections.method.title}
+						note={sections.method.note}
+					/>
+					<div class="proposition-grid">
+						{propositions.map((item) => (
+							<NoteBlock kind={item.kind} title={item.title} notation={item.notation} accent={item.accent}>
+								{item.body}
+							</NoteBlock>
+						))}
+					</div>
+				</div>
+				<div class="proof-tree-panel" aria-label="A small animated proof tree">
+					<svg viewBox="0 0 280 320" role="img" aria-labelledby="proof-tree-title">
+						<title id="proof-tree-title">Proof tree illustration</title>
+						<path d="M48 76 H114 M166 76 H232 M80 120 H200 M140 120 V190 M74 190 H206 M140 190 V248 M96 248 H184" />
+						<text x="81" y="62">term</text>
+						<text x="199" y="62">reader</text>
+						<text x="140" y="108">example</text>
+						<text x="140" y="178">diagram</text>
+						<text x="140" y="236">note</text>
+						<text x="140" y="286">understanding</text>
+					</svg>
 				</div>
 			</div>
-			<div class="hero-panel" aria-label="Selected profile details">
-				<p class="panel-label">Working around</p>
-				<ul class="clean-list">
-					<li>API documentation, onboarding guides, and reference context</li>
-					<li>OpenAPI, SwaggerHub, Redoc, Markdown, and static docs sites</li>
-					<li>Drafts that need a careful technical editor before they ship</li>
-				</ul>
-			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="section-band section-band--muted">
-		<div class="section-inner split-section">
-			<div>
-				<p class="eyebrow">How I tend to work</p>
-				<h2>Clear docs, written close to the product.</h2>
+		<section class="notebook-section notebook-section--closing" aria-labelledby="garden-title">
+			<div class="garden-strip">
+				<div>
+					<p class="eyebrow">{garden.number}</p>
+					<h2 id="garden-title">{garden.heading}</h2>
+					<p>{garden.note}</p>
+				</div>
+				<nav class="garden-links" aria-label="Digital garden links">
+					{garden.links.map((link) => (
+						<a href={link.href}>{link.label}</a>
+					))}
+				</nav>
 			</div>
-			<div class="strength-grid">
-				<article>
-					<h3>Structure</h3>
-					<p>I separate setup, concepts, tasks, and reference material so readers are not forced to untangle everything at once.</p>
-				</article>
-				<article>
-					<h3>Technical accuracy</h3>
-					<p>I work from specs, product behaviour, and engineer feedback, then make the wording match what actually happens.</p>
-				</article>
-				<article>
-					<h3>Tooling awareness</h3>
-					<p>I am comfortable around Git, static sites, OpenAPI files, and the small build details that shape docs work.</p>
-				</article>
-				<article>
-					<h3>Plain-language judgment</h3>
-					<p>I keep the voice direct without sanding away terms that developers need to recognise.</p>
-				</article>
-			</div>
-		</div>
-	</section>
-
-	<section class="section-band">
-		<div class="section-inner">
-			<div class="section-heading">
-				<p class="eyebrow">Writing samples</p>
-				<h2>A few pieces of docs work.</h2>
-			</div>
-			<div class="work-grid">
-				<article class="work-card">
-					<p class="card-kicker">API documentation</p>
-					<h3><a href="/work/api-docs-snippet/">API Docs Snippet</a></h3>
-					<p>A compact introduction for a REST API product, covering authentication, errors, and response conventions.</p>
-				</article>
-				<article class="work-card">
-					<p class="card-kicker">Docs workflow</p>
-					<h3><a href="/work/redoc-openapi/">Building Redoc Output from OpenAPI Specs</a></h3>
-					<p>A procedural guide that turns a SwaggerHub export into publishable Redoc output.</p>
-				</article>
-			</div>
-			<p class="section-note">
-				Coding projects are represented through GitHub for now. I am keeping formal coding case studies unpublished until there is enough useful context around the scope and outcomes.
-			</p>
-		</div>
-	</section>
-
-	<section class="section-band contact-band">
-		<div class="section-inner contact-strip">
-			<div>
-				<p class="eyebrow">Contact</p>
-				<h2>Say hello about technical writing or docs projects.</h2>
-			</div>
-			<div class="actions">
-				<LinkButton link="mailto:yarn@docko.dev" text="yarn@docko.dev" variant="primary" />
-				<LinkButton link="https://linkedin.com/in/docko" text="LinkedIn" />
-				<LinkButton link="https://github.com/doc-ko" text="GitHub" />
-			</div>
-		</div>
-	</section>
+		</section>
+	</div>
 </BaseLayout>
