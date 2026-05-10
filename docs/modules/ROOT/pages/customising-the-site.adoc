@@ -1,0 +1,377 @@
+= Customising The Site
+:description: Tutorial for modifying the personal website.
+
+This tutorial walks through the common edits you are likely to make to the website.
+It assumes you are working from the repository root.
+
+== 1. Run The Site Locally
+
+Install dependencies once:
+
+[source,sh]
+----
+npm install
+----
+
+Start the development server:
+
+[source,sh]
+----
+npm run dev
+----
+
+Astro will print a local URL, usually `http://localhost:4321/`.
+Open that URL and keep the server running while you edit files.
+
+Before publishing or committing a larger change, run:
+
+[source,sh]
+----
+npm run build
+----
+
+That catches broken imports, invalid Astro files, and pages that cannot be generated.
+
+== 2. Edit Homepage Copy
+
+Start with `src/data/homepage.js`.
+
+That file controls most homepage words, labels, and links:
+
+* `meta`: browser title and search description.
+* `hero`: opening label, headline, lede, lemma, top links, and margin note.
+* `sections`: section numbers, headings, notes, and margin notes.
+* `fields`: the four subject cards below the field diagram.
+* `writing`: selected homepage links.
+* `propositions`: definition/proposition/corollary blocks.
+* `garden`: closing section text and links.
+
+Change string values freely, but keep the object shape intact.
+For example, this is a safe edit:
+
+[source,js]
+----
+hero: {
+    kicker: 'Karl Oberio',
+    headline: 'Technical writing for developer tools.',
+    lede: 'A public notebook for API docs, formal ideas, and careful diagrams.',
+    // Keep lemma, links, and margin in place.
+}
+----
+
+After saving, refresh the local site and check the homepage on desktop and a narrow browser width.
+
+== 3. Change Homepage Links
+
+Homepage links are arrays of `{ label, href }` objects in `src/data/homepage.js`.
+
+To add a hero link:
+
+[source,js]
+----
+links: [
+    { label: 'writing samples', href: '/work/' },
+    { label: 'about', href: '/about/' },
+    { label: 'email', href: 'mailto:yarn@docko.dev' },
+    { label: 'github', href: 'https://github.com/doc-ko' },
+],
+----
+
+Use site-relative links for internal pages, such as `/work/`.
+Use full URLs for external sites.
+Use `mailto:` for email links.
+
+The closing homepage links are in `garden.links`.
+
+== 4. Change The Main Navigation
+
+Edit `src/components/Navigation.astro`.
+
+The current navigation is:
+
+[source,astro]
+----
+<div class="nav-links" id="primary-navigation">
+    <a href="/">Home</a>
+    <a href="/work/">Work</a>
+    <a href="/about/">About</a>
+    <a href="mailto:yarn@docko.dev">Contact</a>
+</div>
+----
+
+Keep the `nav-links` class and `primary-navigation` id.
+The mobile menu script uses them.
+
+If you add a new page, add its link here only after the page exists under `src/pages/`.
+
+== 5. Change Footer Links
+
+Edit `src/components/Footer.astro`.
+
+Use normal `<a>` tags for internal links and `LinkButton` for button-style links:
+
+[source,astro]
+----
+<a href="/blog/">Blog</a>
+<LinkButton link="https://github.com/doc-ko" text="GitHub" />
+----
+
+`LinkButton.astro` automatically adds `target="_blank"` and `rel="noreferrer"` for links that start with `http`.
+
+== 6. Edit The About Page
+
+Edit `src/pages/about/index.md`.
+
+The frontmatter at the top controls page metadata:
+
+[source,md]
+----
+---
+layout: '../../layouts/MarkdownLayout.astro'
+title: 'About'
+pubDate: 2024-01-16
+description: 'About Karl Oberio'
+author: Karl Oberio
+tags: ["about"]
+---
+----
+
+Keep the frontmatter block.
+The body below it is normal Markdown.
+
+The profile image currently lives at `src/pages/about/_dp.jpg` and is referenced like this:
+
+[source,md]
+----
+![Karl Oberio](./_dp.jpg)
+----
+
+Replace that file if you want a new image, or change the Markdown if you want to use a different filename.
+
+== 7. Add A Blog Post
+
+Create a new Markdown file under `src/pages/posts/`, for example:
+
+[source,text]
+----
+src/pages/posts/my-note.md
+----
+
+Use this shape:
+
+[source,md]
+----
+---
+layout: ../../layouts/MarkdownPostLayout.astro
+title: My Note
+pubDate: 2026-05-09
+description: 'A short description of the note.'
+author: Karl Oberio
+tags: ["blog"]
+---
+
+Write the post here.
+----
+
+Rules to keep in mind:
+
+* Include at least one tag.
+  The tag pages depend on `tags`.
+* Use `draft: true` if you want to keep a post out of public lists.
+* Put images beside the Markdown file or in `public/`, then reference them from Markdown.
+
+== 8. Add A Work Sample
+
+Create a Markdown file under `src/pages/work/`, for example:
+
+[source,text]
+----
+src/pages/work/my-api-guide.md
+----
+
+Use the richer work-sample frontmatter:
+
+[source,md]
+----
+---
+layout: '../../layouts/MarkdownPostLayout.astro'
+title: 'My API Guide'
+pubDate: 2026-05-09
+description: 'A concise description for the Work index and page metadata.'
+author: Karl Oberio
+tags: ["work", "api-docs", "technical-writing"]
+role: 'Technical writer'
+tools: ["OpenAPI", "Markdown"]
+audience: 'Developers integrating with the API'
+outcome: 'A clearer onboarding path for new integrators'
+---
+
+## Summary
+
+Explain what the sample demonstrates.
+----
+
+The Work index at `src/pages/work/index.astro` automatically lists non-draft Markdown files in `src/pages/work/`, sorted by `pubDate` from newest to oldest.
+
+Use `draft: true` if a work sample should not appear yet.
+
+== 9. Customise The Homepage Sections
+
+For copy-only changes, keep using `src/data/homepage.js`.
+
+For structural changes, edit `src/pages/index.astro`.
+It imports the homepage data and renders components in this order:
+
+. `HomeHero`
+. fields section with `SectionHeading`, `FieldDiagram`, and `MarginNote`
+. writing section with `WritingList`
+. method section with `NoteBlock` cards and an inline proof-tree SVG
+. closing garden section
+
+If you remove or rename a property in `homepage.js`, update the component that reads it.
+For example, `WritingList.astro` expects every writing item to have `kind`, `title`, `href`, `description`, `notation`, and `accent`.
+
+== 10. Change Colours And Typography
+
+Start at the top of `src/styles/global.css`.
+
+The main design tokens are CSS variables:
+
+[source,css]
+----
+:root {
+    --bg: #071015;
+    --surface: #101a21;
+    --ink: #f0e7d2;
+    --accent: #e7ad4f;
+    --cyan: #65d7ea;
+    --violet: #b99cff;
+    --serif: "Iowan Old Style", Georgia, serif;
+    --mono: "SFMono-Regular", ui-monospace, monospace;
+}
+----
+
+Change variables first.
+That keeps the design consistent across pages.
+
+Common edits:
+
+* Background colour: `--bg` and `--bg-ruled`.
+* Body text colour: `--ink`, `--ink-strong`, and `--muted`.
+* Highlight colours: `--accent`, `--cyan`, and `--violet`.
+* Maximum page width: `--max-width`.
+* Reading column width: `--content-width` and `--reading-width`.
+* Typeface choices: `--serif`, `--sans`, and `--mono`.
+
+After changing colours, check links, tags, code blocks, cards, and focus rings.
+Those elements all rely on the same variables.
+
+== 11. Change The Diagrams
+
+The diagrams are inline SVG inside Astro components:
+
+* Hero diagram: `src/components/AnimatedDiagram.astro`
+* Field diagram: `src/components/FieldDiagram.astro`
+* Proof tree panel: inline SVG inside `src/pages/index.astro`
+
+The animation styles live in `src/styles/global.css`.
+Search for these selectors:
+
+* `.trace`
+* `.vector-field`
+* `.state-machine`
+* `.field-link`
+* `.proof-tree-panel`
+* `@keyframes`
+
+When editing SVG, keep the `title` and accessible labels in place so the diagrams remain understandable to assistive technology.
+
+== 12. Add A New Page
+
+Astro creates routes from files in `src/pages/`.
+
+Examples:
+
+* `src/pages/uses.md` becomes `/uses/`.
+* `src/pages/notes/index.astro` becomes `/notes/`.
+* `src/pages/work/my-sample.md` becomes `/work/my-sample/`.
+
+For a simple Markdown page, use:
+
+[source,md]
+----
+---
+layout: ../layouts/MarkdownPostLayout.astro
+title: Uses
+pubDate: 2026-05-09
+description: 'Tools and setup notes.'
+author: Karl Oberio
+tags: ["uses"]
+---
+
+Page content here.
+----
+
+Adjust the `layout` path based on how deep the Markdown file is.
+
+== 13. Keep Drafts Unpublished
+
+Astro ignores directories whose names start with an underscore for routing.
+This branch uses `src/pages/_drafts/` for unpublished material.
+
+To hide an existing Markdown page from lists, you can also add:
+
+[source,md]
+----
+draft: true
+----
+
+The blog, work, and tag index code filters out pages with `draft: true`.
+
+== 14. Troubleshooting
+
+=== A Page Disappeared
+
+Check whether the file was moved under an underscore directory like `_drafts`, or whether its frontmatter has `draft: true`.
+
+=== The Tag Page Is Missing A Post
+
+Make sure the Markdown file has a `tags` array:
+
+[source,md]
+----
+tags: ["blog", "technical-writing"]
+----
+
+=== The Work Index Looks Sparse
+
+Add `role`, `tools`, `audience`, and `outcome` frontmatter to the work sample.
+Those fields fill the details panel in `MarkdownPostLayout.astro`.
+
+=== The Mobile Menu Stopped Working
+
+Check that `Navigation.astro` still has:
+
+[source,astro]
+----
+<div class="nav-links" id="primary-navigation">
+----
+
+Also check that `BaseLayout.astro` still imports `src/scripts/menu.js`.
+
+=== A Style Change Affected Too Much
+
+Look for broad selectors in `src/styles/global.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.work-card`, `.entry-details`, and `.button-link`.
+
+== 15. Suggested Editing Workflow
+
+Use this sequence for most changes:
+
+. Start `npm run dev`.
+. Edit one focused area, such as `homepage.js` or one Markdown page.
+. Check the page in the browser.
+. Check a narrow viewport for mobile layout issues.
+. Run `npm run build`.
+. Review `git diff` before committing.
+
+That workflow keeps the site easy to change without letting layout, routing, or frontmatter mistakes pile up.

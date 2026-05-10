@@ -1,0 +1,144 @@
+= Branch Changes
+:description: Functional changes introduced by the ai-rewrite branch.
+
+This document describes the functional changes in the `ai-rewrite` branch compared with `main`.
+
+== Summary
+
+The branch turns the site from a lightly customised Astro tutorial blog into a more intentional personal site for technical writing.
+The new direction is a dark, mathematical-notebook style: restrained typography, symbolic diagrams, margin notes, writing samples, and a homepage that behaves more like a table of contents than a portfolio landing page.
+
+== Main Website Changes
+
+=== Homepage Rewrite
+
+The homepage in `src/pages/index.astro` has been rebuilt around a notebook-style structure:
+
+* Hero section with a short statement, working lemma, primary links, and an animated diagram.
+* Field section for mathematics, computer science, philosophy, and linguistics.
+* Selected writing paths linking to work samples and the blog.
+* Formal note blocks for definitions, propositions, and corollaries.
+* Closing digital garden index with links to work, blog, tags, and GitHub.
+
+Most homepage text is now centralised in `src/data/homepage.js`, with notes in `src/data/README.md`.
+
+=== New Homepage Components
+
+The branch adds small, focused Astro components under `src/components/`:
+
+* `HomeHero.astro` renders the homepage hero and diagram stack.
+* `AnimatedDiagram.astro` renders the animated SVG diagram.
+* `FieldDiagram.astro` renders the field graph and field cards.
+* `SectionHeading.astro` renders numbered section headings.
+* `MarginNote.astro` renders side notes.
+* `WritingList.astro` renders selected homepage writing links.
+* `NoteBlock.astro` renders the definition/proposition cards.
+
+These components keep the homepage page file readable while leaving the copy in `src/data/homepage.js`.
+
+=== Visual System Refresh
+
+`src/styles/global.css` has been substantially expanded.
+It now defines:
+
+* Dark notebook palette and CSS variables.
+* Serif, sans, and monospace type roles.
+* Shared header, footer, buttons, tags, work cards, and content lists.
+* Homepage-specific notebook grids, diagrams, field cards, writing lists, and note blocks.
+* Responsive layouts for tablet and mobile widths.
+* Reduced-motion handling for users who prefer less animation.
+
+The key design variables are at the top of `src/styles/global.css`.
+
+=== Site Shell And Navigation
+
+The shared site frame has been updated:
+
+* `src/layouts/BaseLayout.astro` now handles metadata, skip link, shared header, shared footer, and optional hidden page title support.
+* `src/components/Header.astro` and `src/components/Navigation.astro` now expose a concise primary navigation: Home, Work, About, Contact.
+* `src/components/Footer.astro` now groups blog, tag, contact, LinkedIn, GitHub, repository, and docs links.
+* `src/scripts/menu.js` supports the responsive mobile navigation.
+
+=== Work Samples
+
+The old hidden portfolio pages were replaced by a visible `Work` section:
+
+* `src/pages/work/index.astro` lists Markdown work samples.
+* `src/pages/work/api-docs-snippet.md` adds an API documentation sample.
+* `src/pages/work/redoc-openapi.md` adds an OpenAPI to Redoc workflow sample.
+
+Work sample metadata is read from frontmatter fields such as `role`, `tools`, `audience`, and `outcome`.
+
+=== Markdown Post Layout
+
+`src/layouts/MarkdownPostLayout.astro` now supports richer page metadata:
+
+* Description and byline.
+* Optional image.
+* Details panel for role, tools, audience, outcome, and tags.
+* Shared content layout for blog posts and work samples.
+
+=== About Page And Drafts
+
+The About page has been rewritten to focus on developer-facing documentation, technical writing, and engineering fluency.
+The profile image was renamed from `dp.jpg` to `_dp.jpg`.
+
+The chess-family page was moved under `src/pages/_drafts/`, so Astro will not publish it as a live route.
+
+=== Local Agent And Deployment Tooling
+
+The branch adds `.agents/` skill files and `skills-lock.json`.
+These are helper instructions for agent-assisted work in this repository, including browser automation and Vercel-related workflows.
+They do not affect the public website unless a tool reads them during development.
+
+== Most Important Files
+
+Use this map when deciding where to make a change.
+
+[cols="1,1",options="header"]
+|===
+| Goal
+| Start here
+
+| Edit homepage words and links
+| `src/data/homepage.js`
+
+| Change homepage structure
+| `src/pages/index.astro`
+
+| Change homepage visual sections
+| `src/components/*.astro`
+
+| Change colors, spacing, typography, cards, and responsive behavior
+| `src/styles/global.css`
+
+| Change navigation links
+| `src/components/Navigation.astro`
+
+| Change footer links
+| `src/components/Footer.astro`
+
+| Edit the About page
+| `src/pages/about/index.md`
+
+| Add a blog post
+| `src/pages/posts/*.md`
+
+| Add a work sample
+| `src/pages/work/*.md`
+
+| Change Markdown post metadata layout
+| `src/layouts/MarkdownPostLayout.astro`
+
+| Change the shared page shell
+| `src/layouts/BaseLayout.astro`
+|===
+
+== What To Watch
+
+* The homepage data object shape matters.
+  Components expect fields like `hero.links`, `fields`, `writing`, `propositions`, and `garden.links`.
+* Markdown pages should include `tags`; the tag pages depend on frontmatter tags.
+* Work samples should include enough frontmatter for the Work index and details panel to render well.
+* External links in `LinkButton.astro` automatically open in a new tab when the URL starts with `http`.
+* The visual style is concentrated in one global stylesheet, so broad CSS edits can affect many pages.

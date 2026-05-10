@@ -1,14 +1,31 @@
-= Personal Website Docs
+= Personal Site Docs
+:description: Owner documentation for maintaining and customising the personal website.
 
-== Website Build
+This documentation is the owner guide for the `{site-domain}` website.
+It explains what changed in the current branch and how to make future edits without rediscovering the Astro project structure.
 
-The website {site-domain} currently uses https://astro.build/[Astro^].
-Specifically, this website is an offshoot of the https://docs.astro.build/en/tutorial/0-introduction/[*Build your first Astro blog*^] tutorial.
+== Start Here
 
-== Code Repository and Hosting
+* xref:branch-changes.adoc[Branch changes]: what this branch changed and where the important files live.
+* xref:customising-the-site.adoc[Customising the site]: a practical walkthrough for editing copy, links, pages, writing samples, and visual styling.
 
-The repository for {site-domain} is https://github.com/doc-ko/doc-ko.github.io[^], and is hosted using https://pages.github.com/[GitHub Pages^].
+== Useful Commands
 
-== Domain
+Run these from the repository root.
 
-The domain `{site-domain}` is from https://metaname.co.nz[Metaname^].
+[source,sh]
+----
+npm install
+npm run dev
+npm run build
+----
+
+`npm run dev` starts the local Astro development server.
+`npm run build` checks that the site can be generated for production.
+
+== Mental Model
+
+This is a small Astro site.
+Most pages live under `src/pages/`, shared layout and interface pieces live under `src/components/` and `src/layouts/`, and the main visual system lives in `src/styles/global.css`.
+
+For routine homepage copy changes, start with `src/data/homepage.js` before editing component markup.

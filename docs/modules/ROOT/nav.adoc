@@ -1,1 +1,3 @@
 * xref:index.adoc[]
+* xref:branch-changes.adoc[]
+* xref:customising-the-site.adoc[]
