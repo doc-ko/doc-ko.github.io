@@ -34,7 +34,7 @@ That catches broken imports, invalid Astro files, and pages that cannot be gener
 
 == 2. Edit Homepage Copy
 
-Start with `src/data/homepage.js`.
+Start with `src/data/homepage.yaml`.
 
 That file controls most homepage words, labels, and links:
 
@@ -51,32 +51,36 @@ Homepage copy strings support Markdown for links, emphasis, inline code, paragra
 Keep labels, link text, symbols, and notation short; use fields such as `lede`, `note`, `margin`, `description`, and `body` for multi-paragraph Markdown.
 For example, this is a safe edit:
 
-[source,js]
+[source,yaml]
 ----
-hero: {
-    kicker: 'Karl Oberio',
-    headline: 'Technical writing for developer tools.',
-    lede: 'A public notebook for API docs, formal ideas, and careful diagrams.',
-    // Keep lemma, links, and margin in place.
-}
+hero:
+  kicker: "Karl Oberio"
+  headline: "Technical writing for developer tools."
+  lede: >-
+    A public notebook for API docs, formal ideas, and careful diagrams.
+  # Keep lemma, links, and margin in place.
 ----
 
 After saving, refresh the local site and check the homepage on desktop and a narrow browser width.
 
 == 3. Change Homepage Links
 
-Homepage links are arrays of `{ label, href }` objects in `src/data/homepage.js`.
+Homepage links are lists of `label` and `href` entries in `src/data/homepage.yaml`.
 
 To add a hero link:
 
-[source,js]
+[source,yaml]
 ----
-links: [
-    { label: 'writing samples', href: '/work/' },
-    { label: 'about', href: '/about/' },
-    { label: 'email', href: 'mailto:yarn@docko.dev' },
-    { label: 'github', href: 'https://github.com/doc-ko' },
-],
+hero:
+  links:
+    - label: "writing samples"
+      href: "/work/"
+    - label: "about"
+      href: "/about/"
+    - label: "email"
+      href: "mailto:yarn@docko.dev"
+    - label: "github"
+      href: "https://github.com/doc-ko"
 ----
 
 Use site-relative links for internal pages, such as `/work/`.
@@ -219,7 +223,7 @@ Use `draft: true` if a work sample should not appear yet.
 
 == 9. Customise The Homepage Sections
 
-For copy-only changes, keep using `src/data/homepage.js`.
+For copy-only changes, keep using `src/data/homepage.yaml`.
 
 For structural changes, edit `src/pages/index.astro`.
 It imports the homepage data and renders components in this order:
@@ -230,7 +234,7 @@ It imports the homepage data and renders components in this order:
 . method section with `NoteBlock` cards and an inline proof-tree SVG
 . closing garden section
 
-If you remove or rename a property in `homepage.js`, update the component that reads it.
+If you remove or rename a property in `homepage.yaml`, update the component that reads it.
 For example, `WritingList.astro` expects every writing item to have `kind`, `title`, `href`, `description`, `notation`, and `accent`.
 
 == 10. Change Colours And Typography
@@ -370,7 +374,7 @@ Look for broad selectors in `src/styles/global.css`, especially global element s
 Use this sequence for most changes:
 
 . Start `npm run dev`.
-. Edit one focused area, such as `homepage.js` or one Markdown page.
+. Edit one focused area, such as `homepage.yaml` or one Markdown page.
 . Check the page in the browser.
 . Check a narrow viewport for mobile layout issues.
 . Run `npm run build`.

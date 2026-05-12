@@ -28,4 +28,4 @@ npm run build
 This is a small Astro site.
 Most pages live under `src/pages/`, shared layout and interface pieces live under `src/components/` and `src/layouts/`, and the main visual system lives in `src/styles/global.css`.
 
-For routine homepage copy changes, start with `src/data/homepage.js` before editing component markup.
+For routine homepage copy changes, start with `src/data/homepage.yaml` before editing component markup.

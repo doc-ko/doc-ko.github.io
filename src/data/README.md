@@ -1,6 +1,6 @@
 # Homepage Editing Notes
 
-Most homepage content is in `homepage.js`.
+Most homepage content is in `homepage.yaml`.
 
 - `meta`: browser title and search description.
 - `hero`: opening headline, short note, lemma, and top links.
@@ -10,9 +10,10 @@ Most homepage content is in `homepage.js`.
 - `propositions`: definition/proposition blocks.
 - `garden.links`: closing navigation links.
 
-For routine copy changes, edit strings inside `homepage.js` and keep the object
-shape the same. The Astro components in `src/components/` handle the layout and
-visual design.
+For routine copy changes, edit strings inside `homepage.yaml` and keep the
+object shape the same. The Astro components in `src/components/` handle the
+layout and visual design. `homepage.js` is only the loader that parses the YAML
+and exports it to the page.
 
 Homepage copy fields support Markdown for links, emphasis, inline code,
 paragraphs, and lists. Keep labels, link text, symbols, and notation short; use

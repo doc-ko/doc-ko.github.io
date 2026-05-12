@@ -103,7 +103,7 @@ Use this map when deciding where to make a change.
 | Start here
 
 | Edit homepage words and links
-| `src/data/homepage.js`
+| `src/data/homepage.yaml`
 
 | Change homepage structure
 | `src/pages/index.astro`
