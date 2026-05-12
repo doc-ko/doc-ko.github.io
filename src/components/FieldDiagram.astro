@@ -1,4 +1,7 @@
 ---
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+
 const { fields = [] } = Astro.props;
 ---
 
@@ -47,8 +50,8 @@ const { fields = [] } = Astro.props;
             <article class={`field-card field-card--${field.accent}`}>
                 <p class="field-card__symbol">{field.symbol}</p>
                 <div>
-                    <h3>{field.title}</h3>
-                    <p>{field.description}</p>
+                    <h3><MarkdownInline content={field.title} /></h3>
+                    <MarkdownCopy class="field-card__description" content={field.description} />
                 </div>
             </article>
         ))}

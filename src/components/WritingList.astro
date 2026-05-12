@@ -1,4 +1,7 @@
 ---
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+
 const { items = [] } = Astro.props;
 ---
 
@@ -6,9 +9,9 @@ const { items = [] } = Astro.props;
     {items.map((item) => (
         <article class={`writing-item writing-item--${item.accent}`}>
             <div>
-                <p class="writing-item__kind">{item.kind}</p>
-                <h3><a href={item.href}>{item.title}</a></h3>
-                <p>{item.description}</p>
+                <p class="writing-item__kind"><MarkdownInline content={item.kind} /></p>
+                <h3><a href={item.href}><MarkdownInline content={item.title} /></a></h3>
+                <MarkdownCopy class="writing-item__description" content={item.description} />
             </div>
             <code>{item.notation}</code>
         </article>

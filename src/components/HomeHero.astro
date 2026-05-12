@@ -1,5 +1,7 @@
 ---
 import AnimatedDiagram from './AnimatedDiagram.astro';
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
 import MarginNote from './MarginNote.astro';
 
 const { hero } = Astro.props;
@@ -8,16 +10,16 @@ const { hero } = Astro.props;
 <section class="notebook-hero" aria-labelledby="home-title">
     <div class="notebook-grid notebook-grid--hero">
         <div class="hero-manuscript">
-            <p class="eyebrow">{hero.kicker}</p>
-            <h1 id="home-title">{hero.headline}</h1>
-            <p class="hero-lede">{hero.lede}</p>
+            <p class="eyebrow"><MarkdownInline content={hero.kicker} /></p>
+            <h1 id="home-title"><MarkdownInline content={hero.headline} /></h1>
+            <MarkdownCopy class="hero-lede" content={hero.lede} />
 
             <article class="lemma-card">
                 <p class="lemma-card__label">
-                    <span>{hero.lemma.label}</span>
+                    <span><MarkdownInline content={hero.lemma.label} /></span>
                     <code>{hero.lemma.notation}</code>
                 </p>
-                <p>{hero.lemma.body}</p>
+                <MarkdownCopy class="lemma-card__body" content={hero.lemma.body} />
             </article>
 
             <nav class="quiet-links" aria-label="Homepage links">
@@ -29,7 +31,7 @@ const { hero } = Astro.props;
 
         <div class="hero-diagram-stack">
             <AnimatedDiagram />
-            <MarginNote label={hero.margin.label}>{hero.margin.body}</MarginNote>
+            <MarginNote label={hero.margin.label} body={hero.margin.body} />
         </div>
     </div>
 </section>

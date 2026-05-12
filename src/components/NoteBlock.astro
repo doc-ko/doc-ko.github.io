@@ -1,12 +1,19 @@
 ---
-const { kind, title, notation, accent = 'amber' } = Astro.props;
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+
+const { kind, title, notation, body, accent = 'amber' } = Astro.props;
 ---
 
 <article class={`note-block note-block--${accent}`}>
     <p class="note-block__label">
-        <span>{kind}</span>
+        <span><MarkdownInline content={kind} /></span>
         {notation && <code>{notation}</code>}
     </p>
-    <h3>{title}</h3>
-    <p><slot /></p>
+    <h3><MarkdownInline content={title} /></h3>
+    {body ? (
+        <MarkdownCopy class="note-block__body" content={body} />
+    ) : (
+        <div class="note-block__body"><slot /></div>
+    )}
 </article>

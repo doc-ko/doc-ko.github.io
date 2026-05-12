@@ -1,11 +1,14 @@
 ---
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+
 const { number, title, note } = Astro.props;
 ---
 
 <header class="notebook-section-heading">
-    {number && <p class="section-number">{number}</p>}
+    {number && <p class="section-number"><MarkdownInline content={number} /></p>}
     <div>
-        <h2>{title}</h2>
-        {note && <p>{note}</p>}
+        <h2><MarkdownInline content={title} /></h2>
+        {note && <MarkdownCopy class="notebook-section-note" content={note} />}
     </div>
 </header>

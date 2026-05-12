@@ -1,0 +1,8 @@
+---
+import { renderMarkdown } from '../lib/homepageMarkdown.js';
+
+const { content = '', class: className } = Astro.props;
+const html = await renderMarkdown(content);
+---
+
+<div class:list={['markdown-copy', className]} set:html={html} />

@@ -47,6 +47,8 @@ That file controls most homepage words, labels, and links:
 * `garden`: closing section text and links.
 
 Change string values freely, but keep the object shape intact.
+Homepage copy strings support Markdown for links, emphasis, inline code, paragraphs, and lists.
+Keep labels, link text, symbols, and notation short; use fields such as `lede`, `note`, `margin`, `description`, and `body` for multi-paragraph Markdown.
 For example, this is a safe edit:
 
 [source,js]

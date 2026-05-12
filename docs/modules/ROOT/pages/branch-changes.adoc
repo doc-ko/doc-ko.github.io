@@ -20,7 +20,8 @@ The homepage in `src/pages/index.astro` has been rebuilt around a notebook-style
 * Formal note blocks for definitions, propositions, and corollaries.
 * Closing digital garden index with links to work, blog, tags, and GitHub.
 
-Most homepage text is now centralised in `src/data/homepage.js`, with notes in `src/data/README.md`.
+Most homepage text is now centralised in `src/data/homepage.yaml`, with a small loader in `src/data/homepage.js` and notes in `src/data/README.md`.
+Homepage copy fields support Markdown through `src/components/MarkdownCopy.astro`, `src/components/MarkdownInline.astro`, and the shared renderer in `src/lib/homepageMarkdown.js`.
 
 === New Homepage Components
 
@@ -33,8 +34,9 @@ The branch adds small, focused Astro components under `src/components/`:
 * `MarginNote.astro` renders side notes.
 * `WritingList.astro` renders selected homepage writing links.
 * `NoteBlock.astro` renders the definition/proposition cards.
+* `MarkdownCopy.astro` and `MarkdownInline.astro` render Markdown-backed homepage copy while preserving the existing component structure.
 
-These components keep the homepage page file readable while leaving the copy in `src/data/homepage.js`.
+These components keep the homepage page file readable while leaving the copy in `src/data/homepage.yaml`.
 
 === Visual System Refresh
 

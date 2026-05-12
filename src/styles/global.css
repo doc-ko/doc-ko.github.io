@@ -125,6 +125,23 @@ li + li {
     margin-top: 0.55rem;
 }
 
+.markdown-copy > :first-child {
+    margin-top: 0;
+}
+
+.markdown-copy > :last-child {
+    margin-bottom: 0;
+}
+
+.markdown-copy :is(ul, ol) {
+    margin: 0.65rem 0 0;
+}
+
+.markdown-copy :is(strong, b) {
+    color: var(--ink-strong);
+    font-weight: 600;
+}
+
 code {
     border: 1px solid var(--line);
     border-radius: 3px;
@@ -394,8 +411,8 @@ pre code {
     font-size: 0.75rem;
 }
 
-.lemma-card p:last-child,
-.note-block > p:last-child {
+.lemma-card__body,
+.note-block__body {
     margin-top: 0.85rem;
     color: var(--muted);
 }
@@ -609,7 +626,7 @@ pre code {
     font-size: clamp(1.65rem, 3vw, 2.45rem);
 }
 
-.notebook-section-heading p:not(.section-number) {
+.notebook-section-note {
     max-width: 42rem;
     margin-top: 0.85rem;
     color: var(--muted);
@@ -700,7 +717,7 @@ pre code {
     font-size: 1.02rem;
 }
 
-.field-card p:not(.field-card__symbol) {
+.field-card__description {
     margin-top: 0.28rem;
     color: var(--muted);
     font-size: 0.95rem;
@@ -755,7 +772,7 @@ pre code {
     text-decoration-color: currentColor;
 }
 
-.writing-item p:not(.writing-item__kind) {
+.writing-item__description {
     max-width: 39rem;
     margin-top: 0.55rem;
     color: var(--muted);
@@ -815,7 +832,7 @@ pre code {
     margin-top: 0.5rem;
 }
 
-.garden-strip p:not(.eyebrow) {
+.garden-note {
     max-width: 46rem;
     margin-top: 0.75rem;
     color: var(--muted);

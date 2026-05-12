@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import FieldDiagram from '../components/FieldDiagram.astro';
 import HomeHero from '../components/HomeHero.astro';
 import MarginNote from '../components/MarginNote.astro';
+import MarkdownCopy from '../components/MarkdownCopy.astro';
+import MarkdownInline from '../components/MarkdownInline.astro';
 import NoteBlock from '../components/NoteBlock.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import WritingList from '../components/WritingList.astro';
@@ -29,7 +31,7 @@ const { meta, hero, sections, fields, writing, propositions, garden } = homepage
 					/>
 					<FieldDiagram fields={fields} />
 				</div>
-				<MarginNote label={sections.fields.marginLabel}>{sections.fields.margin}</MarginNote>
+				<MarginNote label={sections.fields.marginLabel} body={sections.fields.margin} />
 			</div>
 		</section>
 
@@ -43,7 +45,7 @@ const { meta, hero, sections, fields, writing, propositions, garden } = homepage
 					/>
 					<WritingList items={writing} />
 				</div>
-				<MarginNote label={sections.writing.marginLabel}>{sections.writing.margin}</MarginNote>
+				<MarginNote label={sections.writing.marginLabel} body={sections.writing.margin} />
 			</div>
 		</section>
 
@@ -57,9 +59,13 @@ const { meta, hero, sections, fields, writing, propositions, garden } = homepage
 					/>
 					<div class="proposition-grid">
 						{propositions.map((item) => (
-							<NoteBlock kind={item.kind} title={item.title} notation={item.notation} accent={item.accent}>
-								{item.body}
-							</NoteBlock>
+							<NoteBlock
+								kind={item.kind}
+								title={item.title}
+								notation={item.notation}
+								body={item.body}
+								accent={item.accent}
+							/>
 						))}
 					</div>
 				</div>
@@ -81,9 +87,9 @@ const { meta, hero, sections, fields, writing, propositions, garden } = homepage
 		<section class="notebook-section notebook-section--closing" aria-labelledby="garden-title">
 			<div class="garden-strip">
 				<div>
-					<p class="eyebrow">{garden.number}</p>
-					<h2 id="garden-title">{garden.heading}</h2>
-					<p>{garden.note}</p>
+					<p class="eyebrow"><MarkdownInline content={garden.number} /></p>
+					<h2 id="garden-title"><MarkdownInline content={garden.heading} /></h2>
+					<MarkdownCopy class="garden-note" content={garden.note} />
 				</div>
 				<nav class="garden-links" aria-label="Digital garden links">
 					{garden.links.map((link) => (

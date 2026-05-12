@@ -13,3 +13,8 @@ Most homepage content is in `homepage.js`.
 For routine copy changes, edit strings inside `homepage.js` and keep the object
 shape the same. The Astro components in `src/components/` handle the layout and
 visual design.
+
+Homepage copy fields support Markdown for links, emphasis, inline code,
+paragraphs, and lists. Keep labels, link text, symbols, and notation short; use
+body fields such as `lede`, `note`, `margin`, `description`, and `body` for
+multi-paragraph Markdown.
