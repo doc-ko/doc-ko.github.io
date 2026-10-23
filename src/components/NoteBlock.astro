@@ -8,7 +8,7 @@ const { kind, title, notation, body, accent = 'amber' } = Astro.props;
 <article class={`note-block note-block--${accent}`}>
     <p class="note-block__label">
         <span><MarkdownInline content={kind} /></span>
-        {notation && <code>{notation}</code>}
+        {notation && <code><MarkdownInline content={notation} /></code>}
     </p>
     <h3><MarkdownInline content={title} /></h3>
     {body ? (

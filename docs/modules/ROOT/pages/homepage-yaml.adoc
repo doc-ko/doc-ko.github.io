@@ -218,7 +218,7 @@ Each item:
 | Block heading.
 
 | `notation`
-| Plain
+| Markdown (inline)
 | Monospace text beside the label. Optional.
 
 | `body`
