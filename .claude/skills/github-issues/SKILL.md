@@ -76,7 +76,8 @@ Use `-F` (not `-f`) so the id is sent as a number.
 
 Choose the relationship by meaning. A sub-issue means the parent is not finished until the child is, so use it for an umbrella and its implementation. Use blocked-by for "cannot start or finish until that is decided".
 Mention in the issue body when a relationship exists, so it reads correctly outside GitHub's UI.
-Most issues need no relationship at all. Add one only when it is real, not to make the issue look connected.
+Standalone bugs and small tasks need no relationship. Planned work often does: use a sub-issue for an umbrella and its implementation, and blocked-by when one decision gates another.
+Add a link only when the dependency is real, not to make issues look connected.
 
 ## Linking to PRs
 
