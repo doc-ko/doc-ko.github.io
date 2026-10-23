@@ -521,6 +521,427 @@ pre code {
     color: var(--violet);
 }
 
+/* Hover motion. Tiles are decorative: no pointer cursor, no selection. */
+.field-emblem__tile {
+    cursor: default;
+    user-select: none;
+}
+
+.field-emblem__symbol {
+    position: relative;
+}
+
+.field-emblem__tile {
+    position: relative;
+    container-type: size;
+}
+
+.syllable-tree,
+.thought-bubble {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.syllable-tree__edge {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 0.8;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+}
+
+.syllable-tree__leaf {
+    opacity: 0;
+    fill: var(--accent);
+    font-family: var(--mono);
+    font-size: 14px;
+    text-anchor: middle;
+}
+
+/* The summation reads like typeset display maths: a serif sigma with the
+   limits above and below, and a red heart as the summand. */
+.field-emblem__tile--violet .field-emblem__symbol,
+.sum-limit,
+.sum-term__exp {
+    font-family: "STIX Two Math", "STIXGeneral", "Latin Modern Math", "Cambria Math", "Times New Roman", serif;
+}
+
+.sum-limit,
+.sum-term {
+    position: absolute;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.sum-limit {
+    left: 50%;
+    color: var(--violet);
+}
+
+.sum-limit__rel {
+    margin-inline: 0.28em;
+}
+
+.sum-limit--upper {
+    bottom: 100%;
+    margin-bottom: 0.2em;
+    font-size: 0.42em;
+    translate: -50% 0;
+}
+
+.sum-limit--lower {
+    top: 100%;
+    margin-top: 0.3em;
+    font-size: 0.34em;
+    translate: -50% 0;
+    clip-path: inset(-20% 100% -20% 0);
+}
+
+.sum-inf {
+    width: 1.3em;
+    height: 0.65em;
+    overflow: visible;
+}
+
+.sum-inf__path {
+    fill: none;
+    stroke: var(--violet);
+    stroke-width: 1.5;
+    stroke-linecap: butt;
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1.02;
+}
+
+.sum-term {
+    left: 100%;
+    top: 50%;
+    margin-left: 0.1em;
+    display: flex;
+    align-items: center;
+    translate: 0 -50%;
+}
+
+.sum-heart {
+    width: 0.56em;
+    height: 0.51em;
+    clip-path: inset(100% -20% 0 -20%);
+}
+
+.sum-term__exp {
+    align-self: flex-start;
+    margin-top: -0.08em;
+    margin-left: 0.05em;
+    color: var(--violet);
+    font-size: 0.46em;
+    clip-path: inset(-20% 100% -20% 0);
+}
+
+.field-emblem__label {
+    transition: opacity 0.25s ease 0.15s;
+}
+
+.thought-bubble__cloud,
+.thought-bubble__trail {
+    fill: none;
+    stroke: var(--cyan);
+    stroke-width: 0.8;
+    stroke-linejoin: round;
+}
+
+.thought-bubble__cloud {
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1.02;
+}
+
+.thought-bubble__dot {
+    fill: var(--cyan);
+}
+
+.thought-bubble__trail,
+.thought-bubble__dot {
+    transform: scale(0);
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.field-emblem__tile--paper .field-emblem__symbol {
+    font-family: Menlo, Monaco, "SF Mono", "Cascadia Mono", Consolas, "DejaVu Sans Mono", "Courier New", monospace;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    /* linguistics: the schwa shrinks into the nucleus of a /jəp/ syllable
+       tree, drawn bottom-up around it. The container units are the tile's. */
+    .field-emblem__tile--amber .field-emblem__symbol {
+        /* the delay lets the tree clear away before the schwa grows back */
+        transition:
+            font-size 0.8s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s,
+            transform 0.8s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s;
+    }
+
+    .field-emblem__tile--amber .field-emblem__label {
+        transition: opacity 0.25s ease 0.5s;
+    }
+
+    .field-emblem__tile--amber:hover .field-emblem__symbol {
+        font-size: 14cqw;
+        /* the symbol's centre sits half the label block above the tile
+           centre; 0.83rem cancels that so the target is a tile percentage */
+        transform: translateY(calc(19.3cqh + 0.83rem));
+        transition-delay: 0s;
+    }
+
+    .field-emblem__tile--amber:hover .field-emblem__label {
+        opacity: 0;
+        transition-delay: 0s;
+    }
+
+    .syllable-tree__edge {
+        transition: stroke-dashoffset 0.3s ease;
+    }
+
+    .syllable-tree__leaf {
+        transition: opacity 0.3s ease;
+    }
+
+    .field-emblem__tile:hover .syllable-tree__edge {
+        stroke-dashoffset: 0;
+    }
+
+    .field-emblem__tile:hover .syllable-tree__leaf {
+        opacity: 1;
+    }
+
+    .field-emblem__tile:hover .syllable-tree__edge--rime {
+        transition-delay: 0.2s;
+    }
+
+    .field-emblem__tile:hover .syllable-tree__leaf--coda {
+        transition-delay: 0.25s;
+    }
+
+    .field-emblem__tile:hover .syllable-tree__edge--syllable,
+    .field-emblem__tile:hover .syllable-tree__leaf--onset {
+        transition-delay: 0.4s;
+    }
+
+    /* every tile: the label steps aside on hover and the symbol moves to the
+       tile centre (0.83rem is half the label block that normally sits below) */
+    .field-emblem__tile:hover .field-emblem__label {
+        opacity: 0;
+        transition-delay: 0s;
+    }
+
+    /* cyan and paper: whatever is drawn clears away first, then the symbol
+       moves back and the label returns */
+    .field-emblem__tile--cyan .field-emblem__symbol,
+    .field-emblem__tile--paper .field-emblem__symbol {
+        transition: translate 0.4s ease 0.35s;
+    }
+
+    .field-emblem__tile--cyan .field-emblem__label,
+    .field-emblem__tile--paper .field-emblem__label {
+        transition: opacity 0.25s ease 0.7s;
+    }
+
+    .field-emblem__tile--cyan:hover .field-emblem__symbol,
+    .field-emblem__tile--paper:hover .field-emblem__symbol {
+        transition-delay: 0s;
+    }
+
+    /* mathematics: the sigma becomes the sum of k = 0 to infinity of heart^k,
+       centred as a whole (the term to the right is about 0.9em wide) */
+    .field-emblem__tile--violet:hover .field-emblem__symbol {
+        translate: -0.5em calc(0.83rem + 0.04em);
+    }
+
+    /* The pieces are drawn in, not faded: the infinity is stroked, the rest
+       is written left to right, and the heart fills from the bottom. On
+       unhover they retract first; the sigma slides back afterwards. */
+    .field-emblem__tile--violet .field-emblem__symbol {
+        transition: translate 0.35s ease 0.45s;
+    }
+
+    .field-emblem__tile--violet .field-emblem__label {
+        transition: opacity 0.25s ease 0.8s;
+    }
+
+    .field-emblem__tile--violet:hover .field-emblem__symbol {
+        transition-delay: 0s;
+    }
+
+    .sum-inf__path {
+        transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .sum-limit--lower,
+    .sum-term__exp {
+        transition: clip-path 0.4s ease;
+    }
+
+    .sum-heart {
+        transition: clip-path 0.5s ease;
+    }
+
+    .field-emblem__tile:hover .sum-inf__path {
+        stroke-dashoffset: 0;
+        transition-delay: 0.15s;
+    }
+
+    .field-emblem__tile:hover .sum-limit--lower {
+        clip-path: inset(-20% -20% -20% 0);
+        transition-delay: 0.3s;
+    }
+
+    .field-emblem__tile:hover .sum-heart {
+        clip-path: inset(-20% -20% -20% -20%);
+        transition-delay: 0.45s;
+    }
+
+    .field-emblem__tile:hover .sum-term__exp {
+        clip-path: inset(-20% -20% -20% 0);
+        transition-delay: 0.85s;
+    }
+
+    /* logic and philosophy: the lambda moves to the lower left and a thought
+       bubble is drawn to its upper right: the trail of small circles, then the cloud,
+       then the dots of the thought */
+    .field-emblem__tile--cyan:hover .field-emblem__symbol {
+        translate: -18cqw calc(0.83rem + 0.05em + 17cqh);
+    }
+
+    .thought-bubble__cloud {
+        transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .thought-bubble__trail,
+    .thought-bubble__dot {
+        transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+    }
+
+    .field-emblem__tile:hover .thought-bubble__cloud {
+        stroke-dashoffset: 0;
+        transition-delay: 0.35s;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__trail,
+    .field-emblem__tile:hover .thought-bubble__dot {
+        transform: scale(1);
+    }
+
+    .field-emblem__tile:hover .thought-bubble__trail--1 {
+        transition-delay: 0.1s;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__trail--2 {
+        transition-delay: 0.25s;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__dot--1 {
+        transition-delay: 0.8s;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__dot--2 {
+        transition-delay: 0.92s;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__dot--3 {
+        transition-delay: 1.04s;
+    }
+
+    /* once drawn, the dots loop through nothing, ., .., ... like a typing
+       indicator */
+    .field-emblem__tile:hover .thought-bubble__dot--1 {
+        animation: bubble-dot-1 2.8s linear 0.8s infinite backwards;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__dot--2 {
+        animation: bubble-dot-2 2.8s linear 0.8s infinite backwards;
+    }
+
+    .field-emblem__tile:hover .thought-bubble__dot--3 {
+        animation: bubble-dot-3 2.8s linear 0.8s infinite backwards;
+    }
+
+    /* computing: a terminal prompt; the cursor is drawn out as a line, then
+       blinks, and the pair is centred */
+    .field-emblem__tile--paper .field-emblem__symbol::after {
+        content: "";
+        position: absolute;
+        left: 100%;
+        bottom: 0.12em;
+        width: 0;
+        height: 0.07em;
+        background: currentcolor;
+        transition: width 0.3s ease;
+    }
+
+    .field-emblem__tile--paper:hover .field-emblem__symbol {
+        translate: -0.28em calc(0.83rem - 0.03em);
+    }
+
+    .field-emblem__tile--paper:hover .field-emblem__symbol::after {
+        width: 0.55em;
+        transition-delay: 0.1s;
+        animation: emblem-blink 1s steps(1) 0.5s infinite;
+    }
+}
+
+@keyframes bubble-dot-1 {
+    0%,
+    20% {
+        transform: scale(0);
+    }
+    25%,
+    95% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes bubble-dot-2 {
+    0%,
+    45% {
+        transform: scale(0);
+    }
+    50%,
+    95% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes bubble-dot-3 {
+    0%,
+    70% {
+        transform: scale(0);
+    }
+    75%,
+    95% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+
+@keyframes emblem-blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
 .margin-note {
     position: relative;
     border-left: 1px solid var(--line-strong);
