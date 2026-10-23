@@ -58,7 +58,7 @@ hero:
   kicker: "Karl Oberio"
   headline: "Technical writing for developer tools."
   lede: >-
-    A public notebook for API docs, formal ideas, and careful diagrams.
+    A public notebook for API docs and formal ideas.
   # Keep lemma, links, and margin in place.
 ----
 
@@ -264,19 +264,39 @@ Common edits:
 After changing colours, check links, tags, code blocks, cards, and focus rings.
 Those elements all rely on the same variables.
 
-== 11. Change The Diagrams
+== 11. Change The Field Emblem
 
-The one diagram is the hero drawing, an inline SVG in `src/components/AnimatedDiagram.astro`.
+The four large symbols in the hero are the field emblem, rendered by `src/components/FieldEmblem.astro`.
+It reads the same `fields` list as the cards in section 01, so changing a field's `symbol`, `title`, or `accent` in `src/data/homepage.yaml` updates both.
 
-The animation styles live in `src/styles/global.css`.
-Search for these selectors:
+The styles are the `.field-emblem` rules in `src/styles/global.css`.
+Each tile takes its colour from its `accent`, using the same colour variables as the rest of the site.
 
-* `.trace`
-* `.vector-field`
-* `.state-machine`
-* `@keyframes`
+Each tile also has a hover animation.
+The tiles are not links, so they show a normal cursor and do nothing when clicked.
+The animation is chosen by `accent`, not by the symbol, so each one is written for the symbol currently using that colour:
 
-When editing SVG, keep the `title` and accessible labels in place so the diagrams remain understandable to assistive technology.
+[cols="1,3",options="header"]
+|===
+| Accent | Hover animation
+
+| `amber`
+| The symbol shrinks and settles as the nucleus of an unlabelled syllable tree for /jəp/: two upside-down V shapes, with onset j and coda p, drawn bottom-up around it. When the pointer leaves, the tree clears away before the symbol grows back. The tree is drawn in `FieldEmblem.astro` and appears on the tile whose accent is `amber`; it assumes that tile's symbol is ə.
+
+| `violet`
+| The sigma becomes the sum of k = 0 to infinity of ♥^k, typeset like display maths: a serif sigma in the violet accent, ∞ above, italic k=0 below, and a red SVG heart with a superscript k. The whole expression is centred in the tile. The extra markup is in `FieldEmblem.astro` and is added to the tile whose accent is `violet`; the serif font stack is set in `global.css`.
+
+| `cyan`
+| The symbol moves to the lower left and a thought bubble is drawn to its upper right: a trail of two small circles, the cloud outline, then three dots that count nothing, `.`, `..`, `...` on a loop while the pointer stays there. It clears away before the symbol returns. The bubble is drawn in `FieldEmblem.astro` and appears on the tile whose accent is `cyan`.
+
+| `paper`
+| The symbol is set in a terminal-style monospace font. A cursor line is drawn out after it and then blinks, and the symbol and cursor are centred together.
+|===
+
+On hover every tile hides its label, and the symbol (or the whole drawing) moves to the tile centre.
+The drawings are built, not faded: lines are stroked in, text is written left to right, and the heart fills from the bottom.
+If you reorder or recolour the fields, the animations follow the `accent`.
+They are switched off for visitors who prefer reduced motion.
 
 == 12. Add A New Page
 

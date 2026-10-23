@@ -6,7 +6,7 @@ This document describes the functional changes in the `ai-rewrite` branch compar
 == Summary
 
 The branch turns the site from a lightly customised Astro tutorial blog into a more intentional personal site for technical writing.
-The new direction is a dark, mathematical-notebook style: restrained typography, symbolic diagrams, margin notes, and a homepage that behaves more like a table of contents than a portfolio landing page.
+The new direction is a dark, mathematical-notebook style: restrained typography, symbolic glyphs, margin notes, and a homepage that behaves more like a table of contents than a portfolio landing page.
 
 == Main Website Changes
 
@@ -14,7 +14,7 @@ The new direction is a dark, mathematical-notebook style: restrained typography,
 
 The homepage in `src/pages/index.astro` has been rebuilt around a notebook-style structure:
 
-* Hero section with a short statement, working lemma, primary links, and an animated diagram.
+* Hero section with a short statement, working lemma, primary links, and a four-symbol emblem.
 * Field section for mathematics, computer science, philosophy, and linguistics.
 * Selected writing paths linking to work samples and the blog.
 * Formal note blocks for definitions, propositions, and corollaries.
@@ -27,8 +27,8 @@ Homepage copy fields support Markdown through `src/components/MarkdownCopy.astro
 
 The branch adds small, focused Astro components under `src/components/`:
 
-* `HomeHero.astro` renders the homepage hero and diagram stack.
-* `AnimatedDiagram.astro` renders the animated SVG diagram.
+* `HomeHero.astro` renders the homepage hero and emblem stack.
+* `FieldEmblem.astro` renders the four field symbols in the hero.
 * `FieldDiagram.astro` renders the field cards.
 * `SectionHeading.astro` renders numbered section headings.
 * `MarginNote.astro` renders side notes.
@@ -45,9 +45,8 @@ It now defines:
 * Dark notebook palette and CSS variables.
 * Serif, sans, and monospace type roles.
 * Shared header, footer, buttons, tags, work cards, and content lists.
-* Homepage-specific notebook grids, diagrams, field cards, writing lists, and note blocks.
+* Homepage-specific notebook grids, the field emblem, field cards, and note blocks.
 * Responsive layouts for tablet and mobile widths.
-* Reduced-motion handling for users who prefer less animation.
 
 The key design variables are at the top of `src/styles/global.css`.
 
