@@ -9,19 +9,18 @@ meta:
 
 hero:
   kicker: "By [@doc-ko](https://www.github.com/doc-ko)"
-  headline: "🔧 On Building"
+  headline: "Work in progress"
   lede: >-
     Apologies for the :ai[AI-generated text]{note="Text with a dashed underline, like
     this word, was written by AI."}; I'll get round to it at some point.
   lemma:
-    label: "WORK IN PROGRESS"
-    notation: ":ai[site = design + stub]"
+    label: "☢️ TO BE UNSLOPPIFIED"
+    notation: "Using Claude Code"
     body: >-
       **This site isn't much of anything yet.**
 
       I basically let AI run loose with little to no thought so far on what the final design should be.
 
-      Using Claude.
   links:
     - label: "about"
       href: "/about/"
