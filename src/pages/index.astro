@@ -2,15 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FieldDiagram from '../components/FieldDiagram.astro';
 import HomeHero from '../components/HomeHero.astro';
-import MarginNote from '../components/MarginNote.astro';
 import MarkdownCopy from '../components/MarkdownCopy.astro';
 import MarkdownInline from '../components/MarkdownInline.astro';
 import NoteBlock from '../components/NoteBlock.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import WritingList from '../components/WritingList.astro';
 import { homepage } from '../data/homepage.js';
 
-const { meta, hero, sections, fields, writing, propositions, garden } = homepage;
+const { meta, hero, sections, fields, propositions, garden } = homepage;
 ---
 
 <BaseLayout
@@ -31,21 +29,6 @@ const { meta, hero, sections, fields, writing, propositions, garden } = homepage
 					/>
 					<FieldDiagram fields={fields} />
 				</div>
-				<MarginNote label={sections.fields.marginLabel} body={sections.fields.margin} />
-			</div>
-		</section>
-
-		<section class="notebook-section notebook-section--ruled" aria-labelledby="writing-title">
-			<div class="notebook-grid">
-				<div>
-					<SectionHeading
-						number={sections.writing.number}
-						title={sections.writing.title}
-						note={sections.writing.note}
-					/>
-					<WritingList items={writing} />
-				</div>
-				<MarginNote label={sections.writing.marginLabel} body={sections.writing.margin} />
 			</div>
 		</section>
 
@@ -68,18 +51,6 @@ const { meta, hero, sections, fields, writing, propositions, garden } = homepage
 							/>
 						))}
 					</div>
-				</div>
-				<div class="proof-tree-panel" aria-label="A small animated proof tree">
-					<svg viewBox="0 0 280 320" role="img" aria-labelledby="proof-tree-title">
-						<title id="proof-tree-title">Proof tree illustration</title>
-						<path d="M48 76 H114 M166 76 H232 M80 120 H200 M140 120 V190 M74 190 H206 M140 190 V248 M96 248 H184" />
-						<text x="81" y="62">term</text>
-						<text x="199" y="62">reader</text>
-						<text x="140" y="108">example</text>
-						<text x="140" y="178">diagram</text>
-						<text x="140" y="236">note</text>
-						<text x="140" y="286">understanding</text>
-					</svg>
 				</div>
 			</div>
 		</section>

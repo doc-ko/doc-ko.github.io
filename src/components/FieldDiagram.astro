@@ -6,45 +6,6 @@ const { fields = [] } = Astro.props;
 ---
 
 <div class="field-diagram">
-    <div class="field-diagram__figure" aria-label="Diagram connecting the fields of the site">
-        <svg viewBox="0 0 520 320" role="img" aria-labelledby="field-diagram-title">
-            <title id="field-diagram-title">Fields connected as a small proof graph</title>
-            <defs>
-                <marker id="field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" />
-                </marker>
-            </defs>
-            <path class="field-link field-link--amber" d="M100 96 C164 48 246 54 306 106" />
-            <path class="field-link field-link--cyan" d="M104 218 C170 266 246 262 308 212" />
-            <path class="field-link field-link--violet" d="M104 96 C178 148 230 168 308 212" />
-            <path class="field-link field-link--paper" d="M104 218 C180 166 232 148 308 106" />
-
-            <g class="field-node field-node--amber">
-                <circle cx="88" cy="94" r="36" />
-                <text x="88" y="103">∑</text>
-            </g>
-            <g class="field-node field-node--cyan">
-                <circle cx="330" cy="106" r="36" />
-                <text x="330" y="115">λ</text>
-            </g>
-            <g class="field-node field-node--violet">
-                <circle cx="330" cy="214" r="36" />
-                <text x="330" y="223">φ</text>
-            </g>
-            <g class="field-node field-node--paper">
-                <circle cx="88" cy="220" r="36" />
-                <text x="88" y="226">⟦x⟧</text>
-            </g>
-
-            <g class="field-proof">
-                <path d="M404 86 H472 M404 142 H472 M390 114 H486 M438 142 V206 M404 206 H472" />
-                <text x="438" y="76">claim</text>
-                <text x="438" y="134">premises</text>
-                <text x="438" y="232">page</text>
-            </g>
-        </svg>
-    </div>
-
     <div class="field-list">
         {fields.map((field) => (
             <article class={`field-card field-card--${field.accent}`}>
