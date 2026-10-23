@@ -28,10 +28,11 @@ hero:
     - label: "email"
       href: "mailto:yarn@docko.dev"
   margin:
-    label: ":ai[work in progress]"
+    label: "My areas of interest"
     body: >-
-      :ai[Diagrams and layout are the new part. Copy is being rewritten from the
-      previous version of the site, so expect gaps.]
+      Thinking of writing up some content on one or more of the above topics.
+
+      The animations for each icon were my ideas, though the implementation is AI.
 
 sections:
   fields:
