@@ -1,0 +1,166 @@
+= Branch Changes
+:description: Functional changes introduced by the ai-rewrite branch.
+
+This document describes the functional changes in the `ai-rewrite` branch compared with `main`.
+
+== Summary
+
+The branch turns the site from a lightly customised Astro tutorial blog into a more intentional personal site for technical writing.
+The new direction is a dark, mathematical-notebook style: restrained typography, symbolic glyphs, margin notes, and a homepage that behaves more like a table of contents than a portfolio landing page.
+
+== Main Website Changes
+
+=== Homepage Rewrite
+
+The homepage in `src/pages/index.astro` has been rebuilt around a notebook-style structure:
+
+* Hero section with a short statement, working lemma, primary links, and a four-symbol emblem.
+* Field section for mathematics, computer science, philosophy, and linguistics.
+* Formal note blocks for definitions, propositions, and corollaries.
+* Closing section with a contact email and a GitHub link.
+
+Most homepage text is now centralised in `src/data/homepage.yaml`, with a small loader in `src/data/homepage.js` and notes in `src/data/README.md`.
+Homepage copy fields support Markdown through `src/components/MarkdownCopy.astro`, `src/components/MarkdownInline.astro`, and the shared renderer in `src/lib/homepageMarkdown.js`.
+
+=== New Homepage Components
+
+The branch adds small, focused Astro components under `src/components/`:
+
+* `HomeHero.astro` renders the homepage hero and emblem stack.
+* `FieldEmblem.astro` renders the four field icons in the hero as SVG paths; `src/lib/glyphs.js` holds the outlines.
+* `FieldDiagram.astro` renders the field cards.
+* `SectionHeading.astro` renders numbered section headings.
+* `MarginNote.astro` renders side notes.
+* `NoteBlock.astro` renders the definition/proposition cards.
+* `MarkdownCopy.astro` and `MarkdownInline.astro` render Markdown-backed homepage copy while preserving the existing component structure.
+
+These components keep the homepage page file readable while leaving the copy in `src/data/homepage.yaml`.
+
+=== Visual System Refresh
+
+`src/styles/global.css` has been substantially expanded.
+It now defines:
+
+* Dark notebook palette and CSS variables.
+* Serif, sans, and monospace type roles.
+* Shared header, footer, buttons, tags, work cards, and content lists.
+* Homepage-specific notebook grids, the field emblem, field cards, and note blocks.
+* Responsive layouts for tablet and mobile widths.
+
+The key design variables are at the top of `src/styles/global.css`.
+
+=== Site Shell And Navigation
+
+The shared site frame has been updated:
+
+* `src/layouts/BaseLayout.astro` now handles metadata, skip link, shared header, shared footer, and optional hidden page title support.
+* `src/components/Header.astro` and `src/components/Navigation.astro` now expose a concise primary navigation: Home, About, Contact.
+* The header logo reads `oberio.me`.
+* `src/components/Footer.astro` now shows the copyright line and four buttons: LinkedIn, GitHub, Repo, and Docs.
+* `src/scripts/menu.js` supports the responsive mobile navigation.
+
+=== AI-Generated Text Marking
+
+Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin: ai` in a page's frontmatter.
+Marked text has a dashed underline.
+A marked phrase can carry a note that shows on hover, tap, or keyboard focus; the homepage uses one on "AInese" to explain the underline.
+The marking works in Markdown pages and in Markdown values in `homepage.yaml`.
+`src/lib/remarkAiText.js` holds the plugin.
+`src/lib/markdownPlugins.js` lists it with the other Markdown plugins, and `astro.config.mjs` and `src/lib/homepageMarkdown.js` both use that list.
+
+=== Removed Content
+
+The site no longer holds documentation work samples, so the old portfolio pages and their replacements under `src/pages/work/` are gone.
+The first blog post and the chess-family draft were removed too.
+The blog and tag pages are still there, ready for new posts; `/blog/` shows "No posts yet." while it is empty.
+
+=== Markdown Post Layout
+
+`src/layouts/MarkdownPostLayout.astro` now supports richer page metadata:
+
+* Description and byline.
+* Optional image.
+* Details panel for role, tools, audience, outcome, and tags.
+* Shared content layout for blog posts.
+
+=== About Page
+
+The About page has been rewritten to focus on developer-facing documentation, technical writing, and engineering fluency.
+The profile image was removed from the About page.
+
+=== Domain And Deployment
+
+The site now publishes at `oberio.me` instead of `docko.dev`.
+`astro.config.mjs` sets `site` to `https://oberio.me`, and `public/CNAME` names the same domain.
+The GitHub Pages workflow in `.github/workflows/deploy.yml` uses current action versions, because the old `v1` actions no longer deploy.
+The contact email moved to the `oberio.me` domain.
+The footer Docs button still points at `docs.docko.dev`.
+
+=== Contact Email Hidden From Scrapers
+
+The contact address is stored backwards in `src/data/contact.js` and turned back round by `src/scripts/email.js` in the browser, so it does not appear readably in the repo or the built pages.
+The navigation, homepage, and About page link to it through `EmailLink.astro`, `email: true` in `homepage.yaml` lists, or `:email[]` in Markdown.
+See xref:customising-the-site.adoc#contact-email[].
+
+=== Local Agent Tooling
+
+The branch adds the `agent-browser` skill under `.agents/skills/` and records it in `skills-lock.json`.
+`AGENTS.md` tells agents to use it to check pages in a browser.
+It does not affect the public website.
+
+== Most Important Files
+
+Use this map when deciding where to make a change.
+
+[cols="1,1",options="header"]
+|===
+| Goal
+| Start here
+
+| Edit homepage words and links
+| `src/data/homepage.yaml`
+
+| Change homepage structure
+| `src/pages/index.astro`
+
+| Change homepage visual sections
+| `src/components/*.astro`
+
+| Change colors, spacing, typography, cards, and responsive behavior
+| `src/styles/global.css`
+
+| Change navigation links
+| `src/components/Navigation.astro`
+
+| Change footer links
+| `src/components/Footer.astro`
+
+| Edit the About page
+| `src/pages/about/index.md`
+
+| Add a blog post
+| `src/pages/posts/*.md`
+
+| Change Markdown post metadata layout
+| `src/layouts/MarkdownPostLayout.astro`
+
+| Change the shared page shell
+| `src/layouts/BaseLayout.astro`
+
+| Change how AI-marked text is parsed
+| `src/lib/remarkAiText.js`
+
+| Change the contact email
+| `src/data/contact.js`
+
+| Change how AI-marked text looks
+| `--ai-underline-*` variables and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/global.css`
+|===
+
+== What To Watch
+
+* The homepage data object shape matters.
+  Components expect fields like `hero.links`, `fields`, `propositions`, and `garden.links`.
+* Markdown pages should include `tags`; the tag pages depend on frontmatter tags.
+* External links in `LinkButton.astro` automatically open in a new tab when the URL starts with `http`.
+* The visual style is concentrated in one global stylesheet, so broad CSS edits can affect many pages.

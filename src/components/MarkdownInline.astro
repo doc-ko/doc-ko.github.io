@@ -1,0 +1,8 @@
+---
+import { renderInlineMarkdown } from '../lib/homepageMarkdown.js';
+
+const { content = '' } = Astro.props;
+const html = await renderInlineMarkdown(content);
+---
+
+<Fragment set:html={html} />

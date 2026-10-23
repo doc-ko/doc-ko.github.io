@@ -7,9 +7,13 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "docs": "scripts/view-docs.sh",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.1.2"
+    "@astrojs/markdown-remark": "4.0.1",
+    "astro": "^4.1.2",
+    "js-yaml": "^4.1.0",
+    "remark-directive": "^3.0.1"
   }
 }

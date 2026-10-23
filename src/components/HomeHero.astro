@@ -1,0 +1,38 @@
+---
+import EmailLink from './EmailLink.astro';
+import FieldEmblem from './FieldEmblem.astro';
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+import MarginNote from './MarginNote.astro';
+
+const { hero, fields = [] } = Astro.props;
+---
+
+<section class="notebook-hero" aria-labelledby="home-title">
+    <div class="notebook-grid notebook-grid--hero">
+        <div class="hero-manuscript">
+            <p class="eyebrow"><MarkdownInline content={hero.kicker} /></p>
+            <h1 id="home-title"><MarkdownInline content={hero.headline} /></h1>
+            <MarkdownCopy class="hero-lede" content={hero.lede} />
+
+            <article class="lemma-card">
+                <p class="lemma-card__label">
+                    <span><MarkdownInline content={hero.lemma.label} /></span>
+                    <code><MarkdownInline content={hero.lemma.notation} /></code>
+                </p>
+                <MarkdownCopy class="lemma-card__body" content={hero.lemma.body} />
+            </article>
+
+            <nav class="quiet-links" aria-label="Homepage links">
+                {hero.links.map((link) => (
+                    link.email ? <EmailLink>{link.label}</EmailLink> : <a href={link.href}>{link.label}</a>
+                ))}
+            </nav>
+        </div>
+
+        <div class="hero-diagram-stack">
+            <FieldEmblem fields={fields} />
+            <MarginNote label={hero.margin.label} body={hero.margin.body} />
+        </div>
+    </div>
+</section>

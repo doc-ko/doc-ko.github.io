@@ -1,11 +1,12 @@
 name: personal-site
-title: 'Personal Website'
-version: '0.1'
-  
+title: Personal Website
+version: '0.2'
+start_page: ROOT:index.adoc
+
 nav:
   - modules/ROOT/nav.adoc
-    
+
 asciidoc:
   attributes:
-    site-domain: 'docko.dev'
+    site-domain: 'oberio.me'
     link-repo: 'https://github.com/doc-ko/doc-ko.github.io'

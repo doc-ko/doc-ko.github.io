@@ -1,6 +1,6 @@
 ---
-import MarkdownPostLayout from '../layouts/MarkdownPostLayout.astro'
 const { url, title } = Astro.props
+const href = url.endsWith('/') ? url : `${url}/`;
 ---
 
-<li><a href={url}>{title}</a></li>
+<li><a class="text-link" href={href}>{title}</a></li>

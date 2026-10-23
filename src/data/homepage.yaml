@@ -1,0 +1,95 @@
+# Edit this file for homepage words, lists, and links.
+# Keep the object shape intact; src/data/homepage.js parses this file and
+# exports it to the Astro components.
+
+meta:
+  title: "WIP - oberio.me"
+  description: >-
+    A website in want of a need.
+
+hero:
+  kicker: "By [@doc-ko](https://www.github.com/doc-ko)"
+  headline: "🔧 On Building"
+  lede: >-
+    Apologies for the :ai[AI-generated text]{note="Text with a dashed underline, like
+    this word, was written by AI."}; I'll get round to it at some point.
+  lemma:
+    label: "WORK IN PROGRESS"
+    notation: ":ai[site = design + stub]"
+    body: >-
+      **This site isn't much of anything yet.**
+
+      I basically let AI run loose with little to no thought so far on what the final design should be.
+
+      Using Claude.
+  links:
+    - label: "about"
+      href: "/about/"
+    - label: "email"
+      email: true
+  margin:
+    label: "My areas of interest"
+    body: >-
+      Thinking of writing up some content on one or more of the above topics.
+
+      The animations for each icon were my ideas, though the implementation is AI.
+
+sections:
+  fields:
+    number: "01"
+    title: ":ai[What I do.]"
+    note: >-
+      :ai[Placeholder summary, taken from the previous site and the About page.]
+  method:
+    number: "02"
+    title: ":ai[State of this site.]"
+    note: ":ai[What is done, what is placeholder, what is missing.]"
+
+fields:
+  - icon: "mathematics"
+    title: "mathematics"
+    description: ":ai[proofs, notation, formal structure]"
+    accent: "violet"
+  - icon: "computing"
+    title: "computing"
+    description: >-
+      :ai[Git, Markdown, static sites, OpenAPI tooling, small changes, and Linux
+      desktop workflows]
+    accent: "paper"
+  - icon: "linguistics"
+    title: "linguistics"
+    description: ":ai[syntax, semantics, language as a system]"
+    accent: "amber"
+  - icon: "logic"
+    title: "logic & philosophy"
+    description: ":ai[definitions, arguments, careful distinctions]"
+    accent: "cyan"
+
+propositions:
+  - kind: "Overhauling"
+    title: "Visual design"
+    notation: "In Progress"
+    body: >-
+      Adding a bit more personal flair to the visual design, plus a light and dark mode.
+    accent: "amber"
+  - kind: ":ai[Placeholder]"
+    title: ":ai[Copy]"
+    notation: ":ai[copy ≈ previous site]"
+    body: >-
+      :ai[Wording is borrowed from the previous site and will be rewritten.]
+    accent: "cyan"
+  - kind: ":ai[Missing]"
+    title: ":ai[Content]"
+    notation: ":ai[TODO]"
+    body: >-
+      :ai[The blog, writing samples, and a settled purpose for this site.]
+    accent: "violet"
+
+garden:
+  number: "03 / :ai[contact and paths]"
+  heading: ":ai[Where to go]"
+  note: >-
+    :ai[Contact: :email[].]
+  links:
+    - label: "github"
+      href: "https://github.com/doc-ko"

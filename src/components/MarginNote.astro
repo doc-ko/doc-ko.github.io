@@ -1,0 +1,13 @@
+---
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+
+const { label = 'note', body } = Astro.props;
+---
+
+<aside class="margin-note">
+    <p class="margin-note__label"><MarkdownInline content={label} /></p>
+    <div class="margin-note__body">
+        {body ? <MarkdownCopy content={body} /> : <slot />}
+    </div>
+</aside>

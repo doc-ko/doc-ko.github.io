@@ -1,0 +1,486 @@
+= Customising The Site
+:description: Tutorial for modifying the personal website.
+
+This tutorial walks through the common edits you are likely to make to the website.
+It assumes you are working from the repository root.
+
+== 1. Run The Site Locally
+
+Install dependencies once:
+
+[source,sh]
+----
+npm install
+----
+
+Start the development server:
+
+[source,sh]
+----
+npm run dev
+----
+
+Astro will print a local URL, usually `http://localhost:4321/`.
+Open that URL and keep the server running while you edit files.
+
+Before publishing or committing a larger change, run:
+
+[source,sh]
+----
+npm run build
+----
+
+That catches broken imports, invalid Astro files, and pages that cannot be generated.
+
+== 2. Edit Homepage Copy
+
+Start with `src/data/homepage.yaml`.
+
+That file controls most homepage words, labels, and links:
+
+* `meta`: browser title and search description.
+* `hero`: opening label, headline, lede, lemma, top links, and margin note.
+* `sections`: section numbers, headings, and notes.
+* `fields`: the subject cards in section 01.
+* `propositions`: definition/proposition/corollary blocks.
+* `garden`: closing section text and links.
+
+For every key, where it appears, and whether it is Markdown or plain text, see xref:homepage-yaml.adoc[].
+
+Change string values freely, but keep the object shape intact.
+Homepage copy strings support Markdown for links, emphasis, inline code, paragraphs, and lists.
+Keep labels, link text, symbols, and notation short; use fields such as `lede`, `note`, `margin`, `description`, and `body` for multi-paragraph Markdown.
+For example, this is a safe edit:
+
+[source,yaml]
+----
+hero:
+  kicker: "Karl Oberio"
+  headline: "Technical writing for developer tools."
+  lede: >-
+    A public notebook for API docs and formal ideas.
+  # Keep lemma, links, and margin in place.
+----
+
+After saving, refresh the local site and check the homepage on desktop and a narrow browser width.
+
+== 3. Change Homepage Links
+
+Homepage links are lists of `label` and `href` entries in `src/data/homepage.yaml`.
+
+To add a hero link:
+
+[source,yaml]
+----
+hero:
+  links:
+    - label: "about"
+      href: "/about/"
+    - label: "email"
+      email: true
+    - label: "github"
+      href: "https://github.com/doc-ko"
+----
+
+Use site-relative links for internal pages, such as `/about/`.
+Use full URLs for external sites.
+Use `email: true` instead of `href` to link to the contact email; see <<contact-email>>.
+
+The closing homepage links are in `garden.links`.
+
+== 4. Change The Main Navigation
+
+Edit `src/components/Navigation.astro`.
+
+The current navigation is:
+
+[source,astro]
+----
+<div class="nav-links" id="primary-navigation">
+    <a href="/">Home</a>
+    <a href="/about/">About</a>
+    <EmailLink>Contact</EmailLink>
+</div>
+----
+
+`EmailLink` is imported at the top of the file; see <<contact-email>>.
+Keep the `nav-links` class and `primary-navigation` id.
+The mobile menu script uses them.
+
+If you add a new page, add its link here only after the page exists under `src/pages/`.
+
+[[contact-email]]
+=== The contact email
+
+The contact address is written backwards in `src/data/contact.js`, and nowhere else.
+Scrapers are bots that collect email addresses from web pages and public code, and they look for `mailto:` links and text shaped like an address.
+A reversed address matches neither.
+`src/scripts/email.js` turns it back round in the visitor's browser, which most scrapers never run.
+
+Some scrapers do run scripts, so treat the address as disposable: use an alias that forwards to your real inbox, and swap it when it starts attracting junk.
+
+To change the address, edit `emailReversed` in `src/data/contact.js`.
+Write the new address in reverse, character by character: `me@example.com` becomes `moc.elpmaxe@em`.
+Do not write the address readably anywhere in the repo, including docs and commit messages.
+
+To link to the address:
+
+* In an Astro component, use `<EmailLink>link text</EmailLink>` from `src/components/EmailLink.astro`.
+Leave it empty to show the address as the link text.
+* In Markdown, including `homepage.yaml` values, write `:email[]` or `:email[link text]`.
+* In a `links` list in `homepage.yaml`, use `email: true` instead of `href`.
+
+Visitors with JavaScript turned off see the link text but cannot click it, and an empty link shows nothing.
+
+== 5. Change Footer Links
+
+Edit `src/components/Footer.astro`.
+
+The footer holds the copyright line and a row of `LinkButton` links:
+
+[source,astro]
+----
+<LinkButton link="https://github.com/doc-ko" text="GitHub" />
+----
+
+Add or remove `LinkButton` lines to change the buttons.
+
+`LinkButton.astro` automatically adds `target="_blank"` and `rel="noreferrer"` for links that start with `http`.
+
+== 6. Edit The About Page
+
+Edit `src/pages/about/index.md`.
+
+The frontmatter at the top controls page metadata:
+
+[source,md]
+----
+---
+layout: '../../layouts/MarkdownLayout.astro'
+title: 'About'
+pubDate: 2024-01-16
+description: 'About Karl Oberio'
+author: Karl Oberio
+tags: ["about"]
+---
+----
+
+Keep the frontmatter block.
+The body below it is normal Markdown.
+
+The page currently has no profile image.
+To add one, put the file beside the Markdown (for example `src/pages/about/photo.jpg`) and reference it with `![Karl Oberio](./photo.jpg)`.
+Prefix the filename with an underscore only if Astro should not treat it as a page.
+
+== 7. Add A Blog Post
+
+The blog is empty for now: `/blog/` shows "No posts yet." until the first post exists.
+
+Create a new Markdown file under `src/pages/posts/`, for example:
+
+[source,text]
+----
+src/pages/posts/my-note.md
+----
+
+Use this shape:
+
+[source,md]
+----
+---
+layout: ../../layouts/MarkdownPostLayout.astro
+title: My Note
+pubDate: 2026-05-09
+description: 'A short description of the note.'
+author: Karl Oberio
+tags: ["blog"]
+---
+
+Write the post here.
+----
+
+Rules to keep in mind:
+
+* Include at least one tag.
+  The tag pages depend on `tags`.
+* Use `draft: true` if you want to keep a post out of public lists.
+* Put images beside the Markdown file or in `public/`, then reference them from Markdown.
+
+The homepage doesn't link to the blog yet.
+To add the link, add an item to `garden.links` in `src/data/homepage.yaml`:
+
+[source,yaml]
+----
+    - label: "blog"
+      href: "/blog/"
+----
+
+`MarkdownPostLayout.astro` also reads optional `role`, `tools`, `audience`, and `outcome` frontmatter, and shows them in a details panel beside the post.
+
+== 8. Mark AI-Generated Text
+
+Mark any text that AI wrote, so readers can tell it apart from text you wrote.
+Nothing detects AI text automatically: text counts as yours unless you mark it.
+Marked text gets a dashed underline, and hovering over it shows "AI-generated".
+
+Mark a phrase with `:ai[...]`, and mark whole paragraphs or lists with an `:::ai` block:
+
+[source,md]
+----
+Some words I wrote, and :ai[a phrase the model wrote].
+
+:::ai
+A whole paragraph the model wrote.
+
+- Lists work too.
+:::
+----
+
+To mark a whole Markdown page, add `origin: ai` to its frontmatter.
+This works with both `MarkdownLayout.astro` and `MarkdownPostLayout.astro`, and marks the page body but not the title.
+On `MarkdownPostLayout.astro` pages it also marks the description and the Role, Audience, and Outcome details.
+The date, tools, and tags are not marked.
+
+Code blocks inside marked text are not underlined, so they stay readable.
+
+The same syntax works in `src/data/homepage.yaml`, with some limits.
+See the Value Types section of xref:homepage-yaml.adoc[] for them.
+
+=== Explain the underline
+
+A marked phrase can carry a note that explains it:
+
+[source,md]
+----
+Apologies for the :ai[AInese]{note="Text with a dashed underline, like this word, was written by AI."}.
+----
+
+The note appears when someone hovers over the phrase, taps it, or moves to it with the keyboard.
+On narrow screens it appears at the bottom of the screen instead of under the word.
+A phrase with a note doesn't also show the "AI-generated" tooltip.
+Notes only work on `:ai[...]` phrases, not on `:::ai` blocks.
+
+The homepage explains the underline this way, on the word "AInese" in `hero.lede`.
+
+Screen readers hear "AI-generated:" before marked text.
+That label is hidden on screen and left out when someone copies the text.
+
+=== Change how AI text looks
+
+The look is set by four variables at the top of `src/styles/global.css`:
+
+[source,css]
+----
+--ai-underline-style: dashed;
+--ai-underline-color: rgb(185 173 148 / 45%);
+--ai-underline-thickness: 0.05em;
+--ai-underline-offset: 0.26em;
+----
+
+For a dotted or wavy line, set `--ai-underline-style` to `dotted` or `wavy`.
+For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `global.css`.
+Every marked element has the `data-origin="ai"` attribute, so that one rule covers them all.
+The note's box is styled by the `.ai-note` rule.
+
+=== Words that start with a colon
+
+The `:ai` syntax comes from the `remark-directive` plugin, which reads any `:word` as a directive.
+`src/lib/remarkAiText.js` turns every directive other than `ai` and `email` back into ordinary text, so `ratio a:b` still shows as written.
+Avoid writing `:ai[` or `:email[` unless you mean them.
+
+== 9. Customise The Homepage Sections
+
+For copy-only changes, keep using `src/data/homepage.yaml`.
+
+For structural changes, edit `src/pages/index.astro`.
+It imports the homepage data and renders components in this order:
+
+. `HomeHero`
+. fields section with `SectionHeading` and `FieldDiagram` (the cards)
+. method section with `SectionHeading` and `NoteBlock` cards
+. closing garden section
+
+If you remove or rename a property in `homepage.yaml`, update the component that reads it.
+For example, `FieldDiagram.astro` expects every field item to have `icon`, `title`, `description`, and `accent`.
+
+== 10. Change Colours And Typography
+
+Start at the top of `src/styles/global.css`.
+
+The main design tokens are CSS variables:
+
+[source,css]
+----
+:root {
+    --bg: #071015;
+    --surface: #101a21;
+    --ink: #f0e7d2;
+    --accent: #e7ad4f;
+    --cyan: #65d7ea;
+    --violet: #b99cff;
+    --serif: "Iowan Old Style", Georgia, serif;
+    --mono: "SFMono-Regular", ui-monospace, monospace;
+}
+----
+
+Change variables first.
+That keeps the design consistent across pages.
+
+Common edits:
+
+* Background colour: `--bg` and `--bg-ruled`.
+* Body text colour: `--ink`, `--ink-strong`, and `--muted`.
+* Highlight colours: `--accent`, `--cyan`, and `--violet`.
+* Maximum page width: `--max-width`.
+* Reading column width: `--content-width` and `--reading-width`.
+* Typeface choices: `--serif`, `--sans`, and `--mono`.
+
+After changing colours, check links, tags, code blocks, cards, and focus rings.
+Those elements all rely on the same variables.
+
+== 11. Change The Field Emblem
+
+The four large drawings in the hero are the field emblem, rendered by `src/components/FieldEmblem.astro`.
+It reads the same `fields` list as the cards in section 01.
+Each field's `icon` picks its drawing, and its `accent` picks the colour; see xref:homepage-yaml.adoc[] for the allowed values.
+
+=== The symbols are paths, not text
+
+The symbols are SVG paths, so they look the same on every device and do not depend on installed fonts.
+The outlines live in `src/lib/glyphs.js`, which is generated.
+It holds the path, ink bounds and advance of each glyph, in em units.
+
+To regenerate it, for example to change a glyph:
+
+. Collect the source fonts in one folder: `STIXTwoText.ttf`, `STIXTwoText-Italic.ttf`, `STIXTwoMath.otf` (all STIX Two, SIL Open Font Licence) and a regular JetBrains Mono renamed `JetBrainsMono.woff2`.
+. Install fontTools: `pip install fonttools brotli`.
+. Run `python3 scripts/extract-glyphs.py FONT_FOLDER`.
+
+The glyph list is at the top of `scripts/extract-glyphs.py`.
+The font licences are in `src/lib/glyph-licenses/`.
+Adding a new icon means adding its glyphs to that list, giving it a block in `FieldEmblem.astro`, adding an entry in `src/lib/icons.js` for the small version used on the section 01 cards, and adding its hover rules in `global.css`.
+
+=== Hover animations
+
+The styles are the `.field-emblem` rules in `src/styles/global.css`.
+Each tile takes its colour from its `accent`, using the same colour variables as the rest of the site.
+The tiles are not links, so they show a normal cursor and do nothing when clicked.
+The animation belongs to the `icon`, so reordering or recolouring the fields does not change it:
+
+[cols="1,3",options="header"]
+|===
+| Icon | Hover animation
+
+| `linguistics`
+| The ə shrinks and settles as the nucleus of an unlabelled syllable tree for /jəp/: two upside-down V shapes, with onset j and coda p, drawn bottom-up around it. When the pointer leaves, the tree clears away before the symbol grows back.
+
+| `mathematics`
+| The sigma becomes the sum of k = 0 to infinity of ♥^k, typeset like display maths: ∞ stroked in above, italic k = 0 written below, a red heart filling from the bottom, and a superscript k. The whole expression is centred in the tile.
+
+| `logic`
+| The λ moves to the lower left and a thought bubble is drawn to its upper right: a trail of two small circles, the cloud outline, then three dots. While the pointer stays there the dots loop: `...`, nothing, `.`, `..`, `...`. It clears away before the λ returns.
+
+| `computing`
+| A cursor line is drawn out after the `$` prompt and then blinks, and the prompt and cursor are centred together.
+|===
+
+On hover every tile hides its label, and the drawing moves to the tile centre.
+The drawings are built, not faded: lines are stroked in, text is written left to right, and the heart fills from the bottom.
+Everything is switched off for visitors who prefer reduced motion.
+
+== 12. Add A New Page
+
+Astro creates routes from files in `src/pages/`.
+
+Examples:
+
+* `src/pages/uses.md` becomes `/uses/`.
+* `src/pages/notes/index.astro` becomes `/notes/`.
+
+For a simple Markdown page, use:
+
+[source,md]
+----
+---
+layout: ../layouts/MarkdownLayout.astro
+title: Uses
+---
+
+Page content here.
+----
+
+Adjust the `layout` path based on how deep the Markdown file is.
+
+== 13. Keep Drafts Unpublished
+
+Astro does not publish files or directories in `src/pages/` whose names start with an underscore.
+Keep unpublished pages in a directory such as `src/pages/_drafts/`.
+
+To keep a published post out of the blog and tag lists, add this to its frontmatter instead:
+
+[source,md]
+----
+draft: true
+----
+
+The page still exists at its own URL.
+
+== 14. Troubleshooting
+
+=== A Page Disappeared
+
+Check whether the file was moved under an underscore directory like `_drafts`, or whether its frontmatter has `draft: true`.
+
+=== The Tag Page Is Missing A Post
+
+Make sure the Markdown file has a `tags` array:
+
+[source,md]
+----
+tags: ["blog", "technical-writing"]
+----
+
+=== The Mobile Menu Stopped Working
+
+Check that `Navigation.astro` still has:
+
+[source,astro]
+----
+<div class="nav-links" id="primary-navigation">
+----
+
+Also check that `BaseLayout.astro` still imports `src/scripts/menu.js`.
+
+=== A Style Change Affected Too Much
+
+Look for broad selectors in `src/styles/global.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.markdown-copy`, `.lemma-card`, and `.button-link`.
+
+== 15. Suggested Editing Workflow
+
+Use this sequence for most changes:
+
+. Start `npm run dev`.
+. Edit one focused area, such as `homepage.yaml` or one Markdown page.
+. Check the page in the browser.
+. Check a narrow viewport for mobile layout issues.
+. Run `npm run build`.
+. Review `git diff` before committing.
+
+That workflow keeps the site easy to change without letting layout, routing, or frontmatter mistakes pile up.
+
+== 16. Publish And Change The Domain
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and deploys it to GitHub Pages.
+You can also run the workflow by hand from the repository's Actions tab.
+
+The site is served at `oberio.me`.
+To move it to another domain, change all of these together:
+
+* `site` in `astro.config.mjs`.
+* `public/CNAME`.
+* `site-domain` in `docs/antora.yml`.
+* The header logo text in `src/components/Header.astro`.
+* The custom domain under the repository's *Settings > Pages* on GitHub.
+* The DNS records at the domain registrar.
+
+GitHub ignores `public/CNAME` when a workflow deploys the site, so the *Settings > Pages* value is the one that counts.
