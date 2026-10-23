@@ -42,21 +42,23 @@ sections:
     note: "What is done, what is placeholder, what is missing."
 
 fields:
-  - symbol: "¶"
-    title: "documentation"
-    description: "API introductions, procedural guides, reference material"
+  - symbol: "ə"
+    title: "linguistics"
+    description: "syntax, semantics, language as a system"
     accent: "amber"
-  - symbol: "λ"
-    title: "code"
-    description: "Git, Markdown, static sites, OpenAPI tooling, small changes"
-    accent: "cyan"
   - symbol: "∑"
     title: "mathematics"
     description: "proofs, notation, formal structure"
     accent: "violet"
+  - symbol: "λ"
+    title: "logic & philosophy"
+    description: "definitions, arguments, careful distinctions"
+    accent: "cyan"
   - symbol: "$"
-    title: "linux"
-    description: "desktop workflows"
+    title: "computing"
+    description: >-
+      Git, Markdown, static sites, OpenAPI tooling, small changes, and Linux
+      desktop workflows
     accent: "paper"
 
 propositions:
