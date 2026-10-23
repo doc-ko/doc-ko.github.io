@@ -16,9 +16,8 @@ The homepage in `src/pages/index.astro` has been rebuilt around a notebook-style
 
 * Hero section with a short statement, working lemma, primary links, and a four-symbol emblem.
 * Field section for mathematics, computer science, philosophy, and linguistics.
-* Selected writing paths linking to work samples and the blog.
 * Formal note blocks for definitions, propositions, and corollaries.
-* Closing digital garden index with links to work, blog, tags, and GitHub.
+* Closing section with a contact email and a GitHub link.
 
 Most homepage text is now centralised in `src/data/homepage.yaml`, with a small loader in `src/data/homepage.js` and notes in `src/data/README.md`.
 Homepage copy fields support Markdown through `src/components/MarkdownCopy.astro`, `src/components/MarkdownInline.astro`, and the shared renderer in `src/lib/homepageMarkdown.js`.
@@ -59,14 +58,19 @@ The shared site frame has been updated:
 * `src/components/Footer.astro` now shows the copyright line and four buttons: LinkedIn, GitHub, Repo, and Docs.
 * `src/scripts/menu.js` supports the responsive mobile navigation.
 
-=== Work Samples
+=== AI-Generated Text Marking
 
-The old hidden portfolio pages were replaced by two Markdown work samples. The Work index page was later removed, so they are not linked from the site:
+Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin: ai` in a page's frontmatter.
+Marked text has a dashed underline.
+A marked phrase can carry a note that shows on hover, tap, or keyboard focus; the homepage uses one on "AInese" to explain the underline.
+The marking works in Markdown pages and in Markdown values in `homepage.yaml`.
+`src/lib/remarkAiText.js` holds the plugin, which is registered in `astro.config.mjs` and `src/lib/homepageMarkdown.js`.
 
-* `src/pages/work/api-docs-snippet.md` adds an API documentation sample.
-* `src/pages/work/redoc-openapi.md` adds an OpenAPI to Redoc workflow sample.
+=== Removed Content
 
-Work sample metadata is read from frontmatter fields such as `role`, `tools`, `audience`, and `outcome`.
+The site no longer holds documentation work samples, so the old portfolio pages and their replacements under `src/pages/work/` are gone.
+The first blog post and the chess-family draft were removed too.
+The blog and tag pages are still there, ready for new posts; `/blog/` shows "No posts yet." while it is empty.
 
 === Markdown Post Layout
 
@@ -75,14 +79,12 @@ Work sample metadata is read from frontmatter fields such as `role`, `tools`, `a
 * Description and byline.
 * Optional image.
 * Details panel for role, tools, audience, outcome, and tags.
-* Shared content layout for blog posts and work samples.
+* Shared content layout for blog posts.
 
-=== About Page And Drafts
+=== About Page
 
 The About page has been rewritten to focus on developer-facing documentation, technical writing, and engineering fluency.
 The profile image was removed from the About page.
-
-The chess-family page was moved under `src/pages/_drafts/`, so Astro will not publish it as a live route.
 
 === Local Agent And Deployment Tooling
 
@@ -123,21 +125,23 @@ Use this map when deciding where to make a change.
 | Add a blog post
 | `src/pages/posts/*.md`
 
-| Add a work sample
-| `src/pages/work/*.md`
-
 | Change Markdown post metadata layout
 | `src/layouts/MarkdownPostLayout.astro`
 
 | Change the shared page shell
 | `src/layouts/BaseLayout.astro`
+
+| Change how AI-marked text is parsed
+| `src/lib/remarkAiText.js`
+
+| Change how AI-marked text looks
+| `--ai-underline-*` variables and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/global.css`
 |===
 
 == What To Watch
 
 * The homepage data object shape matters.
-  Components expect fields like `hero.links`, `fields`, `writing`, `propositions`, and `garden.links`.
+  Components expect fields like `hero.links`, `fields`, `propositions`, and `garden.links`.
 * Markdown pages should include `tags`; the tag pages depend on frontmatter tags.
-* Work samples should include enough frontmatter for the Work index and details panel to render well.
 * External links in `LinkButton.astro` automatically open in a new tab when the URL starts with `http`.
 * The visual style is concentrated in one global stylesheet, so broad CSS edits can affect many pages.

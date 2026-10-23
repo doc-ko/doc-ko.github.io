@@ -1,9 +1,11 @@
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
+import { aiTextPlugins } from './remarkAiText.js';
 
 const processor = createMarkdownProcessor({
     gfm: true,
     smartypants: true,
     syntaxHighlight: false,
+    remarkPlugins: aiTextPlugins,
     remarkRehype: {
         allowDangerousHtml: false,
     },

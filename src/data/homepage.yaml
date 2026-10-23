@@ -8,88 +8,87 @@ meta:
     A website in want of a need.
 
 hero:
-  kicker: "[@doc-ko](https://www.github.com/doc-ko)"
-  headline: "`Work in Progress`"
+  kicker: "By [@doc-ko](https://www.github.com/doc-ko)"
+  headline: "🔧 On Building"
   lede: >-
-    Apologies for the AInese; I'll get round to it at some point.
+    Apologies for the :ai[AI-generated text]{note="Text with a dashed underline, like
+    this word, was written by AI."}; I'll get round to it at some point.
   lemma:
     label: "WORK IN PROGRESS"
-    notation: "site = design + stub"
+    notation: ":ai[site = design + stub]"
     body: >-
-      **This page is a stub.**
+      **This site isn't much of anything yet.**
 
       I basically let AI run loose with little to no thought so far on what the final design should be.
+
+      Using Claude.
   links:
     - label: "about"
       href: "/about/"
     - label: "email"
       href: "mailto:yarn@docko.dev"
   margin:
-    label: "work in progress"
+    label: ":ai[work in progress]"
     body: >-
-      Diagrams and layout are the new part. Copy is being rewritten from the
-      previous version of the site, so expect gaps.
+      :ai[Diagrams and layout are the new part. Copy is being rewritten from the
+      previous version of the site, so expect gaps.]
 
 sections:
   fields:
     number: "01"
-    title: "What I do."
+    title: ":ai[What I do.]"
     note: >-
-      Placeholder summary, taken from the previous site and the About page.
+      :ai[Placeholder summary, taken from the previous site and the About page.]
   method:
     number: "02"
-    title: "State of this site."
-    note: "What is done, what is placeholder, what is missing."
+    title: ":ai[State of this site.]"
+    note: ":ai[What is done, what is placeholder, what is missing.]"
 
 fields:
   - icon: "mathematics"
     title: "mathematics"
-    description: "proofs, notation, formal structure"
+    description: ":ai[proofs, notation, formal structure]"
     accent: "violet"
   - icon: "computing"
     title: "computing"
     description: >-
-      Git, Markdown, static sites, OpenAPI tooling, small changes, and Linux
-      desktop workflows
+      :ai[Git, Markdown, static sites, OpenAPI tooling, small changes, and Linux
+      desktop workflows]
     accent: "paper"
   - icon: "linguistics"
     title: "linguistics"
-    description: "syntax, semantics, language as a system"
+    description: ":ai[syntax, semantics, language as a system]"
     accent: "amber"
   - icon: "logic"
     title: "logic & philosophy"
-    description: "definitions, arguments, careful distinctions"
+    description: ":ai[definitions, arguments, careful distinctions]"
     accent: "cyan"
 
 propositions:
-  - kind: "Done"
-    title: "Visual design"
+  - kind: ":ai[Done]"
+    title: ":ai[Visual design]"
     notation: "layout ✓"
     body: >-
-      Notebook look, diagrams, and animation are mostly settled.
+      :ai[Notebook look, diagrams, and animation are mostly settled.]
     accent: "amber"
-  - kind: "Placeholder"
-    title: "Copy"
+  - kind: ":ai[Placeholder]"
+    title: ":ai[Copy]"
     notation: "copy ≈ previous site"
     body: >-
-      Wording is borrowed from the previous site and will be rewritten.
+      :ai[Wording is borrowed from the previous site and will be rewritten.]
     accent: "cyan"
-  - kind: "Missing"
-    title: "Content"
+  - kind: ":ai[Missing]"
+    title: ":ai[Content]"
     notation: "TODO"
     body: >-
-      The blog, writing samples, and a settled purpose for this site.
+      :ai[The blog, writing samples, and a settled purpose for this site.]
     accent: "violet"
 
 garden:
-  number: "03 / contact and paths"
-  heading: "Where to go"
+  number: "03 / :ai[contact and paths]"
+  heading: ":ai[Where to go]"
   note: >-
-    Contact: [yarn@docko.dev](mailto:yarn@docko.dev).
+    :ai[Contact: [yarn@docko.dev](mailto:yarn@docko.dev).]
   links:
-    - label: "blog"
-      href: "/blog/"
-    - label: "tags"
-      href: "/tags/"
     - label: "github"
       href: "https://github.com/doc-ko"

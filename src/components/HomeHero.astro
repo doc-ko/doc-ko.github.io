@@ -17,7 +17,7 @@ const { hero, fields = [] } = Astro.props;
             <article class="lemma-card">
                 <p class="lemma-card__label">
                     <span><MarkdownInline content={hero.lemma.label} /></span>
-                    <code>{hero.lemma.notation}</code>
+                    <code><MarkdownInline content={hero.lemma.notation} /></code>
                 </p>
                 <MarkdownCopy class="lemma-card__body" content={hero.lemma.body} />
             </article>

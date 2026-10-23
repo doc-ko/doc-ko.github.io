@@ -32,6 +32,34 @@ No Markdown is processed.
 
 Raw HTML is not allowed in Markdown values.
 
+=== AI-marked text
+
+Markdown values can mark AI-generated text the same way Markdown pages do.
+See xref:customising-the-site.adoc[] for the syntax and how it looks.
+
+* `:ai[...]` works in both inline and block Markdown values, including a `note` that explains the underline: `:ai[AInese]{note="..."}`.
+* `:::ai` blocks only work in block Markdown values.
+Inline values sit inside headings and labels, where a block would break the layout.
+* Plain values are not processed, so `:ai[...]` would show up literally.
+* An `:::ai` block needs a literal `|` scalar.
+A folded `>-` scalar joins single line breaks into spaces, which would put `:::ai` on the same line as the text.
+* Quote a value that starts with `:ai[`, or use a block scalar, so YAML reads it as a string.
+
+[source,yaml]
+----
+hero:
+  lede: >-
+    Apologies for the :ai[AInese]{note="Text with a dashed underline, like
+    this word, was written by AI."}; I'll get round to it at some point.
+  lemma:
+    body: |-
+      **This page is a stub.**
+
+      :::ai
+      A paragraph the model wrote.
+      :::
+----
+
 == Top-Level Keys
 
 [cols="1,3",options="header"]
@@ -95,7 +123,7 @@ Raw HTML is not allowed in Markdown values.
 | Label on the card under the lede.
 
 | `hero.lemma.notation`
-| Plain
+| Markdown (inline)
 | Monospace text beside the card label.
 
 | `hero.lemma.body`

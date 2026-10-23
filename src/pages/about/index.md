@@ -5,6 +5,7 @@ pubDate: 2024-01-16
 description: 'About Karl Oberio'
 author: Karl Oberio
 tags: ["about"]
+origin: ai
 ---
 
 I am a technical writer focused on developer-facing documentation: API introductions, procedural guides, and reference material that needs to stay accurate without becoming heavy.

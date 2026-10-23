@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 const { frontmatter } = Astro.props;
 const tags = frontmatter.tags ?? [];
+const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
 const date = frontmatter.pubDate
     ? new Date(frontmatter.pubDate).toLocaleDateString('en-NZ', {
         year: 'numeric',
@@ -11,17 +12,17 @@ const date = frontmatter.pubDate
     : '';
 const machineDate = frontmatter.pubDate ? new Date(frontmatter.pubDate).toISOString().slice(0, 10) : '';
 const detailItems = [
-    frontmatter.role && ['Role', frontmatter.role],
+    frontmatter.role && ['Role', frontmatter.role, origin],
     frontmatter.tools && ['Tools', Array.isArray(frontmatter.tools) ? frontmatter.tools.join(', ') : frontmatter.tools],
-    frontmatter.audience && ['Audience', frontmatter.audience],
-    frontmatter.outcome && ['Outcome', frontmatter.outcome],
+    frontmatter.audience && ['Audience', frontmatter.audience, origin],
+    frontmatter.outcome && ['Outcome', frontmatter.outcome, origin],
 ].filter(Boolean);
 ---
 
 <BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
     <article class="markdown-entry">
         <header class="entry-header">
-            {frontmatter.description && <p class="entry-description">{frontmatter.description}</p>}
+            {frontmatter.description && <p class="entry-description" data-origin={origin}>{frontmatter.description}</p>}
             <p class="entry-byline">
                 {date && <time datetime={machineDate}>{date}</time>}
                 {frontmatter.author && <span>Written by {frontmatter.author}</span>}
@@ -32,10 +33,10 @@ const detailItems = [
         {(detailItems.length > 0 || tags.length > 0) && (
             <aside aria-label="Page details">
                 <dl class="entry-details">
-                    {detailItems.map(([label, value]) => (
+                    {detailItems.map(([label, value, valueOrigin]) => (
                         <div>
                             <dt>{label}</dt>
-                            <dd>{value}</dd>
+                            <dd data-origin={valueOrigin}>{value}</dd>
                         </div>
                     ))}
 
@@ -53,7 +54,7 @@ const detailItems = [
             </aside>
         )}
 
-        <div class="entry-content">
+        <div class="entry-content" data-origin={origin}>
             <slot />
         </div>
     </article>

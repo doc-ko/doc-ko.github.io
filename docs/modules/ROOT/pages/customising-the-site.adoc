@@ -150,6 +150,8 @@ Prefix the filename with an underscore only if Astro should not treat it as a pa
 
 == 7. Add A Blog Post
 
+The blog is empty for now: `/blog/` shows "No posts yet." until the first post exists.
+
 Create a new Markdown file under `src/pages/posts/`, for example:
 
 [source,text]
@@ -180,39 +182,87 @@ Rules to keep in mind:
 * Use `draft: true` if you want to keep a post out of public lists.
 * Put images beside the Markdown file or in `public/`, then reference them from Markdown.
 
-== 8. Add A Work Sample
+The homepage doesn't link to the blog yet.
+To add the link, add an item to `garden.links` in `src/data/homepage.yaml`:
 
-Create a Markdown file under `src/pages/work/`, for example:
-
-[source,text]
+[source,yaml]
 ----
-src/pages/work/my-api-guide.md
+    - label: "blog"
+      href: "/blog/"
 ----
 
-Use the richer work-sample frontmatter:
+`MarkdownPostLayout.astro` also reads optional `role`, `tools`, `audience`, and `outcome` frontmatter, and shows them in a details panel beside the post.
+
+== 8. Mark AI-Generated Text
+
+Mark any text that AI wrote, so readers can tell it apart from text you wrote.
+Nothing detects AI text automatically: text counts as yours unless you mark it.
+Marked text gets a dashed underline, and hovering over it shows "AI-generated".
+
+Mark a phrase with `:ai[...]`, and mark whole paragraphs or lists with an `:::ai` block:
 
 [source,md]
 ----
----
-layout: '../../layouts/MarkdownPostLayout.astro'
-title: 'My API Guide'
-pubDate: 2026-05-09
-description: 'A concise description for page metadata.'
-author: Karl Oberio
-tags: ["work", "api-docs", "technical-writing"]
-role: 'Technical writer'
-tools: ["OpenAPI", "Markdown"]
-audience: 'Developers integrating with the API'
-outcome: 'A clearer onboarding path for new integrators'
----
+Some words I wrote, and :ai[a phrase the model wrote].
 
-## Summary
+:::ai
+A whole paragraph the model wrote.
 
-Explain what the sample demonstrates.
+- Lists work too.
+:::
 ----
 
-There is currently no Work index page, so nothing on the site links to the existing samples.
-They are still published at their own URLs, such as `/work/api-docs-snippet/`.
+To mark a whole Markdown page, add `origin: ai` to its frontmatter.
+This works with both `MarkdownLayout.astro` and `MarkdownPostLayout.astro`, and marks the page body but not the title.
+On `MarkdownPostLayout.astro` pages it also marks the description and the Role, Audience, and Outcome details.
+The date, tools, and tags are not marked.
+
+Code blocks inside marked text are not underlined, so they stay readable.
+
+The same syntax works in `src/data/homepage.yaml`, with some limits.
+See the Value Types section of xref:homepage-yaml.adoc[] for them.
+
+=== Explain the underline
+
+A marked phrase can carry a note that explains it:
+
+[source,md]
+----
+Apologies for the :ai[AInese]{note="Text with a dashed underline, like this word, was written by AI."}.
+----
+
+The note appears when someone hovers over the phrase, taps it, or moves to it with the keyboard.
+On narrow screens it appears at the bottom of the screen instead of under the word.
+A phrase with a note doesn't also show the "AI-generated" tooltip.
+Notes only work on `:ai[...]` phrases, not on `:::ai` blocks.
+
+The homepage explains the underline this way, on the word "AInese" in `hero.lede`.
+
+Screen readers hear "AI-generated:" before marked text.
+That label is hidden on screen and left out when someone copies the text.
+
+=== Change how AI text looks
+
+The look is set by four variables at the top of `src/styles/global.css`:
+
+[source,css]
+----
+--ai-underline-style: dashed;
+--ai-underline-color: rgb(185 173 148 / 45%);
+--ai-underline-thickness: 0.05em;
+--ai-underline-offset: 0.26em;
+----
+
+For a dotted or wavy line, set `--ai-underline-style` to `dotted` or `wavy`.
+For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `global.css`.
+Every marked element has the `data-origin="ai"` attribute, so that one rule covers them all.
+The note's box is styled by the `.ai-note` rule.
+
+=== Words that start with a colon
+
+The `:ai` syntax comes from the `remark-directive` plugin, which reads any `:word` as a directive.
+`src/lib/remarkAiText.js` turns every directive other than `ai` back into ordinary text, so `ratio a:b` still shows as written.
+Avoid writing `:ai[` unless you mean to mark text.
 
 == 9. Customise The Homepage Sections
 
@@ -322,19 +372,14 @@ Examples:
 
 * `src/pages/uses.md` becomes `/uses/`.
 * `src/pages/notes/index.astro` becomes `/notes/`.
-* `src/pages/work/my-sample.md` becomes `/work/my-sample/`.
 
 For a simple Markdown page, use:
 
 [source,md]
 ----
 ---
-layout: ../layouts/MarkdownPostLayout.astro
+layout: ../layouts/MarkdownLayout.astro
 title: Uses
-pubDate: 2026-05-09
-description: 'Tools and setup notes.'
-author: Karl Oberio
-tags: ["uses"]
 ---
 
 Page content here.
@@ -344,17 +389,17 @@ Adjust the `layout` path based on how deep the Markdown file is.
 
 == 13. Keep Drafts Unpublished
 
-Astro ignores directories whose names start with an underscore for routing.
-This branch uses `src/pages/_drafts/` for unpublished material.
+Astro does not publish files or directories in `src/pages/` whose names start with an underscore.
+Keep unpublished pages in a directory such as `src/pages/_drafts/`.
 
-To hide an existing Markdown page from lists, you can also add:
+To keep a published post out of the blog and tag lists, add this to its frontmatter instead:
 
 [source,md]
 ----
 draft: true
 ----
 
-The blog, work, and tag index code filters out pages with `draft: true`.
+The page still exists at its own URL.
 
 == 14. Troubleshooting
 
@@ -371,11 +416,6 @@ Make sure the Markdown file has a `tags` array:
 tags: ["blog", "technical-writing"]
 ----
 
-=== The Work Index Looks Sparse
-
-Add `role`, `tools`, `audience`, and `outcome` frontmatter to the work sample.
-Those fields fill the details panel in `MarkdownPostLayout.astro`.
-
 === The Mobile Menu Stopped Working
 
 Check that `Navigation.astro` still has:
@@ -389,7 +429,7 @@ Also check that `BaseLayout.astro` still imports `src/scripts/menu.js`.
 
 === A Style Change Affected Too Much
 
-Look for broad selectors in `src/styles/global.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.work-card`, `.entry-details`, and `.button-link`.
+Look for broad selectors in `src/styles/global.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.markdown-copy`, `.lemma-card`, and `.button-link`.
 
 == 15. Suggested Editing Workflow
 

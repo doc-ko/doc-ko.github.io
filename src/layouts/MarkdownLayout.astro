@@ -1,8 +1,11 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 const { frontmatter } = Astro.props;
+const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
-    <slot />
+    <div data-origin={origin}>
+        <slot />
+    </div>
 </BaseLayout>
