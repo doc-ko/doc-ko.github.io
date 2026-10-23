@@ -3,14 +3,15 @@
 # exports it to the Astro components.
 
 meta:
-  title: "Karl Oberio | Technical Writer"
+  title: "WIP - oberio.dev"
   description: >-
-    Technical writer, emphasis on technical.
+    A website in want of a need.
 
 hero:
   kicker: "[@doc-ko](https://www.github.com/doc-ko)"
-  headline: "`Technical` Writer"
+  headline: "`Work in Progress`"
   lede: >-
+    Apologies for the AInese; I'll get round to it at some point.
   lemma:
     label: "WORK IN PROGRESS"
     notation: "site = design + stub"
