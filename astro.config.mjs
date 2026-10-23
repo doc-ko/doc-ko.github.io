@@ -3,7 +3,7 @@ import { aiTextPlugins } from './src/lib/remarkAiText.js';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://docko.dev',
+    site: 'https://oberio.me',
     markdown: {
         remarkPlugins: aiTextPlugins,
     },

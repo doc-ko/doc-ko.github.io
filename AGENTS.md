@@ -1,6 +1,6 @@
 # Personal Site
 
-Astro site for Karl Oberio, deployed to GitHub Pages. The `ai-rewrite` branch is a redesign ("mathematical notebook"); its homepage copy is currently a stub.
+Astro site for Karl Oberio, deployed to GitHub Pages at `oberio.me`. The `ai-rewrite` branch is a redesign ("mathematical notebook"); its homepage copy is currently a stub.
 
 ## Commands
 

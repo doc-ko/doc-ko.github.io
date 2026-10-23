@@ -54,7 +54,8 @@ The key design variables are at the top of `src/styles/global.css`.
 The shared site frame has been updated:
 
 * `src/layouts/BaseLayout.astro` now handles metadata, skip link, shared header, shared footer, and optional hidden page title support.
-* `src/components/Header.astro` and `src/components/Navigation.astro` now expose a concise primary navigation: Home, Work, About, Contact.
+* `src/components/Header.astro` and `src/components/Navigation.astro` now expose a concise primary navigation: Home, About, Contact.
+* The header logo reads `oberio.me`.
 * `src/components/Footer.astro` now shows the copyright line and four buttons: LinkedIn, GitHub, Repo, and Docs.
 * `src/scripts/menu.js` supports the responsive mobile navigation.
 
@@ -86,11 +87,18 @@ The blog and tag pages are still there, ready for new posts; `/blog/` shows "No 
 The About page has been rewritten to focus on developer-facing documentation, technical writing, and engineering fluency.
 The profile image was removed from the About page.
 
-=== Local Agent And Deployment Tooling
+=== Domain And Deployment
 
-The branch adds `.agents/` skill files and `skills-lock.json`.
-These are helper instructions for agent-assisted work in this repository, including browser automation and Vercel-related workflows.
-They do not affect the public website unless a tool reads them during development.
+The site now publishes at `oberio.me` instead of `docko.dev`.
+`astro.config.mjs` sets `site` to `https://oberio.me`, and `public/CNAME` names the same domain.
+The GitHub Pages workflow in `.github/workflows/deploy.yml` uses current action versions, because the old `v1` actions no longer deploy.
+The contact email is still `yarn@docko.dev`, and the footer Docs button still points at `docs.docko.dev`.
+
+=== Local Agent Tooling
+
+The branch adds the `agent-browser` skill under `.agents/skills/` and records it in `skills-lock.json`.
+`AGENTS.md` tells agents to use it to check pages in a browser.
+It does not affect the public website.
 
 == Most Important Files
 

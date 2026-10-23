@@ -24,3 +24,6 @@ pnpm-debug.log*
 # editor-specific files
 .vscode/
 .idea/
+
+# Antora UI cache
+.cache/

@@ -443,3 +443,20 @@ Use this sequence for most changes:
 . Review `git diff` before committing.
 
 That workflow keeps the site easy to change without letting layout, routing, or frontmatter mistakes pile up.
+
+== 16. Publish And Change The Domain
+
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and deploys it to GitHub Pages.
+You can also run the workflow by hand from the repository's Actions tab.
+
+The site is served at `oberio.me`.
+To move it to another domain, change all of these together:
+
+* `site` in `astro.config.mjs`.
+* `public/CNAME`.
+* `site-domain` in `docs/antora.yml`.
+* The header logo text in `src/components/Header.astro`.
+* The custom domain under the repository's *Settings > Pages* on GitHub.
+* The DNS records at the domain registrar.
+
+GitHub ignores `public/CNAME` when a workflow deploys the site, so the *Settings > Pages* value is the one that counts.
