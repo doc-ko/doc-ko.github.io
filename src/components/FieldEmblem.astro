@@ -1,0 +1,14 @@
+---
+import MarkdownInline from './MarkdownInline.astro';
+
+const { fields = [] } = Astro.props;
+---
+
+<ul class="field-emblem" aria-label="Areas of work">
+    {fields.map((field) => (
+        <li class={`field-emblem__tile field-emblem__tile--${field.accent}`}>
+            <span class="field-emblem__symbol" aria-hidden="true">{field.symbol}</span>
+            <span class="field-emblem__label"><MarkdownInline content={field.title} /></span>
+        </li>
+    ))}
+</ul>

@@ -1,10 +1,10 @@
 ---
-import AnimatedDiagram from './AnimatedDiagram.astro';
+import FieldEmblem from './FieldEmblem.astro';
 import MarkdownCopy from './MarkdownCopy.astro';
 import MarkdownInline from './MarkdownInline.astro';
 import MarginNote from './MarginNote.astro';
 
-const { hero } = Astro.props;
+const { hero, fields = [] } = Astro.props;
 ---
 
 <section class="notebook-hero" aria-labelledby="home-title">
@@ -30,7 +30,7 @@ const { hero } = Astro.props;
         </div>
 
         <div class="hero-diagram-stack">
-            <AnimatedDiagram />
+            <FieldEmblem fields={fields} />
             <MarginNote label={hero.margin.label} body={hero.margin.body} />
         </div>
     </div>
