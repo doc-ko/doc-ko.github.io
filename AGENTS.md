@@ -4,9 +4,18 @@ Astro site for Karl Oberio, deployed to GitHub Pages. The `ai-rewrite` branch is
 
 ## Commands
 
-- `npm run dev`: dev server with live reload at http://localhost:4321
+- `npm run dev`: dev server with live reload at http://localhost:4321. The user normally has this running already.
 - `npm run build`: production build into `dist/`; run before committing larger changes
 - `npm run docs`: build and serve the Antora docs with Docker at http://localhost:8080
+
+## Dev server
+
+The user runs `npm run dev` themselves and uses it as their live preview.
+
+- Do not start your own dev server, on any port.
+- Never stop one: no `pkill`, `killall`, or `kill` on `astro` or `node` processes, since that can take down the user's server.
+- To check a change visually, point `agent-browser` at http://localhost:4321 and, if nothing is listening there, ask the user to start `npm run dev`.
+- To check that the site compiles, run `npm run build`.
 
 ## Layout
 
