@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailLink from '../components/EmailLink.astro';
 import FieldDiagram from '../components/FieldDiagram.astro';
 import HomeHero from '../components/HomeHero.astro';
 import MarkdownCopy from '../components/MarkdownCopy.astro';
@@ -64,7 +65,7 @@ const { meta, hero, sections, fields, propositions, garden } = homepage;
 				</div>
 				<nav class="garden-links" aria-label="Digital garden links">
 					{garden.links.map((link) => (
-						<a href={link.href}>{link.label}</a>
+						link.email ? <EmailLink>{link.label}</EmailLink> : <a href={link.href}>{link.label}</a>
 					))}
 				</nav>
 			</div>

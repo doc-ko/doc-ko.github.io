@@ -65,7 +65,8 @@ Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin:
 Marked text has a dashed underline.
 A marked phrase can carry a note that shows on hover, tap, or keyboard focus; the homepage uses one on "AInese" to explain the underline.
 The marking works in Markdown pages and in Markdown values in `homepage.yaml`.
-`src/lib/remarkAiText.js` holds the plugin, which is registered in `astro.config.mjs` and `src/lib/homepageMarkdown.js`.
+`src/lib/remarkAiText.js` holds the plugin.
+`src/lib/markdownPlugins.js` lists it with the other Markdown plugins, and `astro.config.mjs` and `src/lib/homepageMarkdown.js` both use that list.
 
 === Removed Content
 
@@ -92,7 +93,14 @@ The profile image was removed from the About page.
 The site now publishes at `oberio.me` instead of `docko.dev`.
 `astro.config.mjs` sets `site` to `https://oberio.me`, and `public/CNAME` names the same domain.
 The GitHub Pages workflow in `.github/workflows/deploy.yml` uses current action versions, because the old `v1` actions no longer deploy.
-The contact email is still `yarn@docko.dev`, and the footer Docs button still points at `docs.docko.dev`.
+The contact email moved to the `oberio.me` domain.
+The footer Docs button still points at `docs.docko.dev`.
+
+=== Contact Email Hidden From Scrapers
+
+The contact address is stored backwards in `src/data/contact.js` and turned back round by `src/scripts/email.js` in the browser, so it does not appear readably in the repo or the built pages.
+The navigation, homepage, and About page link to it through `EmailLink.astro`, `email: true` in `homepage.yaml` lists, or `:email[]` in Markdown.
+See xref:customising-the-site.adoc#contact-email[].
 
 === Local Agent Tooling
 
@@ -141,6 +149,9 @@ Use this map when deciding where to make a change.
 
 | Change how AI-marked text is parsed
 | `src/lib/remarkAiText.js`
+
+| Change the contact email
+| `src/data/contact.js`
 
 | Change how AI-marked text looks
 | `--ai-underline-*` variables and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/global.css`

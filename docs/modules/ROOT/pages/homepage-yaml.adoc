@@ -45,6 +45,19 @@ Inline values sit inside headings and labels, where a block would break the layo
 A folded `>-` scalar joins single line breaks into spaces, which would put `:::ai` on the same line as the text.
 * Quote a value that starts with `:ai[`, or use a block scalar, so YAML reads it as a string.
 
+[[email-links]]
+=== Email links
+
+The contact address never appears in `homepage.yaml`.
+Link to it in one of two ways, and the site fills it in from `src/data/contact.js`:
+
+* In a `links` list, give the item `email: true` instead of an `href`.
+The `label` is the link text.
+* In a Markdown value, write `:email[]` to show the address as the link text, or `:email[some words]` to use those words.
+This works in inline and block values, including inside `:ai[...]`.
+
+Do not write the address or a `mailto:` link here; see xref:customising-the-site.adoc#contact-email[] for why.
+
 [source,yaml]
 ----
 hero:
@@ -132,7 +145,7 @@ hero:
 
 | `hero.links`
 | List
-| Row of links under the card. Each item has `label` and `href`, both plain.
+| Row of links under the card. Each item has a plain `label` and either a plain `href` or `email: true`; see <<email-links>>.
 
 | `hero.margin.label`
 | Markdown (inline)
@@ -252,7 +265,7 @@ The closing section.
 
 | `garden.links`
 | List
-| Row of links. Each item has `label` and `href`, both plain.
+| Row of links. Each item has a plain `label` and either a plain `href` or `email: true`; see <<email-links>>.
 |===
 
 [[accents]]

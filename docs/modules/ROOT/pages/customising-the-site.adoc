@@ -77,14 +77,14 @@ hero:
     - label: "about"
       href: "/about/"
     - label: "email"
-      href: "mailto:yarn@docko.dev"
+      email: true
     - label: "github"
       href: "https://github.com/doc-ko"
 ----
 
 Use site-relative links for internal pages, such as `/about/`.
 Use full URLs for external sites.
-Use `mailto:` for email links.
+Use `email: true` instead of `href` to link to the contact email; see <<contact-email>>.
 
 The closing homepage links are in `garden.links`.
 
@@ -99,14 +99,38 @@ The current navigation is:
 <div class="nav-links" id="primary-navigation">
     <a href="/">Home</a>
     <a href="/about/">About</a>
-    <a href="mailto:yarn@docko.dev">Contact</a>
+    <EmailLink>Contact</EmailLink>
 </div>
 ----
 
+`EmailLink` is imported at the top of the file; see <<contact-email>>.
 Keep the `nav-links` class and `primary-navigation` id.
 The mobile menu script uses them.
 
 If you add a new page, add its link here only after the page exists under `src/pages/`.
+
+[[contact-email]]
+=== The contact email
+
+The contact address is written backwards in `src/data/contact.js`, and nowhere else.
+Scrapers are bots that collect email addresses from web pages and public code, and they look for `mailto:` links and text shaped like an address.
+A reversed address matches neither.
+`src/scripts/email.js` turns it back round in the visitor's browser, which most scrapers never run.
+
+Some scrapers do run scripts, so treat the address as disposable: use an alias that forwards to your real inbox, and swap it when it starts attracting junk.
+
+To change the address, edit `emailReversed` in `src/data/contact.js`.
+Write the new address in reverse, character by character: `me@example.com` becomes `moc.elpmaxe@em`.
+Do not write the address readably anywhere in the repo, including docs and commit messages.
+
+To link to the address:
+
+* In an Astro component, use `<EmailLink>link text</EmailLink>` from `src/components/EmailLink.astro`.
+Leave it empty to show the address as the link text.
+* In Markdown, including `homepage.yaml` values, write `:email[]` or `:email[link text]`.
+* In a `links` list in `homepage.yaml`, use `email: true` instead of `href`.
+
+Visitors with JavaScript turned off see the link text but cannot click it, and an empty link shows nothing.
 
 == 5. Change Footer Links
 
@@ -261,8 +285,8 @@ The note's box is styled by the `.ai-note` rule.
 === Words that start with a colon
 
 The `:ai` syntax comes from the `remark-directive` plugin, which reads any `:word` as a directive.
-`src/lib/remarkAiText.js` turns every directive other than `ai` back into ordinary text, so `ratio a:b` still shows as written.
-Avoid writing `:ai[` unless you mean to mark text.
+`src/lib/remarkAiText.js` turns every directive other than `ai` and `email` back into ordinary text, so `ratio a:b` still shows as written.
+Avoid writing `:ai[` or `:email[` unless you mean them.
 
 == 9. Customise The Homepage Sections
 

@@ -26,7 +26,7 @@ hero:
     - label: "about"
       href: "/about/"
     - label: "email"
-      href: "mailto:yarn@docko.dev"
+      email: true
   margin:
     label: "My areas of interest"
     body: >-
@@ -89,7 +89,7 @@ garden:
   number: "03 / :ai[contact and paths]"
   heading: ":ai[Where to go]"
   note: >-
-    :ai[Contact: [yarn@docko.dev](mailto:yarn@docko.dev).]
+    :ai[Contact: :email[].]
   links:
     - label: "github"
       href: "https://github.com/doc-ko"

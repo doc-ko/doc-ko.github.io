@@ -21,4 +21,4 @@ I am comfortable around Git, Markdown, static sites, OpenAPI tooling, and small 
 - Mathematics, logic, and language
 - Linux desktop workflows
 
-You can reach me at [yarn@docko.dev](mailto:yarn@docko.dev), on [LinkedIn](https://linkedin.com/in/docko), or through [GitHub](https://github.com/doc-ko).
+You can reach me at :email[], on [LinkedIn](https://linkedin.com/in/docko), or through [GitHub](https://github.com/doc-ko).

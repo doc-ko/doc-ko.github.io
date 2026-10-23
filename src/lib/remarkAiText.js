@@ -1,5 +1,3 @@
-import remarkDirective from 'remark-directive';
-
 // AI-generated text is declared by hand, never detected. In Markdown, mark a
 // phrase with :ai[...] and whole blocks with a :::ai container; unmarked text
 // counts as written by Karl. Each marked element gets data-origin="ai", which
@@ -84,5 +82,3 @@ function noteText(note) {
         },
     };
 }
-
-export const aiTextPlugins = [remarkDirective, remarkAiText];
