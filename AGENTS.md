@@ -1,6 +1,19 @@
 # Personal Site
 
-Astro site for Karl Oberio, deployed to GitHub Pages at `oberio.me`. The `ai-rewrite` branch is a redesign ("mathematical notebook"); its homepage copy is currently a stub.
+Astro site for Karl Oberio, deployed to GitHub Pages at `oberio.me`. Its homepage copy is currently a stub. A dot-grid redesign is planned in `.claude/plans/dot-grid-redesign.md`.
+
+## Project context
+
+- `.claude/notes/site-context.md`: what this site is for, domains, and what not to break.
+- `.claude/plans/`: plans and decisions that span sessions. Read the relevant one before design or layout work, and keep its status list current.
+- `.claude/scratch/`: optional place for temporary working files (gitignored); `/tmp` is fine too.
+
+## Working with the owner
+
+- Explain web and build concepts in plain language and define terms the first time; the owner is a technical writer still learning this vocabulary. Lead with a simple mental model and keep tables short.
+- For any visual design choice, first show several options side by side, rendered with the site's real content, and let the owner pick before changing the codebase.
+- When asked to remove content (posts, samples, drafts), delete the content but keep the pages and features that host it, such as the blog index and tag pages. Ask before removing a route or feature.
+- Never write the contact email address in plain text in the repo; use `EmailLink.astro`, `email: true` in YAML, or `:email[]` in Markdown.
 
 ## Commands
 

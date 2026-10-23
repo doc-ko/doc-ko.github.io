@@ -27,3 +27,7 @@ pnpm-debug.log*
 
 # Antora UI cache
 .cache/
+
+# Claude working files
+.claude/scratch/
+.claude/worktrees/
