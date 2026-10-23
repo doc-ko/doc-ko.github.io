@@ -42,19 +42,19 @@ sections:
     note: "What is done, what is placeholder, what is missing."
 
 fields:
-  - symbol: "ə"
+  - icon: "linguistics"
     title: "linguistics"
     description: "syntax, semantics, language as a system"
     accent: "amber"
-  - symbol: "∑"
+  - icon: "mathematics"
     title: "mathematics"
     description: "proofs, notation, formal structure"
     accent: "violet"
-  - symbol: "λ"
+  - icon: "logic"
     title: "logic & philosophy"
     description: "definitions, arguments, careful distinctions"
     accent: "cyan"
-  - symbol: "$"
+  - icon: "computing"
     title: "computing"
     description: >-
       Git, Markdown, static sites, OpenAPI tooling, small changes, and Linux

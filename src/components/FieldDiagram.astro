@@ -1,15 +1,28 @@
 ---
 import MarkdownCopy from './MarkdownCopy.astro';
 import MarkdownInline from './MarkdownInline.astro';
+import { glyphs } from '../lib/glyphs.js';
+import { restGlyph } from '../lib/icons.js';
 
 const { fields = [] } = Astro.props;
+
+// The glyph is drawn in em units with its ink centred on the origin.
+const glyphFor = (icon) => glyphs[restGlyph[icon]];
+const centre = (glyph) =>
+    `translate(${-(glyph.xmin + glyph.xmax) / 2} ${(glyph.top + glyph.bottom) / 2})`;
 ---
 
 <div class="field-diagram">
     <div class="field-list">
         {fields.map((field) => (
             <article class={`field-card field-card--${field.accent}`}>
-                <p class="field-card__symbol">{field.symbol}</p>
+                {glyphFor(field.icon) ? (
+                    <svg class="field-card__symbol" viewBox="-0.55 -0.55 1.1 1.1" aria-hidden="true">
+                        <path transform={centre(glyphFor(field.icon))} d={glyphFor(field.icon).d} />
+                    </svg>
+                ) : (
+                    <span class="field-card__symbol"></span>
+                )}
                 <div>
                     <h3><MarkdownInline content={field.title} /></h3>
                     <MarkdownCopy class="field-card__description" content={field.description} />

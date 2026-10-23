@@ -1,62 +1,163 @@
 ---
 import MarkdownInline from './MarkdownInline.astro';
+import { glyphs as g } from '../lib/glyphs.js';
 
 const { fields = [] } = Astro.props;
+
+// Every symbol is an SVG path, not text, so it looks the same on every device.
+// All drawings share one coordinate system: the tile is 100 x 100 units, and
+// the paths in glyphs.js are in em, so a glyph is placed by a translate and a
+// scale. Resting symbols are centred at the same height and size; the hover
+// layouts below are computed from the glyph metrics so they stay centred.
+const EM = 35.7;
+const REST_Y = 43;
+
+const round = (n) => Math.round(n * 100) / 100;
+const mid = (glyph) => (glyph.top + glyph.bottom) / 2;
+const inkW = (glyph, em) => (glyph.xmax - glyph.xmin) * em;
+
+// Ink centred on (cx, cy).
+const inkAt = (glyph, em, cx, cy) => ({
+    x: round(cx - ((glyph.xmin + glyph.xmax) / 2) * em),
+    y: round(cy + mid(glyph) * em),
+    s: em,
+});
+// Ink centred horizontally on cx, sitting on a baseline.
+const onBaseline = (glyph, em, cx, baseline) => ({
+    x: round(cx - ((glyph.xmin + glyph.xmax) / 2) * em),
+    y: round(baseline),
+    s: em,
+});
+// Origin (left of the baseline) at x.
+const originAt = (glyph, em, x, baseline) => ({ x: round(x), y: round(baseline), s: em });
+
+const attr = (p) => `translate(${p.x} ${p.y}) scale(${p.s})`;
+const vars = (rest, hover) =>
+    `--rx:${rest.x};--ry:${rest.y};--rs:${rest.s};--hx:${hover.x};--hy:${hover.y};--hs:${hover.s}`;
+
+// linguistics: the schwa shrinks into the nucleus of a /jəp/ tree
+const LEAF = 14;
+const schwa = vars(inkAt(g.schwa, EM, 50, REST_Y), onBaseline(g.schwa, LEAF, 50, 74.4));
+const onset = onBaseline(g.j, LEAF, 20, 57);
+const coda = onBaseline(g.p, LEAF, 80, 74.4);
+
+// mathematics: sum over k = 0 to infinity of heart^k, centred as a whole
+const lowEm = 0.34 * EM;
+const expEm = 0.46 * EM;
+const heartW = 0.56 * EM;
+const heartH = 0.51 * EM;
+const infW = 1.3 * 0.42 * EM;
+const infH = infW / 2;
+const eqMargin = 0.28 * lowEm;
+const sigW = inkW(g.sigma, EM);
+const sigH = (g.sigma.top - g.sigma.bottom) * EM;
+const sumW = sigW + 7 + heartW + 1.6 + inkW(g.kItalic, expEm);
+const sumLeft = 50 - sumW / 2;
+const sigCx = sumLeft + sigW / 2;
+const heartX = sumLeft + sigW + 7;
+const lowW = (g.kItalic.adv + g.equals.adv + g.zero.adv) * lowEm + 2 * eqMargin;
+const stackH = infH + 4.5 + sigH + 5.5 + g.kItalic.top * lowEm;
+const stackTop = 50 - stackH / 2;
+const sigCy = stackTop + infH + 4.5 + sigH / 2;
+const lowBase = stackTop + infH + 4.5 + sigH + 5.5 + g.kItalic.top * lowEm;
+const lowX = sigCx - lowW / 2;
+const heartY = sigCy - heartH / 2 - 0.5;
+const sigma = vars(inkAt(g.sigma, EM, 50, REST_Y), inkAt(g.sigma, EM, sigCx, sigCy));
+const lowK = originAt(g.kItalic, lowEm, lowX, lowBase);
+const lowEq = originAt(g.equals, lowEm, lowX + g.kItalic.adv * lowEm + eqMargin, lowBase);
+const lowZero = originAt(
+    g.zero,
+    lowEm,
+    lowX + (g.kItalic.adv + g.equals.adv) * lowEm + 2 * eqMargin,
+    lowBase,
+);
+const exp = originAt(
+    g.kItalic,
+    expEm,
+    heartX + heartW + 1.6 - g.kItalic.xmin * expEm,
+    heartY - 1.5 + g.kItalic.top * expEm,
+);
+
+// logic and philosophy: the lambda moves to the lower left of a thought bubble
+const lambda = vars(inkAt(g.lambda, EM, 50, REST_Y), inkAt(g.lambda, EM, 32, 67));
+
+// computing: a prompt with a cursor line drawn after it, centred as a pair.
+// The cursor has the size and position of the underscore in the same font
+// (JetBrains Mono): it starts 0.06 em into the next cell, is 0.48 em wide, and
+// sits just below the baseline.
+const CURSOR = { x: 0.06, w: 0.48, top: 0.025, h: 0.075 };
+const promptInk = g.dollar.adv + CURSOR.x + CURSOR.w - g.dollar.xmin;
+const promptOrigin = 50 - (promptInk * EM) / 2 - g.dollar.xmin * EM;
+const promptBaseline = 50 + mid(g.dollar) * EM;
+const dollarHover = { x: round(promptOrigin), y: round(promptBaseline), s: EM };
+const dollar = vars(inkAt(g.dollar, EM, 50, REST_Y), dollarHover);
+const cursor = {
+    x: round(promptOrigin + (g.dollar.adv + CURSOR.x) * EM),
+    y: round(promptBaseline + CURSOR.top * EM),
+    w: round(CURSOR.w * EM),
+    h: round(CURSOR.h * EM),
+};
 ---
 
 <ul class="field-emblem" aria-label="Areas of work">
     {fields.map((field) => (
-        <li class={`field-emblem__tile field-emblem__tile--${field.accent}`}>
-            <span class="field-emblem__symbol" aria-hidden="true">
-                {field.symbol}
-                {/* Hover animation for the violet tile: the sigma becomes the
-                    sum of k = 0 to infinity of heart^k. */}
-                {field.accent === 'violet' && (
+        <li class={`field-emblem__tile field-emblem__tile--${field.accent} field-emblem__tile--${field.icon}`}>
+            <svg class="field-emblem__icon" viewBox="0 0 100 100" aria-hidden="true">
+                {field.icon === 'linguistics' && (
                     <>
-                        <svg class="sum-limit sum-limit--upper sum-inf" viewBox="0 0 20 10" aria-hidden="true">
-                            <path class="sum-inf__path" pathLength="1" d="M10 5 C7.5 0.5 1 0.5 1 5 C1 9.5 7.5 9.5 10 5 C12.5 0.5 19 0.5 19 5 C19 9.5 12.5 9.5 10 5" />
-                        </svg>
-                        <span class="sum-limit sum-limit--lower"><i>k</i><span class="sum-limit__rel">=</span>0</span>
-                        <span class="sum-term">
-                            <svg class="sum-heart" viewBox="0 0 32 29" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="sum-heart-fill" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0" stop-color="#e45a50" />
-                                        <stop offset="1" stop-color="#a9292b" />
-                                    </linearGradient>
-                                </defs>
-                                <path d="M16 27.5 C3 17.5 -1 9.5 4.5 4.5 C9.5 0.5 14.5 2.5 16 7 C17.5 2.5 22.5 0.5 27.5 4.5 C33 9.5 29 17.5 16 27.5 Z" fill="url(#sum-heart-fill)" stroke="#7d1d20" stroke-width="1.4" stroke-linejoin="round" />
-                            </svg>
-                            <i class="sum-term__exp">k</i>
-                        </span>
+                        <path class="syllable-tree__edge syllable-tree__edge--rime" pathLength="1" d="M50 64 L65 44 L80 64" />
+                        <path class="syllable-tree__edge syllable-tree__edge--syllable" pathLength="1" d="M20 44 L42.5 24 L62.76 42" />
+                        <path class="glyph" style={schwa} d={g.schwa.d} />
+                        <path class="syllable-tree__leaf syllable-tree__leaf--onset" transform={attr(onset)} d={g.j.d} />
+                        <path class="syllable-tree__leaf syllable-tree__leaf--coda" transform={attr(coda)} d={g.p.d} />
                     </>
                 )}
-            </span>
-            {/* Hover animation for the amber tile: the symbol shrinks into the
-                nucleus of a /jəp/ syllable tree drawn around it. The symbol is
-                the schwa leaf; the svg covers the tile in percent units. */}
-            {field.accent === 'amber' && (
-                <svg class="syllable-tree" viewBox="0 0 100 100" aria-hidden="true">
-                    <path class="syllable-tree__edge syllable-tree__edge--rime" pathLength="1" d="M50 64 L65 44 L80 64" />
-                    <path class="syllable-tree__edge syllable-tree__edge--syllable" pathLength="1" d="M20 44 L42.5 24 L62.76 42" />
-
-                    <text class="syllable-tree__leaf syllable-tree__leaf--coda" x="80" y="74.4">p</text>
-                    <text class="syllable-tree__leaf syllable-tree__leaf--onset" x="20" y="57">j</text>
-                </svg>
-            )}
-            {/* Hover animation for the cyan tile: a thought bubble is drawn to the
-                upper right of the symbol, which moves to the lower left. Like the syllable tree, the svg covers the tile in
-                percent units. */}
-            {field.accent === 'cyan' && (
-                <svg class="thought-bubble" viewBox="0 0 100 100" aria-hidden="true">
-                    <circle class="thought-bubble__trail thought-bubble__trail--1" cx="41.5" cy="52.5" r="1.6" />
-                    <circle class="thought-bubble__trail thought-bubble__trail--2" cx="46" cy="45" r="2.6" />
-                    <path class="thought-bubble__cloud" pathLength="1" d="M44 35 A8 8 0 0 1 42 21 A9 9 0 0 1 56 16 A9 9 0 0 1 71 17 A8 8 0 0 1 80 27 A8 8 0 0 1 75 36 A8 8 0 0 1 61 37 A8 8 0 0 1 44 35" />
-                    <circle class="thought-bubble__dot thought-bubble__dot--1" cx="53" cy="26.5" r="1.5" />
-                    <circle class="thought-bubble__dot thought-bubble__dot--2" cx="61" cy="26.5" r="1.5" />
-                    <circle class="thought-bubble__dot thought-bubble__dot--3" cx="69" cy="26.5" r="1.5" />
-                </svg>
-            )}
+                {field.icon === 'mathematics' && (
+                    <>
+                        <defs>
+                            <linearGradient id="sum-heart-fill" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0" stop-color="#e45a50" />
+                                <stop offset="1" stop-color="#a9292b" />
+                            </linearGradient>
+                        </defs>
+                        <path class="glyph" style={sigma} d={g.sigma.d} />
+                        <path
+                            class="sum__inf"
+                            pathLength="1"
+                            transform={`translate(${round(sigCx - infW / 2)} ${round(stackTop)}) scale(${round(infW / 20)})`}
+                            d="M10 5 C7.5 0.5 1 0.5 1 5 C1 9.5 7.5 9.5 10 5 C12.5 0.5 19 0.5 19 5 C19 9.5 12.5 9.5 10 5"
+                        />
+                        <g class="sum__lower">
+                            <path transform={attr(lowK)} d={g.kItalic.d} />
+                            <path transform={attr(lowEq)} d={g.equals.d} />
+                            <path transform={attr(lowZero)} d={g.zero.d} />
+                        </g>
+                        <path
+                            class="sum__heart"
+                            transform={`translate(${round(heartX)} ${round(heartY)}) scale(${round(heartW / 32)})`}
+                            d="M16 27.5 C3 17.5 -1 9.5 4.5 4.5 C9.5 0.5 14.5 2.5 16 7 C17.5 2.5 22.5 0.5 27.5 4.5 C33 9.5 29 17.5 16 27.5 Z"
+                        />
+                        <path class="sum__exp" transform={attr(exp)} d={g.kItalic.d} />
+                    </>
+                )}
+                {field.icon === 'logic' && (
+                    <>
+                        <circle class="thought-bubble__trail thought-bubble__trail--1" cx="41.5" cy="52.5" r="1.6" />
+                        <circle class="thought-bubble__trail thought-bubble__trail--2" cx="46" cy="45" r="2.6" />
+                        <path class="thought-bubble__cloud" pathLength="1" d="M44 35 A8 8 0 0 1 42 21 A9 9 0 0 1 56 16 A9 9 0 0 1 71 17 A8 8 0 0 1 80 27 A8 8 0 0 1 75 36 A8 8 0 0 1 61 37 A8 8 0 0 1 44 35" />
+                        <circle class="thought-bubble__dot thought-bubble__dot--1" cx="53" cy="26.5" r="1.5" />
+                        <circle class="thought-bubble__dot thought-bubble__dot--2" cx="61" cy="26.5" r="1.5" />
+                        <circle class="thought-bubble__dot thought-bubble__dot--3" cx="69" cy="26.5" r="1.5" />
+                        <path class="glyph" style={lambda} d={g.lambda.d} />
+                    </>
+                )}
+                {field.icon === 'computing' && (
+                    <>
+                        <path class="glyph" style={dollar} d={g.dollar.d} />
+                        <rect class="cursor" x={cursor.x} y={cursor.y} width={cursor.w} height={cursor.h} />
+                    </>
+                )}
+            </svg>
             <span class="field-emblem__label"><MarkdownInline content={field.title} /></span>
         </li>
     ))}

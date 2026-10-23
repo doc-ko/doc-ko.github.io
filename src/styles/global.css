@@ -467,77 +467,37 @@ pre code {
         rgb(9 18 24 / 78%);
 }
 
+/* A tile is a 100 x 100 drawing plus a label. The tiles are decorative, so
+   they have no pointer cursor and nothing to select. */
 .field-emblem__tile {
+    position: relative;
     min-width: 0;
     margin: 0;
     border: 1px solid var(--line);
     border-radius: 6px;
     aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
     background: var(--paper-soft);
-}
-
-.field-emblem__symbol {
     color: var(--ink-strong);
-    font-family: var(--mono);
-    font-size: clamp(2.6rem, 7vw, 4.4rem);
-    line-height: 1;
-}
-
-.field-emblem__label {
-    text-align: center;
-    color: var(--muted-2);
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    cursor: default;
+    user-select: none;
 }
 
 .field-emblem__tile--amber {
     background: var(--accent-soft);
-}
-
-.field-emblem__tile--amber .field-emblem__symbol {
     color: var(--accent);
 }
 
 .field-emblem__tile--cyan {
     background: var(--cyan-soft);
-}
-
-.field-emblem__tile--cyan .field-emblem__symbol {
     color: var(--cyan);
 }
 
 .field-emblem__tile--violet {
     background: var(--violet-soft);
-}
-
-.field-emblem__tile--violet .field-emblem__symbol {
     color: var(--violet);
 }
 
-/* Hover motion. Tiles are decorative: no pointer cursor, no selection. */
-.field-emblem__tile {
-    cursor: default;
-    user-select: none;
-}
-
-.field-emblem__symbol {
-    position: relative;
-}
-
-.field-emblem__tile {
-    position: relative;
-    container-type: size;
-}
-
-.syllable-tree,
-.thought-bubble {
+.field-emblem__icon {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -545,111 +505,80 @@ pre code {
     pointer-events: none;
 }
 
-.syllable-tree__edge {
+.field-emblem__label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 66%;
+    text-align: center;
+    color: var(--muted-2);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.25s ease 0.15s;
+}
+
+/* Symbols that move: rest and hover placements arrive as custom properties
+   from FieldEmblem.astro. */
+.glyph {
+    fill: currentcolor;
+    transform: translate(calc(var(--rx) * 1px), calc(var(--ry) * 1px)) scale(var(--rs));
+}
+
+.syllable-tree__edge,
+.sum__inf,
+.thought-bubble__cloud,
+.thought-bubble__trail {
     fill: none;
-    stroke: var(--accent);
-    stroke-width: 0.8;
+    stroke: currentcolor;
     stroke-linejoin: round;
+}
+
+.syllable-tree__edge {
+    stroke-width: 0.8;
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
 }
 
+.syllable-tree__leaf,
+.sum__lower,
+.sum__exp {
+    fill: currentcolor;
+}
+
 .syllable-tree__leaf {
     opacity: 0;
-    fill: var(--accent);
-    font-family: var(--mono);
-    font-size: 14px;
-    text-anchor: middle;
 }
 
-/* The summation reads like typeset display maths: a serif sigma with the
-   limits above and below, and a red heart as the summand. */
-.field-emblem__tile--violet .field-emblem__symbol,
-.sum-limit,
-.sum-term__exp {
-    font-family: "STIX Two Math", "STIXGeneral", "Latin Modern Math", "Cambria Math", "Times New Roman", serif;
-}
-
-.sum-limit,
-.sum-term {
-    position: absolute;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.sum-limit {
-    left: 50%;
-    color: var(--violet);
-}
-
-.sum-limit__rel {
-    margin-inline: 0.28em;
-}
-
-.sum-limit--upper {
-    bottom: 100%;
-    margin-bottom: 0.2em;
-    font-size: 0.42em;
-    translate: -50% 0;
-}
-
-.sum-limit--lower {
-    top: 100%;
-    margin-top: 0.3em;
-    font-size: 0.34em;
-    translate: -50% 0;
+.sum__lower {
     clip-path: inset(-20% 100% -20% 0);
 }
 
-.sum-inf {
-    width: 1.3em;
-    height: 0.65em;
-    overflow: visible;
+.sum__exp {
+    clip-path: inset(-20% 100% -20% 0);
 }
 
-.sum-inf__path {
-    fill: none;
-    stroke: var(--violet);
+/* The summation reads like display maths: serif sigma, limits above and
+   below, a red heart as the summand. */
+.sum__inf {
     stroke-width: 1.5;
     stroke-linecap: butt;
     stroke-dasharray: 1 2;
     stroke-dashoffset: 1.02;
 }
 
-.sum-term {
-    left: 100%;
-    top: 50%;
-    margin-left: 0.1em;
-    display: flex;
-    align-items: center;
-    translate: 0 -50%;
-}
-
-.sum-heart {
-    width: 0.56em;
-    height: 0.51em;
+.sum__heart {
+    fill: url("#sum-heart-fill");
+    stroke: #7d1d20;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
     clip-path: inset(100% -20% 0 -20%);
-}
-
-.sum-term__exp {
-    align-self: flex-start;
-    margin-top: -0.08em;
-    margin-left: 0.05em;
-    color: var(--violet);
-    font-size: 0.46em;
-    clip-path: inset(-20% 100% -20% 0);
-}
-
-.field-emblem__label {
-    transition: opacity 0.25s ease 0.15s;
 }
 
 .thought-bubble__cloud,
 .thought-bubble__trail {
-    fill: none;
-    stroke: var(--cyan);
     stroke-width: 0.8;
-    stroke-linejoin: round;
 }
 
 .thought-bubble__cloud {
@@ -658,7 +587,7 @@ pre code {
 }
 
 .thought-bubble__dot {
-    fill: var(--cyan);
+    fill: currentcolor;
 }
 
 .thought-bubble__trail,
@@ -668,35 +597,51 @@ pre code {
     transform-origin: center;
 }
 
-.field-emblem__tile--paper .field-emblem__symbol {
-    font-family: Menlo, Monaco, "SF Mono", "Cascadia Mono", Consolas, "DejaVu Sans Mono", "Courier New", monospace;
+.cursor {
+    fill: currentcolor;
+    transform: scaleX(0);
+    transform-box: fill-box;
+    transform-origin: left center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    /* linguistics: the schwa shrinks into the nucleus of a /jəp/ syllable
-       tree, drawn bottom-up around it. The container units are the tile's. */
-    .field-emblem__tile--amber .field-emblem__symbol {
-        /* the delay lets the tree clear away before the schwa grows back */
-        transition:
-            font-size 0.8s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s,
-            transform 0.8s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s;
-    }
-
-    .field-emblem__tile--amber .field-emblem__label {
-        transition: opacity 0.25s ease 0.5s;
-    }
-
-    .field-emblem__tile--amber:hover .field-emblem__symbol {
-        font-size: 14cqw;
-        /* the symbol's centre sits half the label block above the tile
-           centre; 0.83rem cancels that so the target is a tile percentage */
-        transform: translateY(calc(19.3cqh + 0.83rem));
-        transition-delay: 0s;
-    }
-
-    .field-emblem__tile--amber:hover .field-emblem__label {
+    /* Every tile: the label steps aside on hover. The drawing clears away
+       first on unhover, then the symbol moves back and the label returns. */
+    .field-emblem__tile:hover .field-emblem__label {
         opacity: 0;
         transition-delay: 0s;
+    }
+
+    .field-emblem__tile--linguistics .field-emblem__label {
+        transition-delay: 0.5s;
+    }
+
+    .field-emblem__tile--mathematics .field-emblem__label {
+        transition-delay: 0.8s;
+    }
+
+    .field-emblem__tile--logic .field-emblem__label,
+    .field-emblem__tile--computing .field-emblem__label {
+        transition-delay: 0.7s;
+    }
+
+    .field-emblem__tile:hover .field-emblem__label {
+        transition-delay: 0s;
+    }
+
+    .glyph {
+        transition: transform 0.4s ease 0.35s;
+    }
+
+    .field-emblem__tile:hover .glyph {
+        transform: translate(calc(var(--hx) * 1px), calc(var(--hy) * 1px)) scale(var(--hs));
+        transition-delay: 0s;
+    }
+
+    /* linguistics: the schwa shrinks into the nucleus of a /jəp/ syllable
+       tree, drawn bottom-up around it */
+    .field-emblem__tile--linguistics .glyph {
+        transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s;
     }
 
     .syllable-tree__edge {
@@ -728,91 +673,49 @@ pre code {
         transition-delay: 0.4s;
     }
 
-    /* every tile: the label steps aside on hover and the symbol moves to the
-       tile centre (0.83rem is half the label block that normally sits below) */
-    .field-emblem__tile:hover .field-emblem__label {
-        opacity: 0;
-        transition-delay: 0s;
+    /* mathematics: the pieces are drawn in, not faded: the infinity is
+       stroked, the rest is written left to right, and the heart fills from the
+       bottom. On unhover they retract first; the sigma slides back after. */
+    .field-emblem__tile--mathematics .glyph {
+        transition: transform 0.35s ease 0.45s;
     }
 
-    /* cyan and paper: whatever is drawn clears away first, then the symbol
-       moves back and the label returns */
-    .field-emblem__tile--cyan .field-emblem__symbol,
-    .field-emblem__tile--paper .field-emblem__symbol {
-        transition: translate 0.4s ease 0.35s;
-    }
-
-    .field-emblem__tile--cyan .field-emblem__label,
-    .field-emblem__tile--paper .field-emblem__label {
-        transition: opacity 0.25s ease 0.7s;
-    }
-
-    .field-emblem__tile--cyan:hover .field-emblem__symbol,
-    .field-emblem__tile--paper:hover .field-emblem__symbol {
-        transition-delay: 0s;
-    }
-
-    /* mathematics: the sigma becomes the sum of k = 0 to infinity of heart^k,
-       centred as a whole (the term to the right is about 0.9em wide) */
-    .field-emblem__tile--violet:hover .field-emblem__symbol {
-        translate: -0.5em calc(0.83rem + 0.04em);
-    }
-
-    /* The pieces are drawn in, not faded: the infinity is stroked, the rest
-       is written left to right, and the heart fills from the bottom. On
-       unhover they retract first; the sigma slides back afterwards. */
-    .field-emblem__tile--violet .field-emblem__symbol {
-        transition: translate 0.35s ease 0.45s;
-    }
-
-    .field-emblem__tile--violet .field-emblem__label {
-        transition: opacity 0.25s ease 0.8s;
-    }
-
-    .field-emblem__tile--violet:hover .field-emblem__symbol {
-        transition-delay: 0s;
-    }
-
-    .sum-inf__path {
+    .sum__inf {
         transition: stroke-dashoffset 0.5s ease;
     }
 
-    .sum-limit--lower,
-    .sum-term__exp {
+    .sum__lower,
+    .sum__exp {
         transition: clip-path 0.4s ease;
     }
 
-    .sum-heart {
+    .sum__heart {
         transition: clip-path 0.5s ease;
     }
 
-    .field-emblem__tile:hover .sum-inf__path {
+    .field-emblem__tile:hover .sum__inf {
         stroke-dashoffset: 0;
         transition-delay: 0.15s;
     }
 
-    .field-emblem__tile:hover .sum-limit--lower {
+    .field-emblem__tile:hover .sum__lower {
         clip-path: inset(-20% -20% -20% 0);
         transition-delay: 0.3s;
     }
 
-    .field-emblem__tile:hover .sum-heart {
+    .field-emblem__tile:hover .sum__heart {
         clip-path: inset(-20% -20% -20% -20%);
         transition-delay: 0.45s;
     }
 
-    .field-emblem__tile:hover .sum-term__exp {
+    .field-emblem__tile:hover .sum__exp {
         clip-path: inset(-20% -20% -20% 0);
         transition-delay: 0.85s;
     }
 
     /* logic and philosophy: the lambda moves to the lower left and a thought
-       bubble is drawn to its upper right: the trail of small circles, then the cloud,
-       then the dots of the thought */
-    .field-emblem__tile--cyan:hover .field-emblem__symbol {
-        translate: -18cqw calc(0.83rem + 0.05em + 17cqh);
-    }
-
+       bubble is drawn to its upper right: the trail of small circles, then
+       the cloud, then the dots of the thought */
     .thought-bubble__cloud {
         transition: stroke-dashoffset 0.5s ease;
     }
@@ -852,39 +755,29 @@ pre code {
         transition-delay: 1.04s;
     }
 
-    /* once drawn, the dots loop through nothing, ., .., ... like a typing
-       indicator */
+    /* once drawn, the dots keep going: ... then nothing, ., .., ... on a loop,
+       like a typing indicator. The loop starts after the last dot has popped
+       in, from the same scale, so the first frame is all three dots. */
     .field-emblem__tile:hover .thought-bubble__dot--1 {
-        animation: bubble-dot-1 2.8s linear 0.8s infinite backwards;
+        animation: bubble-dot-1 2.8s linear 1.3s infinite;
     }
 
     .field-emblem__tile:hover .thought-bubble__dot--2 {
-        animation: bubble-dot-2 2.8s linear 0.8s infinite backwards;
+        animation: bubble-dot-2 2.8s linear 1.3s infinite;
     }
 
     .field-emblem__tile:hover .thought-bubble__dot--3 {
-        animation: bubble-dot-3 2.8s linear 0.8s infinite backwards;
+        animation: bubble-dot-3 2.8s linear 1.3s infinite;
     }
 
     /* computing: a terminal prompt; the cursor is drawn out as a line, then
        blinks, and the pair is centred */
-    .field-emblem__tile--paper .field-emblem__symbol::after {
-        content: "";
-        position: absolute;
-        left: 100%;
-        bottom: 0.12em;
-        width: 0;
-        height: 0.07em;
-        background: currentcolor;
-        transition: width 0.3s ease;
+    .cursor {
+        transition: transform 0.3s ease;
     }
 
-    .field-emblem__tile--paper:hover .field-emblem__symbol {
-        translate: -0.28em calc(0.83rem - 0.03em);
-    }
-
-    .field-emblem__tile--paper:hover .field-emblem__symbol::after {
-        width: 0.55em;
+    .field-emblem__tile:hover .cursor {
+        transform: scaleX(1);
         transition-delay: 0.1s;
         animation: emblem-blink 1s steps(1) 0.5s infinite;
     }
@@ -893,42 +786,44 @@ pre code {
 @keyframes bubble-dot-1 {
     0%,
     20% {
-        transform: scale(0);
-    }
-    25%,
-    95% {
         transform: scale(1);
     }
-    100% {
+    25%,
+    50% {
         transform: scale(0);
+    }
+    55%,
+    100% {
+        transform: scale(1);
     }
 }
 
 @keyframes bubble-dot-2 {
     0%,
-    45% {
-        transform: scale(0);
-    }
-    50%,
-    95% {
+    20% {
         transform: scale(1);
     }
-    100% {
+    25%,
+    75% {
         transform: scale(0);
+    }
+    80%,
+    100% {
+        transform: scale(1);
     }
 }
 
 @keyframes bubble-dot-3 {
     0%,
-    70% {
-        transform: scale(0);
-    }
-    75%,
-    95% {
+    20% {
         transform: scale(1);
     }
-    100% {
+    25%,
+    95% {
         transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
     }
 }
 
@@ -1011,9 +906,10 @@ pre code {
 }
 
 .field-card__symbol {
+    width: 2rem;
+    height: 2rem;
     color: var(--ink-strong);
-    font-family: var(--mono);
-    font-size: 1.35rem;
+    fill: currentcolor;
 }
 
 .field-card h3 {
