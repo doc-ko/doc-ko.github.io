@@ -7,7 +7,8 @@ It explains what changed in the current branch and how to make future edits with
 == Start Here
 
 * xref:branch-changes.adoc[Branch changes]: what this branch changed and where the important files live.
-* xref:customising-the-site.adoc[Customising the site]: a practical walkthrough for editing copy, links, pages, writing samples, and visual styling.
+* xref:customising-the-site.adoc[Customising the site]: a practical walkthrough for editing copy, links, pages, and visual styling.
+* xref:homepage-yaml.adoc[Homepage YAML reference]: every key in `src/data/homepage.yaml`, where it appears, and how it is rendered.
 
 == Useful Commands
 

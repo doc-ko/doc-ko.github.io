@@ -1,0 +1,248 @@
+= Homepage YAML Reference
+:description: Reference for every key in src/data/homepage.yaml.
+
+`src/data/homepage.yaml` holds the homepage copy.
+The keys are specific to this site: they are not a standard format, and they exist only because `src/pages/index.astro` and the components in `src/components/` read them by name.
+This page lists every key, where it appears on the page, and how its value is rendered.
+
+== How The File Is Used
+
+* `src/data/homepage.js` parses the YAML and exports it as `homepage`.
+* `src/pages/index.astro` destructures the top-level sections and passes them to components.
+* Components render the values.
+Most text goes through Markdown; a few values are plain text.
+
+If you rename a key or remove a section, the matching text disappears from the page or the build fails.
+Change values freely, add or remove list items, but keep key names and nesting as documented here.
+
+== Value Types
+
+Markdown (inline)::
+Rendered with `MarkdownInline.astro`.
+Links, emphasis, and inline code work.
+The result is not wrapped in a paragraph, so keep it to one line.
+
+Markdown (block)::
+Rendered with `MarkdownCopy.astro`.
+Paragraphs, lists, links, emphasis, and inline code work.
+
+Plain::
+Used as-is.
+No Markdown is processed.
+
+Raw HTML is not allowed in Markdown values.
+
+== Top-Level Keys
+
+[cols="1,3",options="header"]
+|===
+| Key | Purpose
+
+| `meta`
+| Browser title and search description.
+
+| `hero`
+| Opening section: kicker, headline, lede, status card, top links, margin note.
+
+| `sections`
+| Numbers, headings, and notes for the numbered sections.
+
+| `fields`
+| Cards in section 01.
+
+| `propositions`
+| Definition-style blocks in section 02.
+
+| `garden`
+| Closing section and its links.
+|===
+
+== meta
+
+[cols="1,1,3",options="header"]
+|===
+| Key | Type | Where it appears
+
+| `meta.title`
+| Plain
+| Browser tab title.
+
+| `meta.description`
+| Plain
+| Search engine description.
+|===
+
+== hero
+
+[cols="1,1,3",options="header"]
+|===
+| Key | Type | Where it appears
+
+| `hero.kicker`
+| Markdown (inline)
+| Small line above the headline.
+
+| `hero.headline`
+| Markdown (inline)
+| Page heading (`h1`).
+
+| `hero.lede`
+| Markdown (block)
+| Paragraph under the headline.
+
+| `hero.lemma.label`
+| Markdown (inline)
+| Label on the card under the lede.
+
+| `hero.lemma.notation`
+| Plain
+| Monospace text beside the card label.
+
+| `hero.lemma.body`
+| Markdown (block)
+| Text inside the card.
+
+| `hero.links`
+| List
+| Row of links under the card. Each item has `label` and `href`, both plain.
+
+| `hero.margin.label`
+| Markdown (inline)
+| Label of the margin note beside the hero diagram.
+
+| `hero.margin.body`
+| Markdown (block)
+| Text of that margin note.
+|===
+
+== sections
+
+`sections` has two entries: `fields` and `method`.
+Each is a section heading, rendered by `SectionHeading.astro`.
+
+[cols="1,1,3",options="header"]
+|===
+| Key | Type | Where it appears
+
+| `sections.<name>.number`
+| Markdown (inline)
+| Section number above the heading.
+
+| `sections.<name>.title`
+| Markdown (inline)
+| Section heading (`h2`).
+
+| `sections.<name>.note`
+| Markdown (block)
+| Short paragraph under the heading.
+
+|===
+
+The mapping is:
+
+* `sections.fields`: section 01, with the field cards.
+* `sections.method`: section 02, with the proposition blocks.
+
+== fields
+
+A list of cards in section 01.
+Each item:
+
+[cols="1,1,3",options="header"]
+|===
+| Key | Type | Meaning
+
+| `symbol`
+| Plain
+| Large glyph on the card.
+
+| `title`
+| Markdown (inline)
+| Card heading.
+
+| `description`
+| Markdown (block)
+| Card text.
+
+| `accent`
+| Plain
+| Colour of the symbol. See <<accents>>.
+|===
+
+The number of cards follows the list.
+
+== propositions
+
+A list of blocks in section 02.
+Each item:
+
+[cols="1,1,3",options="header"]
+|===
+| Key | Type | Meaning
+
+| `kind`
+| Markdown (inline)
+| Label such as "Definition". Any text works.
+
+| `title`
+| Markdown (inline)
+| Block heading.
+
+| `notation`
+| Plain
+| Monospace text beside the label. Optional.
+
+| `body`
+| Markdown (block)
+| Block text.
+
+| `accent`
+| Plain
+| Colour of the label. Defaults to `amber`. See <<accents>>.
+|===
+
+== garden
+
+The closing section.
+
+[cols="1,1,3",options="header"]
+|===
+| Key | Type | Where it appears
+
+| `garden.number`
+| Markdown (inline)
+| Small line above the heading.
+
+| `garden.heading`
+| Markdown (inline)
+| Heading (`h2`).
+
+| `garden.note`
+| Markdown (block)
+| Paragraph under the heading.
+
+| `garden.links`
+| List
+| Row of links. Each item has `label` and `href`, both plain.
+|===
+
+[[accents]]
+== Accent Values
+
+`accent` accepts `amber`, `cyan`, or `violet`.
+These match the colour variables at the top of `src/styles/global.css`.
+Any other value, including `paper` or leaving it out, falls back to the default text colour, except in `propositions` where the default is `amber`.
+
+== Not In The YAML
+
+These pieces of the homepage are fixed in code:
+
+* Text inside the hero SVG drawing in `src/components/AnimatedDiagram.astro`.
+* The caption words under the hero diagram ("curve", "syntax", "state", "proof").
+* Header navigation (`src/components/Navigation.astro`) and footer (`src/components/Footer.astro`).
+
+== Adding A New Key
+
+. Add the key to `src/data/homepage.yaml`.
+. Read it in `src/pages/index.astro` or the relevant component.
+. Add a row to this page, including whether it is rendered as Markdown or plain text.

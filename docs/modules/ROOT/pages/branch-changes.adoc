@@ -6,7 +6,7 @@ This document describes the functional changes in the `ai-rewrite` branch compar
 == Summary
 
 The branch turns the site from a lightly customised Astro tutorial blog into a more intentional personal site for technical writing.
-The new direction is a dark, mathematical-notebook style: restrained typography, symbolic diagrams, margin notes, writing samples, and a homepage that behaves more like a table of contents than a portfolio landing page.
+The new direction is a dark, mathematical-notebook style: restrained typography, symbolic diagrams, margin notes, and a homepage that behaves more like a table of contents than a portfolio landing page.
 
 == Main Website Changes
 
@@ -29,10 +29,9 @@ The branch adds small, focused Astro components under `src/components/`:
 
 * `HomeHero.astro` renders the homepage hero and diagram stack.
 * `AnimatedDiagram.astro` renders the animated SVG diagram.
-* `FieldDiagram.astro` renders the field graph and field cards.
+* `FieldDiagram.astro` renders the field cards.
 * `SectionHeading.astro` renders numbered section headings.
 * `MarginNote.astro` renders side notes.
-* `WritingList.astro` renders selected homepage writing links.
 * `NoteBlock.astro` renders the definition/proposition cards.
 * `MarkdownCopy.astro` and `MarkdownInline.astro` render Markdown-backed homepage copy while preserving the existing component structure.
 
@@ -58,14 +57,13 @@ The shared site frame has been updated:
 
 * `src/layouts/BaseLayout.astro` now handles metadata, skip link, shared header, shared footer, and optional hidden page title support.
 * `src/components/Header.astro` and `src/components/Navigation.astro` now expose a concise primary navigation: Home, Work, About, Contact.
-* `src/components/Footer.astro` now groups blog, tag, contact, LinkedIn, GitHub, repository, and docs links.
+* `src/components/Footer.astro` now shows the copyright line and four buttons: LinkedIn, GitHub, Repo, and Docs.
 * `src/scripts/menu.js` supports the responsive mobile navigation.
 
 === Work Samples
 
-The old hidden portfolio pages were replaced by a visible `Work` section:
+The old hidden portfolio pages were replaced by two Markdown work samples. The Work index page was later removed, so they are not linked from the site:
 
-* `src/pages/work/index.astro` lists Markdown work samples.
 * `src/pages/work/api-docs-snippet.md` adds an API documentation sample.
 * `src/pages/work/redoc-openapi.md` adds an OpenAPI to Redoc workflow sample.
 
@@ -83,7 +81,7 @@ Work sample metadata is read from frontmatter fields such as `role`, `tools`, `a
 === About Page And Drafts
 
 The About page has been rewritten to focus on developer-facing documentation, technical writing, and engineering fluency.
-The profile image was renamed from `dp.jpg` to `_dp.jpg`.
+The profile image was removed from the About page.
 
 The chess-family page was moved under `src/pages/_drafts/`, so Astro will not publish it as a live route.
 

@@ -40,11 +40,12 @@ That file controls most homepage words, labels, and links:
 
 * `meta`: browser title and search description.
 * `hero`: opening label, headline, lede, lemma, top links, and margin note.
-* `sections`: section numbers, headings, notes, and margin notes.
-* `fields`: the four subject cards below the field diagram.
-* `writing`: selected homepage links.
+* `sections`: section numbers, headings, and notes.
+* `fields`: the subject cards in section 01.
 * `propositions`: definition/proposition/corollary blocks.
 * `garden`: closing section text and links.
+
+For every key, where it appears, and whether it is Markdown or plain text, see xref:homepage-yaml.adoc[].
 
 Change string values freely, but keep the object shape intact.
 Homepage copy strings support Markdown for links, emphasis, inline code, paragraphs, and lists.
@@ -73,8 +74,6 @@ To add a hero link:
 ----
 hero:
   links:
-    - label: "writing samples"
-      href: "/work/"
     - label: "about"
       href: "/about/"
     - label: "email"
@@ -83,7 +82,7 @@ hero:
       href: "https://github.com/doc-ko"
 ----
 
-Use site-relative links for internal pages, such as `/work/`.
+Use site-relative links for internal pages, such as `/about/`.
 Use full URLs for external sites.
 Use `mailto:` for email links.
 
@@ -99,7 +98,6 @@ The current navigation is:
 ----
 <div class="nav-links" id="primary-navigation">
     <a href="/">Home</a>
-    <a href="/work/">Work</a>
     <a href="/about/">About</a>
     <a href="mailto:yarn@docko.dev">Contact</a>
 </div>
@@ -114,13 +112,14 @@ If you add a new page, add its link here only after the page exists under `src/p
 
 Edit `src/components/Footer.astro`.
 
-Use normal `<a>` tags for internal links and `LinkButton` for button-style links:
+The footer holds the copyright line and a row of `LinkButton` links:
 
 [source,astro]
 ----
-<a href="/blog/">Blog</a>
 <LinkButton link="https://github.com/doc-ko" text="GitHub" />
 ----
+
+Add or remove `LinkButton` lines to change the buttons.
 
 `LinkButton.astro` automatically adds `target="_blank"` and `rel="noreferrer"` for links that start with `http`.
 
@@ -145,14 +144,9 @@ tags: ["about"]
 Keep the frontmatter block.
 The body below it is normal Markdown.
 
-The profile image currently lives at `src/pages/about/_dp.jpg` and is referenced like this:
-
-[source,md]
-----
-![Karl Oberio](./_dp.jpg)
-----
-
-Replace that file if you want a new image, or change the Markdown if you want to use a different filename.
+The page currently has no profile image.
+To add one, put the file beside the Markdown (for example `src/pages/about/photo.jpg`) and reference it with `![Karl Oberio](./photo.jpg)`.
+Prefix the filename with an underscore only if Astro should not treat it as a page.
 
 == 7. Add A Blog Post
 
@@ -203,7 +197,7 @@ Use the richer work-sample frontmatter:
 layout: '../../layouts/MarkdownPostLayout.astro'
 title: 'My API Guide'
 pubDate: 2026-05-09
-description: 'A concise description for the Work index and page metadata.'
+description: 'A concise description for page metadata.'
 author: Karl Oberio
 tags: ["work", "api-docs", "technical-writing"]
 role: 'Technical writer'
@@ -217,9 +211,8 @@ outcome: 'A clearer onboarding path for new integrators'
 Explain what the sample demonstrates.
 ----
 
-The Work index at `src/pages/work/index.astro` automatically lists non-draft Markdown files in `src/pages/work/`, sorted by `pubDate` from newest to oldest.
-
-Use `draft: true` if a work sample should not appear yet.
+There is currently no Work index page, so nothing on the site links to the existing samples.
+They are still published at their own URLs, such as `/work/api-docs-snippet/`.
 
 == 9. Customise The Homepage Sections
 
@@ -229,13 +222,12 @@ For structural changes, edit `src/pages/index.astro`.
 It imports the homepage data and renders components in this order:
 
 . `HomeHero`
-. fields section with `SectionHeading`, `FieldDiagram`, and `MarginNote`
-. writing section with `WritingList`
-. method section with `NoteBlock` cards and an inline proof-tree SVG
+. fields section with `SectionHeading` and `FieldDiagram` (the cards)
+. method section with `SectionHeading` and `NoteBlock` cards
 . closing garden section
 
 If you remove or rename a property in `homepage.yaml`, update the component that reads it.
-For example, `WritingList.astro` expects every writing item to have `kind`, `title`, `href`, `description`, `notation`, and `accent`.
+For example, `FieldDiagram.astro` expects every field item to have `symbol`, `title`, `description`, and `accent`.
 
 == 10. Change Colours And Typography
 
@@ -274,11 +266,7 @@ Those elements all rely on the same variables.
 
 == 11. Change The Diagrams
 
-The diagrams are inline SVG inside Astro components:
-
-* Hero diagram: `src/components/AnimatedDiagram.astro`
-* Field diagram: `src/components/FieldDiagram.astro`
-* Proof tree panel: inline SVG inside `src/pages/index.astro`
+The one diagram is the hero drawing, an inline SVG in `src/components/AnimatedDiagram.astro`.
 
 The animation styles live in `src/styles/global.css`.
 Search for these selectors:
@@ -286,8 +274,6 @@ Search for these selectors:
 * `.trace`
 * `.vector-field`
 * `.state-machine`
-* `.field-link`
-* `.proof-tree-panel`
 * `@keyframes`
 
 When editing SVG, keep the `title` and accessible labels in place so the diagrams remain understandable to assistive technology.

@@ -2,11 +2,12 @@
 
 Most homepage content is in `homepage.yaml`.
 
+The full key reference lives in the Antora docs: `docs/modules/ROOT/pages/homepage-yaml.adoc`.
+
 - `meta`: browser title and search description.
 - `hero`: opening headline, short note, lemma, and top links.
-- `sections`: section headings and margin notes.
-- `fields`: the four field labels below the first diagram.
-- `writing`: homepage writing links.
+- `sections`: section headings and notes.
+- `fields`: the subject cards in section 01.
 - `propositions`: definition/proposition blocks.
 - `garden.links`: closing navigation links.
 
