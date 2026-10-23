@@ -227,7 +227,7 @@ It imports the homepage data and renders components in this order:
 . closing garden section
 
 If you remove or rename a property in `homepage.yaml`, update the component that reads it.
-For example, `FieldDiagram.astro` expects every field item to have `symbol`, `title`, `description`, and `accent`.
+For example, `FieldDiagram.astro` expects every field item to have `icon`, `title`, `description`, and `accent`.
 
 == 10. Change Colours And Typography
 
@@ -266,37 +266,53 @@ Those elements all rely on the same variables.
 
 == 11. Change The Field Emblem
 
-The four large symbols in the hero are the field emblem, rendered by `src/components/FieldEmblem.astro`.
-It reads the same `fields` list as the cards in section 01, so changing a field's `symbol`, `title`, or `accent` in `src/data/homepage.yaml` updates both.
+The four large drawings in the hero are the field emblem, rendered by `src/components/FieldEmblem.astro`.
+It reads the same `fields` list as the cards in section 01.
+Each field's `icon` picks its drawing, and its `accent` picks the colour; see xref:homepage-yaml.adoc[] for the allowed values.
+
+=== The symbols are paths, not text
+
+The symbols are SVG paths, so they look the same on every device and do not depend on installed fonts.
+The outlines live in `src/lib/glyphs.js`, which is generated.
+It holds the path, ink bounds and advance of each glyph, in em units.
+
+To regenerate it, for example to change a glyph:
+
+. Collect the source fonts in one folder: `STIXTwoText.ttf`, `STIXTwoText-Italic.ttf`, `STIXTwoMath.otf` (all STIX Two, SIL Open Font Licence) and a regular JetBrains Mono renamed `JetBrainsMono.woff2`.
+. Install fontTools: `pip install fonttools brotli`.
+. Run `python3 scripts/extract-glyphs.py FONT_FOLDER`.
+
+The glyph list is at the top of `scripts/extract-glyphs.py`.
+The font licences are in `src/lib/glyph-licenses/`.
+Adding a new icon means adding its glyphs to that list, giving it a block in `FieldEmblem.astro`, adding an entry in `src/lib/icons.js` for the small version used on the section 01 cards, and adding its hover rules in `global.css`.
+
+=== Hover animations
 
 The styles are the `.field-emblem` rules in `src/styles/global.css`.
 Each tile takes its colour from its `accent`, using the same colour variables as the rest of the site.
-
-Each tile also has a hover animation.
 The tiles are not links, so they show a normal cursor and do nothing when clicked.
-The animation is chosen by `accent`, not by the symbol, so each one is written for the symbol currently using that colour:
+The animation belongs to the `icon`, so reordering or recolouring the fields does not change it:
 
 [cols="1,3",options="header"]
 |===
-| Accent | Hover animation
+| Icon | Hover animation
 
-| `amber`
-| The symbol shrinks and settles as the nucleus of an unlabelled syllable tree for /jəp/: two upside-down V shapes, with onset j and coda p, drawn bottom-up around it. When the pointer leaves, the tree clears away before the symbol grows back. The tree is drawn in `FieldEmblem.astro` and appears on the tile whose accent is `amber`; it assumes that tile's symbol is ə.
+| `linguistics`
+| The ə shrinks and settles as the nucleus of an unlabelled syllable tree for /jəp/: two upside-down V shapes, with onset j and coda p, drawn bottom-up around it. When the pointer leaves, the tree clears away before the symbol grows back.
 
-| `violet`
-| The sigma becomes the sum of k = 0 to infinity of ♥^k, typeset like display maths: a serif sigma in the violet accent, ∞ above, italic k=0 below, and a red SVG heart with a superscript k. The whole expression is centred in the tile. The extra markup is in `FieldEmblem.astro` and is added to the tile whose accent is `violet`; the serif font stack is set in `global.css`.
+| `mathematics`
+| The sigma becomes the sum of k = 0 to infinity of ♥^k, typeset like display maths: ∞ stroked in above, italic k = 0 written below, a red heart filling from the bottom, and a superscript k. The whole expression is centred in the tile.
 
-| `cyan`
-| The symbol moves to the lower left and a thought bubble is drawn to its upper right: a trail of two small circles, the cloud outline, then three dots that count nothing, `.`, `..`, `...` on a loop while the pointer stays there. It clears away before the symbol returns. The bubble is drawn in `FieldEmblem.astro` and appears on the tile whose accent is `cyan`.
+| `logic`
+| The λ moves to the lower left and a thought bubble is drawn to its upper right: a trail of two small circles, the cloud outline, then three dots. While the pointer stays there the dots loop: `...`, nothing, `.`, `..`, `...`. It clears away before the λ returns.
 
-| `paper`
-| The symbol is set in a terminal-style monospace font. A cursor line is drawn out after it and then blinks, and the symbol and cursor are centred together.
+| `computing`
+| A cursor line is drawn out after the `$` prompt and then blinks, and the prompt and cursor are centred together.
 |===
 
-On hover every tile hides its label, and the symbol (or the whole drawing) moves to the tile centre.
+On hover every tile hides its label, and the drawing moves to the tile centre.
 The drawings are built, not faded: lines are stroked in, text is written left to right, and the heart fills from the bottom.
-If you reorder or recolour the fields, the animations follow the `accent`.
-They are switched off for visitors who prefer reduced motion.
+Everything is switched off for visitors who prefer reduced motion.
 
 == 12. Add A New Page
 

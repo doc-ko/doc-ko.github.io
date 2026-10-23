@@ -28,7 +28,7 @@ Homepage copy fields support Markdown through `src/components/MarkdownCopy.astro
 The branch adds small, focused Astro components under `src/components/`:
 
 * `HomeHero.astro` renders the homepage hero and emblem stack.
-* `FieldEmblem.astro` renders the four field symbols in the hero.
+* `FieldEmblem.astro` renders the four field icons in the hero as SVG paths; `src/lib/glyphs.js` holds the outlines.
 * `FieldDiagram.astro` renders the field cards.
 * `SectionHeading.astro` renders numbered section headings.
 * `MarginNote.astro` renders side notes.

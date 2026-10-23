@@ -146,16 +146,16 @@ The mapping is:
 == fields
 
 A list of cards in section 01.
-The same list also draws the four-tile emblem in the hero, which uses `symbol`, `title`, and `accent`.
+The same list also draws the four-tile emblem in the hero, which uses `icon`, `title`, and `accent`.
 Each item:
 
 [cols="1,1,3",options="header"]
 |===
 | Key | Type | Meaning
 
-| `symbol`
+| `icon`
 | Plain
-| Large glyph on the card.
+| Which drawing the field uses, on the card and in the hero emblem: `linguistics`, `mathematics`, `logic`, or `computing`. The drawings are SVG paths in code, not text, so the YAML only names them.
 
 | `title`
 | Markdown (inline)
@@ -167,7 +167,7 @@ Each item:
 
 | `accent`
 | Plain
-| Colour of the symbol. See <<accents>>.
+| Colour of the drawing. See <<accents>>.
 |===
 
 The number of cards follows the list.
@@ -232,9 +232,9 @@ The closing section.
 
 `accent` accepts `amber`, `cyan`, or `violet`.
 These match the colour variables at the top of `src/styles/global.css`.
-`paper` is also valid for `fields`: the symbol keeps the default text colour, and its hover animation is a blinking cursor.
+`paper` is also valid for `fields`: the drawing keeps the default text colour.
 Any other value, or leaving it out, falls back to the default text colour, except in `propositions` where the default is `amber`.
-In `fields`, the accent also selects the hover animation on the hero emblem; see xref:customising-the-site.adoc[].
+The hover animation on the hero emblem belongs to the `icon`, not the accent; see xref:customising-the-site.adoc[].
 
 == Not In The YAML
 
