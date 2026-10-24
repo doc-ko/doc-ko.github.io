@@ -3,9 +3,9 @@ import { siteDescription } from '../../lib/site.js';
 
 export async function GET() {
     const png = await renderCard({
-        title: 'Karl Oberio',
+        title: 'oberio.me',
         description: siteDescription,
-        byline: ['By Karl Oberio'],
+        byline: ['By Karl Oberio (\'doc-ko\')'],
     });
     return new Response(png, { headers: { 'Content-Type': 'image/png' } });
 }

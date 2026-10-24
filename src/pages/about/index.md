@@ -2,7 +2,7 @@
 layout: '../../layouts/MarkdownLayout.astro'
 title: 'About'
 pubDate: 2024-01-16
-description: 'Karl Oberio is a technical writer focused on developer-facing documentation, with enough engineering fluency to ask better questions.'
+description: 'About oberio.me'
 author: Karl Oberio
 tags: ["about"]
 origin: ai
