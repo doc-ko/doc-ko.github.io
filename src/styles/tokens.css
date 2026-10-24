@@ -1,0 +1,85 @@
+/* Design tokens. Every colour on the site is defined here and nowhere else.
+   Each token is light-dark(light, dark); the theme picks which side applies.
+   Default: follow the system. [data-theme] on <html> overrides it; the inline
+   script in BaseLayout and the header toggle set that attribute. */
+@layer tokens, grid, devices, pages;
+
+@layer tokens {
+    :root {
+        color-scheme: light dark;
+
+        /* Paper and ink. Light is "recycled grey" with graphite ink. */
+        --bg: light-dark(#e8e6e1, #071015);
+        --bg-ruled: light-dark(#e1dfd9, #0a1319);
+        --surface: light-dark(#efede9, #101a21);
+        --surface-muted: light-dark(#dfddd7, #0d171f);
+        --surface-raised: light-dark(#f3f2ee, #14212a);
+        --ink: light-dark(#2a2a2c, #f0e7d2);
+        --ink-strong: light-dark(#141416, #fff6de);
+        --muted: light-dark(#504e4a, #b9ad94);
+        --muted-2: light-dark(#5b5853, #8e826e);
+        --warm: light-dark(#66512f, #d8bd85);
+
+        /* Fields and links */
+        --accent: light-dark(#945500, #e7ad4f);
+        --accent-dark: light-dark(#774200, #ffd27a);
+        --cyan: light-dark(#0b5f70, #65d7ea);
+        --violet: light-dark(#5a3ca8, #b99cff);
+        --accent-soft: light-dark(rgb(148 85 0 / 12%), rgb(231 173 79 / 13%));
+        --cyan-soft: light-dark(rgb(11 95 112 / 12%), rgb(101 215 234 / 13%));
+        --violet-soft: light-dark(rgb(90 60 168 / 12%), rgb(185 156 255 / 13%));
+        --focus: var(--cyan);
+        --link-line: light-dark(rgb(119 66 0 / 45%), rgb(231 173 79 / 45%));
+
+        /* Lines and fills */
+        --line: light-dark(rgb(42 40 37 / 16%), rgb(230 211 168 / 17%));
+        --line-strong: light-dark(rgb(42 40 37 / 34%), rgb(244 214 154 / 32%));
+        --paper-soft: light-dark(rgb(42 40 37 / 7%), rgb(240 231 210 / 11%));
+        --grid-line: light-dark(rgb(42 40 37 / 5%), rgb(240 231 210 / 3%));
+        --sheen: light-dark(rgb(255 255 255 / 30%), rgb(240 231 210 / 4%));
+        --header-bg: light-dark(rgb(232 230 225 / 82%), rgb(7 16 21 / 82%));
+        --card-bg: light-dark(rgb(243 242 238 / 72%), rgb(16 26 33 / 72%));
+        --panel-bg: light-dark(rgb(223 221 215 / 78%), rgb(9 18 24 / 78%));
+        --panel-bg-2: light-dark(rgb(243 242 238 / 62%), rgb(16 26 33 / 62%));
+        --code-bg: light-dark(#f3f2ee, #05090d);
+        --shadow: 0 22px 60px light-dark(rgb(42 40 37 / 16%), rgb(0 0 0 / 22%));
+        --shadow-ink: light-dark(rgb(42 40 37 / 10%), rgb(0 0 0 / 12%));
+
+        /* From the brief; used by the grid and pen work (#17). */
+        --dots: light-dark(rgb(60 55 45 / 20%), rgb(240 231 210 / 13%));
+        --pen: light-dark(rgb(42 40 37 / 56%), rgb(240 231 210 / 42%));
+        --pencil: light-dark(rgb(70 66 60 / 40%), rgb(240 231 210 / 24%));
+        --hl-amber: light-dark(rgb(255 196 40 / 30%), rgb(231 173 79 / 24%));
+
+        /* Illustration colours (field emblems) */
+        --heart-top: #e45a50;
+        --heart-bottom: #a9292b;
+        --heart-stroke: light-dark(#7d1d20, #7d1d20);
+
+        /* Which Shiki theme variable code uses. */
+        --shiki: light-dark(var(--shiki-light), var(--shiki-dark));
+
+        --ai-underline-color: light-dark(rgb(80 78 74 / 55%), rgb(185 173 148 / 45%));
+
+        /* Non-colour tokens */
+        --max-width: 1120px;
+        --notebook-width: 1080px;
+        --content-width: 70ch;
+        --reading-width: 43rem;
+        --serif: "Iowan Old Style", "STIX Two Text", "Palatino Linotype", Palatino, Georgia, serif;
+        --mono: "SFMono-Regular", "Cascadia Mono", "Liberation Mono", ui-monospace, Menlo, Consolas, monospace;
+        --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        /* How text marked as AI-generated looks; see [data-origin="ai"]. */
+        --ai-underline-style: dashed;
+        --ai-underline-thickness: 0.05em;
+        --ai-underline-offset: 0.26em;
+    }
+
+    :root[data-theme="light"] {
+        color-scheme: light;
+    }
+
+    :root[data-theme="dark"] {
+        color-scheme: dark;
+    }
+}

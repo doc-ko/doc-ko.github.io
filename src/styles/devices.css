@@ -1,0 +1,625 @@
+@layer devices {
+/* Text declared AI-generated with :ai[...], :::ai, or `origin: ai`. Change the
+       tokens in :root to restyle it, or replace this rule for a different marker. */
+    [data-origin="ai"] {
+        text-decoration-line: underline;
+        text-decoration-style: var(--ai-underline-style);
+        text-decoration-color: var(--ai-underline-color);
+        text-decoration-thickness: var(--ai-underline-thickness);
+        text-underline-offset: var(--ai-underline-offset);
+    }
+
+    [data-origin="ai"] a {
+        text-decoration-style: var(--ai-underline-style);
+        text-decoration-thickness: var(--ai-underline-thickness);
+        text-underline-offset: var(--ai-underline-offset);
+    }
+
+    /* :ai[...]{note="..."} shows its note on hover and focus. */
+    .ai-text[tabindex] {
+        position: relative;
+        cursor: help;
+    }
+
+    .ai-text[tabindex]:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 4px;
+    }
+
+    .ai-note {
+        position: absolute;
+        top: calc(100% + 0.5rem);
+        left: 0;
+        z-index: 10;
+        width: max-content;
+        max-width: 17rem;
+        border: 1px solid var(--line-strong);
+        border-radius: 4px;
+        padding: 0.5rem 0.7rem;
+        background: var(--surface-raised);
+        box-shadow: var(--shadow);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 0.85rem;
+        font-style: normal;
+        line-height: 1.45;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 120ms ease, visibility 120ms;
+    }
+
+    .ai-text:is(:hover, :focus) > .ai-note {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Narrow screens have no room beside the word, so pin the note to the bottom. */
+    @media (max-width: 600px) {
+        .ai-note {
+            position: fixed;
+            top: auto;
+            right: 1rem;
+            bottom: 1rem;
+            left: 1rem;
+            width: auto;
+            max-width: none;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ai-note {
+            transition: none;
+        }
+    }
+
+    /* An inherited underline can't be switched off, but it skips inline blocks,
+       so this keeps code blocks readable inside marked text. */
+    [data-origin="ai"] pre {
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .eyebrow,
+    .panel-label,
+    .card-kicker,
+    .section-number,
+    .margin-note__label {
+        color: var(--warm);
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .lemma-card,
+    .note-block,
+    .hero-panel,
+    .work-card,
+    .contact-callout,
+    .entry-details {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--card-bg);
+        box-shadow: 0 12px 40px var(--shadow-ink);
+    }
+
+    .lemma-card {
+        max-width: 650px;
+        margin-top: 1.6rem;
+        padding: 1rem 1.1rem;
+    }
+
+    .lemma-card__label,
+    .note-block__label {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.65rem 1rem;
+        color: var(--warm);
+        font-family: var(--mono);
+        font-size: 0.75rem;
+    }
+
+    .lemma-card__body,
+    .note-block__body {
+        margin-top: 0.85rem;
+        color: var(--muted);
+    }
+
+    .quiet-links,
+    .garden-links,
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem 1rem;
+    }
+
+    .quiet-links {
+        margin-top: 1.5rem;
+    }
+
+    .quiet-links a,
+    .garden-links a,
+    .footer-links > a:not(.button-link) {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        text-decoration: none;
+    }
+
+    .quiet-links a::before,
+    .garden-links a::before {
+        content: "↳ ";
+        color: var(--cyan);
+    }
+
+    .quiet-links a:hover,
+    .garden-links a:hover,
+    .footer-links > a:not(.button-link):hover {
+        color: var(--ink-strong);
+    }
+
+    .field-emblem {
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: clamp(0.75rem, 2vw, 1.25rem);
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(0.6rem, 1.5vw, 1rem);
+        background:
+            linear-gradient(180deg, var(--sheen), transparent),
+            var(--panel-bg);
+    }
+
+    /* A tile is a 100 x 100 drawing plus a label. The tiles are decorative, so
+       they have no pointer cursor and nothing to select. */
+    .field-emblem__tile {
+        position: relative;
+        min-width: 0;
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        aspect-ratio: 1;
+        background: var(--paper-soft);
+        color: var(--ink-strong);
+        cursor: default;
+        user-select: none;
+    }
+
+    .field-emblem__tile--amber {
+        background: var(--accent-soft);
+        color: var(--accent);
+    }
+
+    .field-emblem__tile--cyan {
+        background: var(--cyan-soft);
+        color: var(--cyan);
+    }
+
+    .field-emblem__tile--violet {
+        background: var(--violet-soft);
+        color: var(--violet);
+    }
+
+    .field-emblem__icon {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .field-emblem__label {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 66%;
+        text-align: center;
+        color: var(--muted-2);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: opacity 0.25s ease 0.15s;
+    }
+
+    /* Symbols that move: rest and hover placements arrive as custom properties
+       from FieldEmblem.astro. */
+    .glyph {
+        fill: currentcolor;
+        transform: translate(calc(var(--rx) * 1px), calc(var(--ry) * 1px)) scale(var(--rs));
+    }
+
+    .syllable-tree__edge,
+    .sum__inf,
+    .thought-bubble__cloud,
+    .thought-bubble__trail {
+        fill: none;
+        stroke: currentcolor;
+        stroke-linejoin: round;
+    }
+
+    .syllable-tree__edge {
+        stroke-width: 0.8;
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+    }
+
+    .syllable-tree__leaf,
+    .sum__lower,
+    .sum__exp {
+        fill: currentcolor;
+    }
+
+    .syllable-tree__leaf {
+        opacity: 0;
+    }
+
+    .sum__lower {
+        clip-path: inset(-20% 100% -20% 0);
+    }
+
+    .sum__exp {
+        clip-path: inset(-20% 100% -20% 0);
+    }
+
+    /* The summation reads like display maths: serif sigma, limits above and
+       below, a red heart as the summand. */
+    .sum__inf {
+        stroke-width: 1.5;
+        stroke-linecap: butt;
+        stroke-dasharray: 1 2;
+        stroke-dashoffset: 1.02;
+    }
+
+    .sum__heart {
+        fill: url("#sum-heart-fill");
+        stroke: var(--heart-stroke);
+        stroke-width: 1.4;
+        stroke-linejoin: round;
+        clip-path: inset(100% -20% 0 -20%);
+    }
+
+    .thought-bubble__cloud,
+    .thought-bubble__trail {
+        stroke-width: 0.8;
+    }
+
+    .thought-bubble__cloud {
+        stroke-dasharray: 1 2;
+        stroke-dashoffset: 1.02;
+    }
+
+    .thought-bubble__dot {
+        fill: currentcolor;
+    }
+
+    .thought-bubble__trail,
+    .thought-bubble__dot {
+        transform: scale(0);
+        transform-box: fill-box;
+        transform-origin: center;
+    }
+
+    .cursor {
+        fill: currentcolor;
+        transform: scaleX(0);
+        transform-box: fill-box;
+        transform-origin: left center;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        /* Every tile: the label steps aside on hover. The drawing clears away
+           first on unhover, then the symbol moves back and the label returns. */
+        .field-emblem__tile:hover .field-emblem__label {
+            opacity: 0;
+            transition-delay: 0s;
+        }
+
+        .field-emblem__tile--linguistics .field-emblem__label {
+            transition-delay: 0.5s;
+        }
+
+        .field-emblem__tile--mathematics .field-emblem__label {
+            transition-delay: 0.8s;
+        }
+
+        .field-emblem__tile--logic .field-emblem__label,
+        .field-emblem__tile--computing .field-emblem__label {
+            transition-delay: 0.7s;
+        }
+
+        .field-emblem__tile:hover .field-emblem__label {
+            transition-delay: 0s;
+        }
+
+        .glyph {
+            transition: transform 0.4s ease 0.35s;
+        }
+
+        .field-emblem__tile:hover .glyph {
+            transform: translate(calc(var(--hx) * 1px), calc(var(--hy) * 1px)) scale(var(--hs));
+            transition-delay: 0s;
+        }
+
+        /* linguistics: the schwa shrinks into the nucleus of a /jəp/ syllable
+           tree, drawn bottom-up around it */
+        .field-emblem__tile--linguistics .glyph {
+            transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.3, 1) 0.3s;
+        }
+
+        .syllable-tree__edge {
+            transition: stroke-dashoffset 0.3s ease;
+        }
+
+        .syllable-tree__leaf {
+            transition: opacity 0.3s ease;
+        }
+
+        .field-emblem__tile:hover .syllable-tree__edge {
+            stroke-dashoffset: 0;
+        }
+
+        .field-emblem__tile:hover .syllable-tree__leaf {
+            opacity: 1;
+        }
+
+        .field-emblem__tile:hover .syllable-tree__edge--rime {
+            transition-delay: 0.2s;
+        }
+
+        .field-emblem__tile:hover .syllable-tree__leaf--coda {
+            transition-delay: 0.25s;
+        }
+
+        .field-emblem__tile:hover .syllable-tree__edge--syllable,
+        .field-emblem__tile:hover .syllable-tree__leaf--onset {
+            transition-delay: 0.4s;
+        }
+
+        /* mathematics: the pieces are drawn in, not faded: the infinity is
+           stroked, the rest is written left to right, and the heart fills from the
+           bottom. On unhover they retract first; the sigma slides back after. */
+        .field-emblem__tile--mathematics .glyph {
+            transition: transform 0.35s ease 0.45s;
+        }
+
+        .sum__inf {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .sum__lower,
+        .sum__exp {
+            transition: clip-path 0.4s ease;
+        }
+
+        .sum__heart {
+            transition: clip-path 0.5s ease;
+        }
+
+        .field-emblem__tile:hover .sum__inf {
+            stroke-dashoffset: 0;
+            transition-delay: 0.15s;
+        }
+
+        .field-emblem__tile:hover .sum__lower {
+            clip-path: inset(-20% -20% -20% 0);
+            transition-delay: 0.3s;
+        }
+
+        .field-emblem__tile:hover .sum__heart {
+            clip-path: inset(-20% -20% -20% -20%);
+            transition-delay: 0.45s;
+        }
+
+        .field-emblem__tile:hover .sum__exp {
+            clip-path: inset(-20% -20% -20% 0);
+            transition-delay: 0.85s;
+        }
+
+        /* logic and philosophy: the lambda moves to the lower left and a thought
+           bubble is drawn to its upper right: the trail of small circles, then
+           the cloud, then the dots of the thought */
+        .thought-bubble__cloud {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .thought-bubble__trail,
+        .thought-bubble__dot {
+            transition: transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1);
+        }
+
+        .field-emblem__tile:hover .thought-bubble__cloud {
+            stroke-dashoffset: 0;
+            transition-delay: 0.35s;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__trail,
+        .field-emblem__tile:hover .thought-bubble__dot {
+            transform: scale(1);
+        }
+
+        .field-emblem__tile:hover .thought-bubble__trail--1 {
+            transition-delay: 0.1s;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__trail--2 {
+            transition-delay: 0.25s;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__dot--1 {
+            transition-delay: 0.8s;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__dot--2 {
+            transition-delay: 0.92s;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__dot--3 {
+            transition-delay: 1.04s;
+        }
+
+        /* once drawn, the dots keep going: ... then nothing, ., .., ... on a loop,
+           like a typing indicator. The loop starts after the last dot has popped
+           in, from the same scale, so the first frame is all three dots. */
+        .field-emblem__tile:hover .thought-bubble__dot--1 {
+            animation: bubble-dot-1 2.8s linear 1.3s infinite;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__dot--2 {
+            animation: bubble-dot-2 2.8s linear 1.3s infinite;
+        }
+
+        .field-emblem__tile:hover .thought-bubble__dot--3 {
+            animation: bubble-dot-3 2.8s linear 1.3s infinite;
+        }
+
+        /* computing: a terminal prompt; the cursor is drawn out as a line, then
+           blinks, and the pair is centred */
+        .cursor {
+            transition: transform 0.3s ease;
+        }
+
+        .field-emblem__tile:hover .cursor {
+            transform: scaleX(1);
+            transition-delay: 0.1s;
+            animation: emblem-blink 1s steps(1) 0.5s infinite;
+        }
+    }
+
+    @keyframes bubble-dot-1 {
+        0%,
+        20% {
+            transform: scale(1);
+        }
+        25%,
+        50% {
+            transform: scale(0);
+        }
+        55%,
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes bubble-dot-2 {
+        0%,
+        20% {
+            transform: scale(1);
+        }
+        25%,
+        75% {
+            transform: scale(0);
+        }
+        80%,
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes bubble-dot-3 {
+        0%,
+        20% {
+            transform: scale(1);
+        }
+        25%,
+        95% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes emblem-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .margin-note {
+        position: relative;
+        border-left: 1px solid var(--line-strong);
+        padding-left: 1rem;
+        color: var(--muted);
+        font-size: 0.96rem;
+    }
+
+    .margin-note::before {
+        content: "";
+        position: absolute;
+        top: 0.35rem;
+        left: -0.24rem;
+        width: 0.42rem;
+        height: 0.42rem;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px var(--bg);
+    }
+
+    .margin-note__body {
+        margin-top: 0.45rem;
+    }
+
+    .button-link {
+        min-height: 2.35rem;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.48rem 0.72rem;
+        background: transparent;
+        color: var(--ink);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        text-decoration: none;
+    }
+
+    .button-link:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+        color: var(--ink-strong);
+    }
+
+    .button-link--secondary {
+        color: var(--muted);
+    }
+
+    .button-link--secondary:hover {
+        border-color: var(--cyan);
+        background: var(--cyan-soft);
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 0.35rem 0.65rem;
+        background: transparent;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.84rem;
+        text-decoration: none;
+    }
+
+    .tag:hover {
+        border-color: var(--accent);
+        background: var(--accent-soft);
+        color: var(--ink-strong);
+    }
+}
