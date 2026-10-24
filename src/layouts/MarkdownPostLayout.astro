@@ -62,3 +62,19 @@ const detailItems = [
         </div>
     </article>
 </BaseLayout>
+
+<style is:global>
+    /* katex.min.css is not in a cascade layer, so it beats the layered grid rule
+       that gives display maths a whole unit of margin (grid.css). */
+    .entry-content .katex-display {
+        margin: var(--u) 0;
+    }
+
+    /* An inline block is skipped by the AI text decoration (devices.css), which
+       keeps display maths unmarked inside marked text. */
+    .entry-content[data-origin="ai"] .katex-display {
+        display: inline-block;
+        width: 100%;
+        vertical-align: top;
+    }
+</style>

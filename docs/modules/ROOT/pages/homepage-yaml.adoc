@@ -62,7 +62,7 @@ Do not write the address or a `mailto:` link here; see xref:customising-the-site
 ----
 hero:
   lede: >-
-    Apologies for the :ai[AInese]{note="Text with a dashed underline, like
+    Apologies for the :ai[AInese]{note="Text with lines above and below it, like
     this word, was written by AI."}; I'll get round to it at some point.
   note:
     body: |-

@@ -93,7 +93,7 @@ The keys are documented in xref:homepage-yaml.adoc[].
 === AI-Generated Text Marking
 
 Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin: ai` in a page's frontmatter.
-Marked text has a dashed underline.
+Marked text has a faint line above and below it, AI posts carry an `[AI]` tag in the blog list, and code blocks, display maths, images and notes get a cross-hatched strip with "AI" instead of the text marking.
 A marked phrase can carry a note that shows on hover, tap, or keyboard focus.
 `src/lib/remarkAiText.js` holds the plugin, and `src/lib/markdownPlugins.js` lists it with the other Markdown plugins.
 
@@ -182,7 +182,7 @@ Use this map when deciding where to make a change.
 | `src/data/contact.js`
 
 | Change how AI-marked text looks
-| `--ai-underline-*` variables in `src/styles/tokens.css` and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/devices.css`
+| `--ai-outline-*` variables in `src/styles/tokens.css` and the `[data-origin="ai"]`, `.ai-tag` and `.ai-note` rules in `src/styles/devices.css`
 
 | Check the grid
 | `?grid` on any page, or `npm run test:grid`

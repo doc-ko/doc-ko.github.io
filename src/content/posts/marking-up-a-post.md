@@ -85,3 +85,25 @@ A block with no language has no label.
 ```
 Plain text, no label.
 ```
+
+## Maths
+
+Maths is written in LaTeX between double dollar signs and drawn by KaTeX. A display equation sits on its own line.
+
+$$
+\int_0^1 x^2\,dx = \tfrac{1}{3}
+$$
+
+```markdown
+$$
+\int_0^1 x^2\,dx = \tfrac{1}{3}
+$$
+```
+
+A longer one shows how a display equation sits between paragraphs.
+
+$$
+\sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+$$
+
+The highlight shorthand leaves maths alone.
