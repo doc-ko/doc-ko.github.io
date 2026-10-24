@@ -131,7 +131,7 @@
         color: var(--ink-strong);
     }
 
-    .iconbtn > svg:not(.drawn-edge),
+    .iconbtn > svg:not(.drawn-edge, .icon-hatch),
     .hamburger__lines {
         position: absolute;
         top: var(--u);
@@ -157,9 +157,76 @@
         background-color: currentColor;
     }
 
+    /* The icon shows the current theme (aria-pressed is true in dark). On hover
+       it turns into the other one, and the box is hatched in that theme's
+       paper: the hatch gets the opposite colour-scheme, so --bg resolves to
+       the theme you would switch to. */
+    .theme-toggle__sun,
+    .theme-toggle__moon {
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: transform 0.35s ease, opacity 0.35s ease;
+    }
+
     .theme-toggle[aria-pressed="true"] .theme-toggle__sun,
     .theme-toggle[aria-pressed="false"] .theme-toggle__moon {
-        display: none;
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.4);
+    }
+
+    .theme-toggle:is(:hover, :focus-visible)[aria-pressed="true"] .theme-toggle__sun,
+    .theme-toggle:is(:hover, :focus-visible)[aria-pressed="false"] .theme-toggle__moon {
+        opacity: 1;
+        transform: none;
+    }
+
+    .theme-toggle:is(:hover, :focus-visible)[aria-pressed="true"] .theme-toggle__moon,
+    .theme-toggle:is(:hover, :focus-visible)[aria-pressed="false"] .theme-toggle__sun {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.4);
+    }
+
+    /* The hatching behind an icon (IconHatch): drawn in on hover and focus, and
+       kept while the menu is open. */
+    .icon-hatch {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(2 * var(--u));
+        height: calc(3 * var(--u));
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .icon-hatch path {
+        fill: none;
+        stroke: var(--ink);
+        stroke-opacity: 0.35;
+        stroke-width: 1px;
+        stroke-linecap: round;
+        stroke-dasharray: 1 2;
+        stroke-dashoffset: 1.02;
+        transition: stroke-dashoffset 0.2s ease calc(var(--i) * 12ms);
+    }
+
+    .iconbtn:is(:hover, :focus-visible) .icon-hatch path,
+    .hamburger[aria-expanded="true"] .icon-hatch path {
+        stroke-dashoffset: 0;
+    }
+
+    /* The theme toggle's hatching previews the other theme: it gets the opposite
+       colour-scheme, so --bg resolves to the theme you would switch to. */
+    .theme-toggle[aria-pressed="true"] .icon-hatch {
+        color-scheme: light;
+    }
+
+    .theme-toggle[aria-pressed="false"] .icon-hatch {
+        color-scheme: dark;
+    }
+
+    .theme-toggle .icon-hatch path {
+        stroke: var(--bg);
+        stroke-opacity: 0.5;
     }
 
     @media (min-width: 680px) {
@@ -398,6 +465,8 @@
         *::after {
             animation-duration: 0.001ms !important;
             animation-iteration-count: 1 !important;
+            transition-duration: 0.001ms !important;
+            transition-delay: 0s !important;
             scroll-behavior: auto !important;
         }
     }

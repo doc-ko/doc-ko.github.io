@@ -1,0 +1,17 @@
+---
+import { hatch } from '../lib/pen.js';
+
+// Hatching that fills an icon button's cell (2 x 3 units), one path per stroke
+// so the strokes can be drawn in one after another. Put it first in the button,
+// before the icon, so the icon sits in front. When it shows is set in pages.css.
+//
+//   name  seed: the same name always draws the same strokes
+const { name } = Astro.props;
+const strokes = hatch(name, { width: 48, height: 72, inset: 4 })
+    .split(/(?=M)/)
+    .filter(Boolean);
+---
+
+<svg class="icon-hatch" viewBox="0 0 48 72" aria-hidden="true">
+    {strokes.map((d, i) => <path d={d} pathLength="1" style={`--i: ${i}`} />)}
+</svg>
