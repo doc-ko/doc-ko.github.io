@@ -51,7 +51,7 @@ The user runs `npm run dev` themselves and uses it as their live preview.
 
 - `src/pages/`: routes. Markdown posts need frontmatter with at least one tag.
 - `src/components/`, `src/layouts/`: shared pieces
-- `src/styles/global.css`: all styling
+- `src/styles/`: all styling, in cascade layers: `tokens.css` (every colour, as `light-dark()` pairs), `grid.css`, `devices.css`, `pages.css`
 - `src/data/homepage.yaml`: homepage copy
 
 ## Documentation

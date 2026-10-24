@@ -25,7 +25,7 @@ Issues are public the moment they exist, so how much to confirm depends on who c
 - You are proposing issues (from TODOs, notes, or a review): list the candidates with a line each and let the user pick before creating anything.
 
 Search for duplicates first (`search_issues`, or `gh issue list --search`).
-Read the relevant code before writing a bug, so the issue can name the likely cause and the file. A bug report that points at `src/styles/global.css` is far easier to pick up than one that only describes the symptom.
+Read the relevant code before writing a bug, so the issue can name the likely cause and the file. A bug report that points at `src/styles/pages.css` is far easier to pick up than one that only describes the symptom.
 
 Never put the contact email address in an issue. The site stores it reversed in `src/data/contact.js` to dodge scrapers, and a public issue would defeat that.
 

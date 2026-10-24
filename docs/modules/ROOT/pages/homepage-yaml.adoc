@@ -272,7 +272,7 @@ The closing section.
 == Accent Values
 
 `accent` accepts `amber`, `cyan`, or `violet`.
-These match the colour variables at the top of `src/styles/global.css`.
+These match the colour variables in `src/styles/tokens.css`.
 `paper` is also valid for `fields`: the drawing keeps the default text colour.
 Any other value, or leaving it out, falls back to the default text colour, except in `propositions` where the default is `amber`.
 The hover animation on the hero emblem belongs to the `icon`, not the accent; see xref:customising-the-site.adoc[].

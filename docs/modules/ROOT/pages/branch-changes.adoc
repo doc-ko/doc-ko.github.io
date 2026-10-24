@@ -38,16 +38,17 @@ These components keep the homepage page file readable while leaving the copy in 
 
 === Visual System Refresh
 
-`src/styles/global.css` has been substantially expanded.
-It now defines:
+The styles are split under cascade layers into `src/styles/tokens.css` (colours and other variables), `grid.css` (base and page layout), `devices.css` (notes, cards, the field emblem, buttons, tags) and `pages.css` (header, footer, homepage and entry pages).
+Together they define:
 
-* Dark notebook palette and CSS variables.
+* A light ("recycled grey") and a dark palette, switched by the header toggle, as CSS variables.
 * Serif, sans, and monospace type roles.
 * Shared header, footer, buttons, tags, work cards, and content lists.
 * Homepage-specific notebook grids, the field emblem, field cards, and note blocks.
 * Responsive layouts for tablet and mobile widths.
 
-The key design variables are at the top of `src/styles/global.css`.
+The design variables are in `src/styles/tokens.css`.
+Every colour is written once there as `light-dark(light, dark)`.
 
 === Site Shell And Navigation
 
@@ -127,7 +128,7 @@ Use this map when deciding where to make a change.
 | `src/components/*.astro`
 
 | Change colors, spacing, typography, cards, and responsive behavior
-| `src/styles/global.css`
+| `src/styles/tokens.css` for colours; `grid.css`, `devices.css` and `pages.css` for the rest
 
 | Change navigation links
 | `src/components/Navigation.astro`
@@ -154,7 +155,7 @@ Use this map when deciding where to make a change.
 | `src/data/contact.js`
 
 | Change how AI-marked text looks
-| `--ai-underline-*` variables and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/global.css`
+| `--ai-underline-*` variables and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/tokens.css` and `src/styles/devices.css`
 |===
 
 == What To Watch
