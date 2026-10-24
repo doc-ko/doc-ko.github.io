@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import { unified } from '@astrojs/markdown-remark';
+import rehypeKatex from 'rehype-katex';
 import { markdownPlugins } from './src/lib/markdownPlugins.js';
 
 // https://astro.build/config
@@ -12,6 +13,13 @@ export default defineConfig({
         // The :ai[] and :email[] directives need the unified pipeline.
         processor: unified({
             remarkPlugins: markdownPlugins,
+            rehypePlugins: [rehypeKatex],
         }),
+        // Both themes are emitted as CSS variables (--shiki-light, --shiki-dark)
+        // with no background, so global.css picks the theme and the background.
+        shikiConfig: {
+            themes: { light: 'github-light', dark: 'github-dark' },
+            defaultColor: false,
+        },
     },
 });

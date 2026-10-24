@@ -16,6 +16,9 @@
     "@astrojs/rss": "^4.0.19",
     "astro": "^7.4.2",
     "js-yaml": "^4.1.0",
-    "remark-directive": "^3.0.1"
+    "katex": "^0.19.1",
+    "rehype-katex": "^7.0.1",
+    "remark-directive": "^3.0.1",
+    "remark-math": "^6.0.0"
   }
 }

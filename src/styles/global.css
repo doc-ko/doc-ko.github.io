@@ -169,6 +169,24 @@ pre {
     color: var(--ink);
 }
 
+/* Shiki emits both themes as variables; the site is dark-only until the
+   light theme lands (#16), then this switches on the theme attribute. */
+.astro-code,
+.astro-code span {
+    color: var(--shiki-dark);
+}
+
+pre.astro-code {
+    background: #05090d;
+}
+
+/* Wide display maths scrolls inside its own box instead of widening the page. */
+.katex-display {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 pre code {
     border: 0;
     padding: 0;
