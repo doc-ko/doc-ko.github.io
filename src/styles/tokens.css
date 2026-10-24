@@ -25,6 +25,8 @@
         --cyan-soft: light-dark(rgb(11 95 112 / 12%), rgb(101 215 234 / 13%));
         --focus: var(--cyan);
         --link-line: light-dark(rgb(119 66 0 / 45%), rgb(231 173 79 / 45%));
+        /* The same line without transparency, for drawing over other lines. */
+        --link-line-solid: light-dark(rgb(181 156 124), rgb(108 87 47));
 
         /* Lines and fills */
         --line: light-dark(rgb(42 40 37 / 16%), rgb(230 211 168 / 17%));

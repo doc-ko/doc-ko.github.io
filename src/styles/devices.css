@@ -12,10 +12,31 @@
         text-underline-offset: var(--ai-outline-offset);
     }
 
+    /* A link in marked text keeps the AI rules on top, in the AI colour (some
+       browsers draw the lines passed down through a link in the link's own
+       decoration colour). Its bottom line is the link's gold, drawn over the AI
+       underline so that it replaces it instead of mixing with it. */
     [data-origin="ai"] a {
+        position: relative;
         text-decoration-style: solid;
+        text-decoration-color: var(--ai-outline-color);
         text-decoration-thickness: var(--ai-outline-thickness);
         text-underline-offset: var(--ai-outline-offset);
+    }
+
+    [data-origin="ai"] a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: var(--ai-link-bottom, 0px);
+        height: 2px;
+        background: var(--link-line-solid);
+        pointer-events: none;
+    }
+
+    [data-origin="ai"] a:hover::after {
+        background: currentColor;
     }
 
     /* Headings keep their own text colour, but their rules take the AI tone. A
