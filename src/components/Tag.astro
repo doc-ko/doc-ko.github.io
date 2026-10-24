@@ -1,0 +1,12 @@
+---
+import { highlighterEnds } from '../lib/pen.js';
+
+// A tag as a quiet ink highlighter swipe, linking to its tag page. Every tag
+// gets its own uneven ends, the same way :hl phrases do.
+//
+//   tag    the tag's name; the link goes to /tags/<tag>/
+//   label  what to show; defaults to the name
+const { tag, label = tag } = Astro.props;
+---
+
+<a class="tag" href={`/tags/${tag}/`} style={`border-radius: ${highlighterEnds(tag)}`}>{label}</a>

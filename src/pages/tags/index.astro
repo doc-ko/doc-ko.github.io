@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Tag from '../../components/Tag.astro';
 import { getPosts, getTags } from '../../lib/posts.js';
 const tags = getTags(await getPosts());
 const pageTitle = "Tag Index";
@@ -8,6 +9,6 @@ const pageTitle = "Tag Index";
 <BaseLayout pageTitle={pageTitle}>
     <div class="tags">
         {tags.map((tag) =>
-            <a class="tag" href={`/tags/${tag}/`}>#{tag}</a>)}
+            <Tag tag={tag} label={`#${tag}`} />)}
     </div>
 </BaseLayout>

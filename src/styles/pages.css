@@ -353,17 +353,36 @@
         margin-top: var(--u);
     }
 
+    /* The rule under the header runs the full width of the post, past the
+       header's own reading width, and takes the second row. */
+    .markdown-entry > .pencil-rule {
+        grid-column: 1 / -1;
+    }
+
     .markdown-entry > aside {
         grid-column: 2;
-        grid-row: 2;
+        grid-row: 3;
         min-width: 0;
     }
 
     /* Phase 5 (#19) turns the details box into a note. */
     .entry-details {
-        margin: var(--u) 0 0;
+        margin: 0;
         padding: var(--u);
         box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    /* A box holding only tags carries its label on its top line. */
+    .entry-details--captioned {
+        position: relative;
+    }
+
+    .entry-details--captioned dt {
+        position: absolute;
+        top: 0;
+        left: var(--u);
+        transform: translateY(-50%);
+        line-height: 12px;
     }
 
     .entry-details div + div {
@@ -390,8 +409,10 @@
         max-width: var(--content-width);
     }
 
+    /* The rule under the date already leaves its own blank row, so the body and
+       the details box start right after it. */
     .entry-content > :first-child {
-        margin-top: var(--u);
+        margin-top: 0;
     }
 
     .content-list {
@@ -436,6 +457,11 @@
         .entry-content {
             grid-column: 1;
             grid-row: auto;
+        }
+
+        /* Stacked, the body follows the details box and needs a row between. */
+        .entry-content > :first-child {
+            margin-top: var(--u);
         }
 
         .site-footer {

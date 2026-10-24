@@ -40,6 +40,7 @@
         --dots: light-dark(rgb(60 55 45 / 20%), rgb(240 231 210 / 13%));
         --pen: light-dark(rgb(42 40 37 / 56%), rgb(240 231 210 / 42%));
         --pencil: light-dark(rgb(70 66 60 / 40%), rgb(240 231 210 / 24%));
+        --hl-ink: light-dark(rgb(60 58 54 / 14%), rgb(235 225 205 / 14%));
         --hl-amber: light-dark(rgb(255 196 40 / 30%), rgb(231 173 79 / 24%));
         --hl-cyan: light-dark(rgb(60 205 225 / 26%), rgb(101 215 234 / 20%));
         --hl-violet: light-dark(rgb(175 140 255 / 26%), rgb(185 156 255 / 22%));

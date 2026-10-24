@@ -1,5 +1,5 @@
 ---
-import { edges } from '../lib/pen.js';
+import { drawnEdgesHtml } from '../lib/penHtml.js';
 
 // The pen-drawn sides of a box. Put this inside an element with class "drawn"
 // (position: relative; see devices.css); each side is a strip laid on a dot row
@@ -11,17 +11,6 @@ import { edges } from '../lib/pen.js';
 //   ink   a heavier start to each side, where the pen lands; on for pen, off
 //         for pencil and focus unless you ask for it (the code bracket does)
 const { name, keys = 'trbl', tone = 'pen', ink = tone === 'pen' } = Astro.props;
-const sides = edges(name, keys, { ink });
 ---
 
-{sides.map((side) => (
-    <svg
-        class={`drawn-edge drawn-edge--${side.key} drawn-edge--${tone}`}
-        viewBox={side.viewBox}
-        preserveAspectRatio="none"
-        aria-hidden="true"
-    >
-        <path class="drawn-edge__line" d={side.d} opacity={side.opacity} />
-        {side.ink && <path class="drawn-edge__ink" d={side.ink} opacity={side.opacity} />}
-    </svg>
-))}
+<Fragment set:html={drawnEdgesHtml(name, keys, tone, ink)} />

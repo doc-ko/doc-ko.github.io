@@ -47,6 +47,7 @@ The user runs `npm run dev` themselves and uses it as their live preview.
 - Never stop one: no `pkill`, `killall`, or `kill` on `astro` or `node` processes, since that can take down the user's server.
 - To check a change visually, point `agent-browser` at http://localhost:4321 and, if nothing is listening there, ask the user to start `npm run dev`.
 - To check that the site compiles, run `npm run build`.
+- Astro caches each post's rendered HTML, keyed on the file's text and not on the plugin code. After changing a Markdown plugin (`src/lib/remark*.js`, `markdownPlugins.js`) the dev server and `npm run build` keep serving the old render. Delete `.astro/data-store.json` and `node_modules/.astro/data-store.json` before building, and for the running dev server change the post file (a blank line is enough) instead of stopping it.
 
 ## Layout
 

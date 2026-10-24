@@ -58,13 +58,33 @@ function smooth(points) {
     return `${d} L${round(last[0])} ${round(last[1])}`;
 }
 
+const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+const at = (p) => `${round(p[0])} ${round(p[1])}`;
+
 // Ink load: a heavier stroke over the first fifth of the edge, where the pen
-// lands. Run it from the end the pen starts at.
+// lands. It has to lie exactly on the line smooth() draws, or the two show as
+// a pair of parallel lines; so it is a piece cut out of the same curves.
+// Run it from the end the pen starts at.
 function inkLoad(points, reverse) {
-    const [a, b, c] = reverse ? [...points].reverse() : points;
-    const ex = b[0] + (c[0] - b[0]) * 0.3;
-    const ey = b[1] + (c[1] - b[1]) * 0.3;
-    return `M${round(a[0])} ${round(a[1])} L${round(b[0])} ${round(b[1])} L${round(ex)} ${round(ey)}`;
+    if (!reverse) {
+        // The first curve runs from the start, with the second point as its
+        // control, to the midpoint of the second and third.
+        const [a, b, c] = points;
+        const end = lerp(b, c, 0.5);
+        const cut = 0.85;
+        const control = lerp(a, b, cut);
+        const stop = lerp(lerp(a, b, cut), lerp(b, end, cut), cut);
+        return `M${at(a)} Q${at(control)} ${at(stop)}`;
+    }
+    // The end is a straight run from the last midpoint to the last point,
+    // after one more curve; go back along both.
+    const last = points[6];
+    const mid = lerp(points[5], last, 0.5);
+    const from = lerp(points[4], points[5], 0.5);
+    const cut = 0.2;
+    const control = lerp(points[5], mid, cut);
+    const stop = lerp(lerp(from, points[5], cut), lerp(points[5], mid, cut), cut);
+    return `M${at(last)} L${at(mid)} Q${at(control)} ${at(stop)}`;
 }
 
 // Which end the pen starts at, going round a box clockwise from the top left:

@@ -7,6 +7,8 @@ import PenLoop from './PenLoop.astro';
 const path = Astro.url.pathname;
 const links = [
     { href: '/', label: 'Home', current: path === '/' },
+    // Blog stays circled on a post or a tag page, which you reach from it.
+    { href: '/blog/', label: 'Blog', current: ['/blog', '/posts', '/tags'].some((root) => path.startsWith(root)) },
     { href: '/about/', label: 'About', current: path.startsWith('/about') },
 ];
 ---
