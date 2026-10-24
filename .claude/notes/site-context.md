@@ -7,7 +7,14 @@ Last updated 2026-10-24.
 On 2026-10-23 the owner decided the earlier "mathematical notebook" redesign was muddled because one site was trying to be both a hiring portfolio and a personal space. The plan is two separate projects:
 
 - a portfolio, for other people (not this repo);
-- this repo, the personal site, mostly for the owner. Its purpose beyond that is still undecided (a place to write, a research notebook, or both).
+- this repo, the personal site.
+
+Decided 2026-10-24: the personal site has two purposes, and they have different audiences.
+
+- **The published site (`oberio.me`) is for the owner to write.** It is a blog, with posts as the main content. The home and about pages support it. Tone: a notebook that is careful, plain and a little playful; not cute, corporate or templated. Let the writing carry the page.
+- **The repo is a showcase of how the site is developed and maintained.** The owner builds it methodically on purpose: issues before work, plans and notes kept in the repo rather than in memory, skills for commits and issues, and owner documentation in `docs/`. `docs/` is where this second purpose is documented. Keep that working style visible when adding to the repo.
+
+When a change touches both (a new workflow, say), the site stays simple for readers and the process is written down in the repo.
 
 Documentation work samples were removed from this repo. It keeps the home and about pages and an empty blog; the blog and tag pages stay on purpose for future posts.
 
