@@ -132,14 +132,16 @@
         color: var(--ink);
     }
 
-    [data-origin="ai"] :is(.code-block, .note, .katex-display, p:has(> img)) {
+    [data-origin="ai"] :is(.code-block, .note, .katex-display, p:has(> img)),
+    .note[data-origin="ai"] {
         position: relative;
     }
 
     /* A note already uses its own ::before (the hatched ring) and ::after (the
        highlight fill), so its strip is drawn on the note body instead. */
     [data-origin="ai"] :is(.code-block, .katex-display, p:has(> img))::before,
-    [data-origin="ai"] .note > .note__body::before {
+    [data-origin="ai"] .note > .note__body::before,
+    .note[data-origin="ai"] > .note__body::before {
         content: "";
         position: absolute;
         top: 0;
@@ -153,7 +155,8 @@
     }
 
     [data-origin="ai"] :is(.code-block, .katex-display, p:has(> img))::after,
-    [data-origin="ai"] .note > .note__body::after {
+    [data-origin="ai"] .note > .note__body::after,
+    .note[data-origin="ai"] > .note__body::after {
         content: "AI";
         position: absolute;
         top: 0;
@@ -175,13 +178,15 @@
 
     /* A note's text takes the AI tone like body text. Its label and title keep
        their own colours, and a highlighted note keeps ink on its fill. */
-    [data-origin="ai"] .note {
+    [data-origin="ai"] .note,
+    .note[data-origin="ai"] {
         color: var(--ai-text-color);
     }
 
     /* The pen frame of a marked code block or note takes the AI colour. */
     [data-origin="ai"] .code-block .drawn-edge,
-    [data-origin="ai"] .note > .drawn-edge {
+    [data-origin="ai"] .note > .drawn-edge,
+    .note[data-origin="ai"] > .drawn-edge {
         color: var(--ai-text-color);
     }
 

@@ -227,6 +227,12 @@ Each item:
 | `body`
 | Markdown (block)
 | Note text.
+
+| `origin`
+| Plain
+| Set to `ai` to mark the whole note as AI-generated.
+It gets the hatched "AI" strip, an AI-coloured frame and the AI text marking, so its fields need no `:ai[...]`.
+Optional.
 |===
 
 The corner dot of each note is always ink, so there is no `accent`.
