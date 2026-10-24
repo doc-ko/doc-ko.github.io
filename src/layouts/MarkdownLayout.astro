@@ -4,7 +4,7 @@ const { frontmatter } = Astro.props;
 const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
 ---
 
-<BaseLayout pageTitle={frontmatter.title}>
+<BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
     <div data-origin={origin}>
         <slot />
     </div>

@@ -6,7 +6,7 @@ const allPosts = await getPosts();
 const pageTitle = 'Blog'
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} description="Writing by Karl Oberio.">
 	{allPosts.length === 0 && <p>No posts yet.</p>}
 	<ul class="content-list">
 		{

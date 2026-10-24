@@ -103,11 +103,11 @@ hero:
 
 | `meta.title`
 | Plain
-| Browser tab title.
+| Browser tab title, and the title in link previews.
 
 | `meta.description`
 | Plain
-| Search engine description.
+| Search engine description, and the description in link previews.
 |===
 
 == hero

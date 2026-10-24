@@ -16,7 +16,7 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BaseLayout pageTitle={tag}>
+<BaseLayout pageTitle={tag} description={`Posts tagged ${tag}.`}>
     <p>Posts tagged with {tag}:</p>
     <ul class="content-list">
         {posts.map((post) => <BlogPost url={postUrl(post)} title={post.data.title} origin={post.data.origin} />)}
