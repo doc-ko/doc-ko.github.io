@@ -259,10 +259,13 @@
         background: var(--code-bg);
     }
 
-    /* Wide display maths scrolls inside its own box instead of widening the page. */
+    /* Wide display maths scrolls inside its own box instead of widening the page.
+       The box clips what rises above it (integral limits, tall sums), so the
+       unit above the equation is padding rather than margin. */
     .katex-display {
         max-width: 100%;
-        margin: var(--u) 0;
+        margin: 0 0 var(--u);
+        padding-top: var(--u);
         overflow-x: auto;
         overflow-y: hidden;
     }
