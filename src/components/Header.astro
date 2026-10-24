@@ -1,12 +1,16 @@
 ---
 import Hamburger from './Hamburger.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import Navigation from './Navigation.astro';
 ---
 
 <header class="site-header">
     <nav class="site-nav" aria-label="Primary">
         <a class="site-logo" href="/">oberio.me</a>
-        <Hamburger />
         <Navigation />
+        <div class="nav-tools">
+            <ThemeToggle />
+            <Hamburger />
+        </div>
     </nav>
 </header>

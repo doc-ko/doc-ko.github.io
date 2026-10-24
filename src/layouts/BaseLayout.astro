@@ -20,6 +20,13 @@ const {
         <meta name="description" content={description} />
         <meta name="generator" content={Astro.generator} />
         <title>{pageTitle}</title>
+        <script is:inline>
+            // Set the theme before first paint. No stored choice means follow the system.
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+            } catch {}
+        </script>
     </head>
     
     <body>
@@ -35,6 +42,7 @@ const {
 
         <script>
             import "../scripts/menu.js";
+            import "../scripts/theme.js";
             import "../scripts/email.js";
         </script>
     </body>
