@@ -5,7 +5,7 @@ description: How to file, label and link GitHub issues for this site's repo (doc
 
 # GitHub issues for the personal site
 
-Issues here track the site's work: bugs, content, and design. The repo is `doc-ko/doc-ko.github.io`.
+Issues here track development, configuration and maintenance work, plus bugs and design. New posts and small fixes don't get one; see "Tracking work" in `AGENTS.md` for when an issue is required. The repo is `doc-ko/doc-ko.github.io`.
 Confirm with `gh repo view --json nameWithOwner -q .nameWithOwner` if unsure.
 
 ## Pick a route

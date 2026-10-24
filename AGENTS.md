@@ -15,6 +15,22 @@ Astro site for Karl Oberio, deployed to GitHub Pages at `oberio.me`. Its homepag
 - When asked to remove content (posts, samples, drafts), delete the content but keep the pages and features that host it, such as the blog index and tag pages. Ask before removing a route or feature.
 - Never write the contact email address in plain text in the repo; use `EmailLink.astro`, `email: true` in YAML, or `:email[]` in Markdown.
 
+## Tracking work
+
+Issues track development, configuration and maintenance work: code, build and deploy, dependencies, styling, docs tooling and agent instructions. Open or find the issue before any file changes.
+
+- Look for an existing issue first (`gh issue list --search`). If none fits, propose one and wait for a yes before creating it. Use the `github-issues` skill for the wording, labels and links.
+- If the owner dictated the issue ("issue: ..."), create it straight away.
+- Do not start an issue that is blocked by an open one. Say what blocks it.
+- Put `Refs #N` in the commit message and `Closes #N` in the PR body, so a PR that finishes only part of an issue does not close it.
+- Plans in `.claude/plans/` list their issue numbers.
+
+No issue is needed for:
+
+- the owner writing or adding a new post (a `post/<slug>` branch is enough);
+- small fixes: a typo, a broken link, or a one-line change that does not alter behaviour;
+- questions, reading code and research.
+
 ## Commands
 
 - `npm run dev`: dev server with live reload at http://localhost:4321. The user normally has this running already.
