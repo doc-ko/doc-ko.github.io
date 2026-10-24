@@ -4,7 +4,7 @@ Tracking: umbrella #20; steps are #21 (Astro upgrade), #22 (collection, MDX, lis
 
 Goal: writing a post should need no code tweaking. Create a file, write Markdown (with math and code), set it to published, push.
 
-Status: steps 0-2 and 5 done (#21 merged, #22 on branch `collection-mdx-posts`: collection, MDX, post route, lists, RSS). Math, code, scaffold and docs not started. `:ai[]`, `:email[]`, stray-colon fallback and `remark-math` (`$a<b$`, `{` in maths) were checked in `.mdx` on 2026-10-24. An empty `src/content/posts/` builds with harmless warnings. An earlier prototype was discarded on 2026-10-24; the plan is the source of truth.
+Status: steps 0-3 and 5 done (#21 and #22 merged; #23 in PR #31: KaTeX maths and dual-theme Shiki code). Light-theme check of code and maths waits for the redesign (#16). Scaffold and docs not started. `:ai[]`, `:email[]`, stray-colon fallback and `remark-math` (`$a<b$`, `{` in maths) were checked in `.mdx` on 2026-10-24. An empty `src/content/posts/` builds with harmless warnings. An earlier prototype was discarded on 2026-10-24; the plan is the source of truth.
 
 ## Decisions to confirm
 

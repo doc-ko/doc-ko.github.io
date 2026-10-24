@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import 'katex/dist/katex.min.css';
 const { frontmatter } = Astro.props;
 const tags = frontmatter.tags ?? [];
 const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
