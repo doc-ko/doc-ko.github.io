@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const allPosts = Object.values(import.meta.glob('../*/*.md', { eager: true }))
-    .filter((post) => !post.frontmatter.draft && post.frontmatter.tags);
-const tags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat().sort())];
+import { getPosts, getTags } from '../../lib/posts.js';
+const tags = getTags(await getPosts());
 const pageTitle = "Tag Index";
 ---
 
