@@ -473,6 +473,9 @@ That workflow keeps the site easy to change without letting layout, routing, or 
 Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and deploys it to GitHub Pages.
 You can also run the workflow by hand from the repository's Actions tab.
 
+Every pull request to `main` also runs `.github/workflows/build.yml`, which installs dependencies and runs `npm run build` without deploying.
+If the build fails, the pull request shows a red check, so you can fix the problem before it reaches `main`.
+
 The site is served at `oberio.me`.
 To move it to another domain, change all of these together:
 
