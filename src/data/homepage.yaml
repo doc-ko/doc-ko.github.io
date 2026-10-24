@@ -13,7 +13,7 @@ hero:
   lede: >-
     Apologies for the :ai[AI-generated text]{note="Text with a dashed underline, like
     this word, was written by AI."}; I'll get round to it at some point.
-  lemma:
+  note:
     label: "☢️ TO BE UNSLOPPIFIED"
     notation: "Using Claude Code"
     body: >-
@@ -34,13 +34,8 @@ hero:
       The animations for each icon were my ideas, though the implementation is AI.
 
 sections:
-  fields:
-    number: "01"
-    title: ":ai[What I do.]"
-    note: >-
-      :ai[Placeholder summary, taken from the previous site and the About page.]
   method:
-    number: "02"
+    number: "01"
     title: ":ai[State of this site.]"
     note: ":ai[What is done, what is placeholder, what is missing.]"
 
@@ -64,7 +59,7 @@ fields:
     description: ":ai[definitions, arguments, careful distinctions]"
     accent: "cyan"
 
-propositions:
+notes:
   - kind: "Overhauling"
     title: "Visual design"
     notation: "In Progress"
@@ -80,12 +75,3 @@ propositions:
     notation: ":ai[TODO]"
     body: >-
       :ai[The blog, writing samples, and a settled purpose for this site.]
-
-garden:
-  number: "03 / :ai[contact and paths]"
-  heading: ":ai[Where to go]"
-  note: >-
-    :ai[Contact: :email[].]
-  links:
-    - label: "github"
-      href: "https://github.com/doc-ko"

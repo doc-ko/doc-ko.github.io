@@ -64,7 +64,7 @@ hero:
   lede: >-
     Apologies for the :ai[AInese]{note="Text with a dashed underline, like
     this word, was written by AI."}; I'll get round to it at some point.
-  lemma:
+  note:
     body: |-
       **This page is a stub.**
 
@@ -83,19 +83,16 @@ hero:
 | Browser title and search description.
 
 | `hero`
-| Opening section: kicker, headline, lede, status card, top links, margin note.
+| Opening section: kicker, headline, lede, status note, top links, margin note.
 
 | `sections`
-| Numbers, headings, and notes for the numbered sections.
+| Number, heading, and note of section 01.
 
 | `fields`
-| Cards in section 01.
+| The four subjects drawn in the hero emblem.
 
-| `propositions`
-| Definition-style blocks in section 02.
-
-| `garden`
-| Closing section and its links.
+| `notes`
+| Status notes in section 01.
 |===
 
 == meta
@@ -131,21 +128,21 @@ hero:
 | Markdown (block)
 | Paragraph under the headline.
 
-| `hero.lemma.label`
+| `hero.note.label`
 | Markdown (inline)
-| Label on the card under the lede.
+| Label on the note under the lede.
 
-| `hero.lemma.notation`
+| `hero.note.notation`
 | Markdown (inline)
-| Monospace text beside the card label.
+| Monospace text beside the note label.
 
-| `hero.lemma.body`
+| `hero.note.body`
 | Markdown (block)
-| Text inside the card.
+| Text inside the note.
 
 | `hero.links`
 | List
-| Row of links under the card. Each item has a plain `label` and either a plain `href` or `email: true`; see <<email-links>>.
+| Row of links under the note. Each item has a plain `label` and either a plain `href` or `email: true`; see <<email-links>>.
 
 | `hero.margin.label`
 | Markdown (inline)
@@ -158,36 +155,30 @@ hero:
 
 == sections
 
-`sections` has two entries: `fields` and `method`.
-Each is a section heading, rendered by `SectionHeading.astro`.
+`sections` has one entry, `method`, which is section 01.
+It is a section heading, rendered by `SectionHeading.astro`.
 
 [cols="1,1,3",options="header"]
 |===
 | Key | Type | Where it appears
 
-| `sections.<name>.number`
+| `sections.method.number`
 | Markdown (inline)
-| Section number above the heading.
+| Section number beside the heading.
 
-| `sections.<name>.title`
+| `sections.method.title`
 | Markdown (inline)
 | Section heading (`h2`).
 
-| `sections.<name>.note`
+| `sections.method.note`
 | Markdown (block)
 | Short paragraph under the heading.
-
 |===
-
-The mapping is:
-
-* `sections.fields`: section 01, with the field cards.
-* `sections.method`: section 02, with the proposition blocks.
 
 == fields
 
-A list of cards in section 01.
-The same list also draws the four-tile emblem in the hero, which uses `icon`, `title`, and `accent`.
+A list of the four subjects.
+It draws the four-tile emblem in the hero.
 Each item:
 
 [cols="1,1,3",options="header"]
@@ -196,26 +187,24 @@ Each item:
 
 | `icon`
 | Plain
-| Which drawing the field uses, on the card and in the hero emblem: `linguistics`, `mathematics`, `logic`, or `computing`. The drawings are SVG paths in code, not text, so the YAML only names them.
+| Which drawing the tile uses: `linguistics`, `mathematics`, `logic`, or `computing`. The drawings are SVG paths in code, not text, so the YAML only names them.
 
 | `title`
 | Markdown (inline)
-| Card heading.
+| Tile label.
 
 | `description`
 | Markdown (block)
-| Card text.
+| Not shown on the page at the moment.
 
 | `accent`
 | Plain
 | Colour of the drawing. See <<accents>>.
 |===
 
-The number of cards follows the list.
+== notes
 
-== propositions
-
-A list of blocks in section 02.
+A list of status notes in section 01.
 Each item:
 
 [cols="1,1,3",options="header"]
@@ -224,11 +213,11 @@ Each item:
 
 | `kind`
 | Markdown (inline)
-| Label such as "Definition". Any text works.
+| Label such as "Missing". Any text works.
 
 | `title`
 | Markdown (inline)
-| Block heading.
+| Note heading.
 
 | `notation`
 | Markdown (inline)
@@ -236,36 +225,10 @@ Each item:
 
 | `body`
 | Markdown (block)
-| Block text.
-
+| Note text.
 |===
 
-The corner dot of each block is always ink, so there is no `accent`.
-
-== garden
-
-The closing section.
-
-[cols="1,1,3",options="header"]
-|===
-| Key | Type | Where it appears
-
-| `garden.number`
-| Markdown (inline)
-| Small line above the heading.
-
-| `garden.heading`
-| Markdown (inline)
-| Heading (`h2`).
-
-| `garden.note`
-| Markdown (block)
-| Paragraph under the heading.
-
-| `garden.links`
-| List
-| Row of links. Each item has a plain `label` and either a plain `href` or `email: true`; see <<email-links>>.
-|===
+The corner dot of each note is always ink, so there is no `accent`.
 
 [[accents]]
 == Accent Values
@@ -274,7 +237,7 @@ The closing section.
 These match the colour variables in `src/styles/tokens.css`.
 `paper` is also valid for `fields`: the drawing keeps the default text colour.
 Any other value, or leaving it out, falls back to the default text colour.
-`propositions` has no `accent`: their corner dots are always ink.
+`notes` has no `accent`: their corner dots are always ink.
 The hover animation on the hero emblem belongs to the `icon`, not the accent; see xref:customising-the-site.adoc[].
 
 == Not In The YAML

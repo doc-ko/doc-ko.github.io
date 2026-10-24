@@ -78,7 +78,7 @@ The keys are documented in xref:homepage-yaml.adoc[].
 === Site Shell And Navigation
 
 * `src/layouts/BaseLayout.astro` handles metadata, the skip link, the header, the footer and the optional hidden page title.
-* The navigation lists Home, About and Contact.
+* The navigation lists Home and About.
 * The header logo reads `oberio.me`.
 * `src/components/Footer.astro` shows the copyright line and four buttons: LinkedIn, GitHub, Repo and Docs.
 
@@ -96,7 +96,7 @@ Posts support maths through KaTeX and syntax-highlighted code through Shiki, bot
 === Contact Email Hidden From Scrapers
 
 The contact address is stored backwards in `src/data/contact.js` and turned back round by `src/scripts/email.js` in the browser, so it does not appear readably in the repo or the built pages.
-The navigation, homepage and About page link to it through `EmailLink.astro`, `email: true` in `homepage.yaml` lists, or `:email[]` in Markdown.
+The homepage and About page link to it through `EmailLink.astro`, `email: true` in `homepage.yaml` lists, or `:email[]` in Markdown.
 See xref:customising-the-site.adoc#contact-email[].
 
 === Domain And Deployment
@@ -177,7 +177,7 @@ Use this map when deciding where to make a change.
 == What To Watch
 
 * The homepage data object shape matters.
-  Components expect fields like `hero.links`, `fields`, `propositions` and `garden.links`.
+  Components expect fields like `hero.links`, `fields` and `notes`.
 * Anything whose height is not a whole number of 24px units pushes every line below it off the dots.
   Run `npm run test:grid` after layout changes.
 * Markdown pages should include `tags`; the tag pages depend on frontmatter tags.

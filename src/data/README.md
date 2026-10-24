@@ -5,11 +5,10 @@ Most homepage content is in `homepage.yaml`.
 The full key reference lives in the Antora docs: `docs/modules/ROOT/pages/homepage-yaml.adoc`.
 
 - `meta`: browser title and search description.
-- `hero`: opening headline, short note, lemma, and top links.
-- `sections`: section headings and notes.
-- `fields`: the subject cards in section 01.
-- `propositions`: definition/proposition blocks.
-- `garden.links`: closing navigation links.
+- `hero`: opening headline, short note, status note, and top links.
+- `sections`: the heading and note of section 01.
+- `fields`: the four subjects drawn in the hero emblem.
+- `notes`: the status notes in section 01.
 
 For routine copy changes, edit strings inside `homepage.yaml` and keep the
 object shape the same. The Astro components in `src/components/` handle the
