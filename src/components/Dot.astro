@@ -1,4 +1,6 @@
 ---
+import { dotHtml } from '../lib/penHtml.js';
+
 // A coloured grid dot: it marks where you are (the current page) or which
 // field something belongs to. Always sits on a dot of the grid, so place it in
 // an element with class "drawn" at the dot's corner. The ring of paper round it
@@ -8,4 +10,4 @@
 const { color = 'ink' } = Astro.props;
 ---
 
-<i class={`dot dot--${color}`} aria-hidden="true"></i>
+<Fragment set:html={dotHtml(color)} />
