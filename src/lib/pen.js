@@ -101,6 +101,42 @@ export function edges(name, keys, options) {
     return [...keys].map((key) => edge(name, key, options));
 }
 
+/**
+ * A hand-drawn loop round a word, as one open stroke: it starts at the upper
+ * left, goes clockwise round an ellipse and overshoots the start a little,
+ * spiralling inward the way a pen does when it closes a circle.
+ * The path lives in a 100 x 40 box and is stretched to the word, so it uses
+ * `vector-effect: non-scaling-stroke` (see devices.css).
+ *
+ * @param {string} name  Seed.
+ * @returns {string}  An SVG path `d`.
+ */
+export function loop(name) {
+    const random = rng(hash(`${name}:loop`));
+    const steps = 12;
+    const start = -Math.PI * 0.75 + (random() - 0.5) * 0.3;
+    const sweep = Math.PI * 2 + 0.45 + random() * 0.2;
+    const points = [];
+    for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const angle = start + sweep * t;
+        const radius = 1 + (random() - 0.5) * 0.05 - 0.1 * Math.max(0, (t - 0.85) / 0.15);
+        points.push([50 + 46 * radius * Math.cos(angle), 20 + 16 * radius * Math.sin(angle)]);
+    }
+    // Catmull-Rom through the points, written as cubic curves.
+    let d = `M${round(points[0][0])} ${round(points[0][1])}`;
+    for (let i = 0; i < points.length - 1; i++) {
+        const p0 = points[Math.max(i - 1, 0)];
+        const p1 = points[i];
+        const p2 = points[i + 1];
+        const p3 = points[Math.min(i + 2, points.length - 1)];
+        const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+        const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+        d += ` C${round(c1[0])} ${round(c1[1])} ${round(c2[0])} ${round(c2[1])} ${round(p2[0])} ${round(p2[1])}`;
+    }
+    return d;
+}
+
 // How far a stroke stops short of a skipped rectangle's edge, in y: a little
 // under the pen's round end, so two strokes meeting there touch, not overlap.
 const JOIN = 0.3;

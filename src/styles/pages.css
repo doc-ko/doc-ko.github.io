@@ -116,11 +116,9 @@
         color: var(--ink-strong);
     }
 
-    /* The current page: an ink dot on the dot row under its label, at the
-       first letter. */
-    .navlink[aria-current="page"] .dot {
-        top: 46.5px;
-        left: 20.5px;
+    .navlink > span {
+        position: relative;
+        display: inline-block;
     }
 
     .iconbtn {
@@ -133,7 +131,7 @@
         color: var(--ink-strong);
     }
 
-    .iconbtn > svg,
+    .iconbtn > svg:not(.drawn-edge),
     .hamburger__lines {
         position: absolute;
         top: var(--u);
@@ -206,16 +204,6 @@
             width: 100%;
             height: calc(2 * var(--u));
             padding: calc(var(--u) / 2) 0 0 var(--u);
-        }
-
-        .nav-links .navlink[aria-current="page"] .dot {
-            top: 28.5px;
-        }
-
-        /* In the menu the first dot row is the box's own, so the tab edges are
-           left out and hover is a plain colour change. */
-        .nav-links .tab .drawn-edge {
-            display: none;
         }
     }
 
