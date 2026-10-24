@@ -54,7 +54,7 @@ The components that use it, under `src/components/`:
 
 The header and navigation are drawn with the same pen elements: a pen circle round the current page, and a rule under the header.
 Hovering or focusing another link draws the circle in there and takes it back from the current page, so the circle seems to move.
-The navigation lists Home and About; there is no Contact tab.
+The navigation lists Home, Blog and About; there is no Contact tab.
 
 The theme toggle's icon turns into the other one on hover, and its cell is hatched in the tone of the theme you would switch to.
 The hamburger is hatched the same way, and stays hatched while the menu is open.
@@ -86,7 +86,7 @@ The keys are documented in xref:homepage-yaml.adoc[].
 === Site Shell And Navigation
 
 * `src/layouts/BaseLayout.astro` handles metadata, the skip link, the header, the footer and the optional hidden page title.
-* The navigation lists Home and About.
+* The navigation lists Home, Blog and About.
 * The header logo reads `oberio.me`.
 * `src/components/Footer.astro` shows the copyright line and four buttons: LinkedIn, GitHub, Repo and Docs.
 
@@ -100,6 +100,12 @@ A marked phrase can carry a note that shows on hover, tap, or keyboard focus.
 === Maths And Code In Posts
 
 Posts support maths through KaTeX and syntax-highlighted code through Shiki, both following the active theme.
+
+=== Highlights, Notes And Code Brackets In Markdown
+
+Posts can use `:hl[...]` (or the `==...==` shorthand) for a highlight, `:::note[Label]` for a note, and every fenced code block is drawn in the pencil bracket.
+`src/lib/remarkDirectives.js` holds the plugin, and `markShorthand` in `src/lib/markdownPlugins.js` sets or disables the shorthand.
+`src/lib/penHtml.js` builds the drawn-edge and dot markup that these directives and the `DrawnEdges` and `Dot` components share.
 
 === Contact Email Hidden From Scrapers
 

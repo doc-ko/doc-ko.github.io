@@ -95,9 +95,14 @@ The current navigation is:
 ----
 <div class="nav-links" id="primary-navigation">
     <a href="/">Home</a>
+    <a href="/blog/">Blog</a>
     <a href="/about/">About</a>
 </div>
 ----
+
+Link to the blog index, not to single posts.
+The index lists every post, so a new post appears without a nav change.
+The Blog tab stays circled on a post page and on a tag page, because you reach both from the blog.
 
 Keep the `nav-links` class and `primary-navigation` id.
 The mobile menu script uses them.
@@ -212,6 +217,72 @@ To add the link, add an item to `hero.links` in `src/data/homepage.yaml`:
 
 `MarkdownPostLayout.astro` also reads optional `role`, `tools`, `audience`, and `outcome` frontmatter, and shows them in a details panel beside the post.
 
+=== Highlights, notes and code brackets
+
+Three drawn devices work in plain Markdown, with no import line.
+They build the same markup as the `Highlight`, `Note` and `CodeBlock` components, so the same CSS in `devices.css` styles both.
+
+A highlight marks a phrase that matters.
+Use two or three on a screen at most.
+Write `:hl[the phrase]`, or wrap it in double equals signs: `==the phrase==`.
+To tint it for a field, add `{field=logic}`, `{field=linguistics}` or `{field=mathematics}`.
+Cyan is logic, amber is linguistics and violet is mathematics, and amber is the default.
+
+The `==` shorthand does not fire inside code or maths, across a link, or when the equals signs have a space just inside them, so `a == b` is left alone.
+To write two equals signs as they are, put a backslash before them: `\==`.
+It is set by `markShorthand` in `src/lib/markdownPlugins.js`; change it to another delimiter, or to `null` to switch the shorthand off.
+
+A note sets a passage apart from the running text:
+
+[source,markdown]
+----
+:::note[Label]{notation="draft" title="A title"}
+The body, in Markdown.
+:::
+----
+
+All the options are optional:
+
+[cols="1,3",options="header"]
+|===
+| Option | Effect
+
+| `[Label]`
+| A small mono caption written on the note's top line, on the left.
+It can contain inline Markdown.
+Margin notes keep theirs beside the dot.
+
+| `notation`
+| Small mono text on the same line, on the right.
+
+| `title`
+| A heading line under the label.
+
+| `variant`
+| `inline` (the default, a pen box) or `margin`: a pencil rule runs up into the paragraph above, down the left of the note, and a hook branches right at the top to a dot with the caption beside it.
+
+| `highlight`
+| Fill the whole note with `amber`, `cyan` or `violet`.
+
+| `hatched`
+| Hatch the padding ring: `ink`, `amber`, `cyan` or `violet`.
+
+| `dot`
+| A corner dot: `ink`, `amber`, `cyan` or `violet`.
+Margin notes default to amber.
+
+| `seed`
+| Gives the pen wobble its own shape.
+It defaults to the label, so two notes with the same label look the same unless they get different seeds.
+|===
+
+Every fenced code block is drawn in the pencil bracket automatically, and the language is written on its top hook.
+Captions sit on the border line instead of on a grid line.
+This is the one place text leaves the baseline, on purpose, so the grid check skips them.
+
+An unknown `field`, `variant`, `highlight`, `hatched` or `dot` value stops the build with a message that lists the choices.
+`src/lib/remarkDirectives.js` holds the plugin.
+
 == 8. Mark AI-Generated Text
 
 Mark any text that AI wrote, so readers can tell it apart from text you wrote.
@@ -280,8 +351,8 @@ The note's box is styled by the `.ai-note` rule.
 === Words that start with a colon
 
 The `:ai` syntax comes from the `remark-directive` plugin, which reads any `:word` as a directive.
-`src/lib/remarkAiText.js` turns every directive other than `ai` and `email` back into ordinary text, so `ratio a:b` still shows as written.
-Avoid writing `:ai[` or `:email[` unless you mean them.
+`src/lib/remarkAiText.js` turns every directive other than `ai`, `email`, `hl` and `note` back into ordinary text, so `ratio a:b` still shows as written.
+Avoid writing `:ai[`, `:email[` or `:hl[` unless you mean them.
 
 == 9. Customise The Homepage Sections
 
