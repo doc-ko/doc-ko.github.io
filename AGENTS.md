@@ -23,6 +23,7 @@ Issues track development, configuration and maintenance work: code, build and de
 - If the owner dictated the issue ("issue: ..."), create it straight away.
 - Do not start an issue that is blocked by an open one. Say what blocks it.
 - Put `Refs #N` in the commit message and `Closes #N` in the PR body, so a PR that finishes only part of an issue does not close it.
+- Write PR bodies in the shape of `.github/pull_request_template.md`. Add a section to the template only when a real need comes up, not in advance.
 - Plans in `.claude/plans/` list their issue numbers.
 
 No issue is needed for:
