@@ -110,6 +110,7 @@ Follow `AGENTS.md`, especially the dev-server rules and "Working with the owner"
 - [x] Phase 2 and 3 (#17): grid, Literata, `?grid` overlay, `tests/grid.spec.js`, `src/lib/pen.js`, `Note`, `DrawnEdges`, `Dot`, `PencilRule`, `Highlight`, `CodeBlock`, hatched `FieldEmblem`, drawn header. Not blocking this merge or #17 (decided 2026-10-24); still worth doing: Firefox halo, 1x wobble, margin note vs bracket on a real post; image heights are padded by script only (no build-time rounding yet)
 - [x] Phase 4 (#18, merged 2026-10-24): homepage rebuilt, YAML keys renamed (`note`, `notes`), field diagram and garden strip removed, Contact tab removed from the header. Copy is still placeholder (#11)
 - [x] Header hover (#38, merged 2026-10-24): `PenLoop` circle for the current page and on hover; theme toggle morphs sun/moon with hatching in the other theme's tone (`IconHatch`); hamburger hatched, kept while open. Reduced motion for these is untested with the setting on
+- [x] Homepage margin note joined to the field emblem (#13): `.hero-diagram-stack` has no gap, so the note's pencil rule meets the emblem's bottom edge
 - [ ] Phase 5
 - [ ] Phase 6
 - [ ] Phase 7

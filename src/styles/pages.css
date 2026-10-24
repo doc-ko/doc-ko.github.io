@@ -291,9 +291,10 @@
         margin-top: var(--u);
     }
 
+    /* No gap: a margin note brings its own row above it, and its rule runs up
+       through that row to meet whatever is above. */
     .hero-diagram-stack {
         display: grid;
-        gap: calc(2 * var(--u));
     }
 
     .notebook-section-heading {
