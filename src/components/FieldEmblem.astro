@@ -1,8 +1,21 @@
 ---
+import DrawnEdges from './DrawnEdges.astro';
 import MarkdownInline from './MarkdownInline.astro';
 import { glyphs as g } from '../lib/glyphs.js';
+import { hatch } from '../lib/pen.js';
 
 const { fields = [] } = Astro.props;
+
+// Each tile is hatched in its field's colour, drawn at build time in two sizes:
+// 7 x 7 units (wide, with a clear row for the label) and 3 units tall (narrow,
+// hatching only behind the drawing). devices.css picks one by container width.
+const WIDE = { width: 168, height: 168 };
+const NARROW = { width: 89, height: 72 };
+const LABEL_ROW = [[0, 116, 168, 146]];
+const hatching = (icon) => ({
+    wide: hatch(`tile-${icon}`, { ...WIDE, skip: LABEL_ROW }),
+    narrow: hatch(`tile-${icon}`, NARROW),
+});
 
 // Every symbol is an SVG path, not text, so it looks the same on every device.
 // All drawings share one coordinate system: the tile is 100 x 100 units, and
@@ -99,66 +112,79 @@ const cursor = {
 };
 ---
 
-<ul class="field-emblem" aria-label="Areas of work">
-    {fields.map((field) => (
-        <li class={`field-emblem__tile field-emblem__tile--${field.accent} field-emblem__tile--${field.icon}`}>
-            <svg class="field-emblem__icon" viewBox="0 0 100 100" aria-hidden="true">
-                {field.icon === 'linguistics' && (
-                    <>
-                        <path class="syllable-tree__edge syllable-tree__edge--rime" pathLength="1" d="M50 64 L65 44 L80 64" />
-                        <path class="syllable-tree__edge syllable-tree__edge--syllable" pathLength="1" d="M20 44 L42.5 24 L62.76 42" />
-                        <path class="glyph" style={schwa} d={g.schwa.d} />
-                        <path class="syllable-tree__leaf syllable-tree__leaf--onset" transform={attr(onset)} d={g.j.d} />
-                        <path class="syllable-tree__leaf syllable-tree__leaf--coda" transform={attr(coda)} d={g.p.d} />
-                    </>
-                )}
-                {field.icon === 'mathematics' && (
-                    <>
-                        <defs>
-                            <linearGradient id="sum-heart-fill" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0" style="stop-color: var(--heart-top)" />
-                                <stop offset="1" style="stop-color: var(--heart-bottom)" />
-                            </linearGradient>
-                        </defs>
-                        <path class="glyph" style={sigma} d={g.sigma.d} />
-                        <path
-                            class="sum__inf"
-                            pathLength="1"
-                            transform={`translate(${round(sigCx - infW / 2)} ${round(stackTop)}) scale(${round(infW / 20)})`}
-                            d="M10 5 C7.5 0.5 1 0.5 1 5 C1 9.5 7.5 9.5 10 5 C12.5 0.5 19 0.5 19 5 C19 9.5 12.5 9.5 10 5"
-                        />
-                        <g class="sum__lower">
-                            <path transform={attr(lowK)} d={g.kItalic.d} />
-                            <path transform={attr(lowEq)} d={g.equals.d} />
-                            <path transform={attr(lowZero)} d={g.zero.d} />
-                        </g>
-                        <path
-                            class="sum__heart"
-                            transform={`translate(${round(heartX)} ${round(heartY)}) scale(${round(heartW / 32)})`}
-                            d="M16 27.5 C3 17.5 -1 9.5 4.5 4.5 C9.5 0.5 14.5 2.5 16 7 C17.5 2.5 22.5 0.5 27.5 4.5 C33 9.5 29 17.5 16 27.5 Z"
-                        />
-                        <path class="sum__exp" transform={attr(exp)} d={g.kItalic.d} />
-                    </>
-                )}
-                {field.icon === 'logic' && (
-                    <>
-                        <circle class="thought-bubble__trail thought-bubble__trail--1" cx="41.5" cy="52.5" r="1.6" />
-                        <circle class="thought-bubble__trail thought-bubble__trail--2" cx="46" cy="45" r="2.6" />
-                        <path class="thought-bubble__cloud" pathLength="1" d="M44 35 A8 8 0 0 1 42 21 A9 9 0 0 1 56 16 A9 9 0 0 1 71 17 A8 8 0 0 1 80 27 A8 8 0 0 1 75 36 A8 8 0 0 1 61 37 A8 8 0 0 1 44 35" />
-                        <circle class="thought-bubble__dot thought-bubble__dot--1" cx="53" cy="26.5" r="1.5" />
-                        <circle class="thought-bubble__dot thought-bubble__dot--2" cx="61" cy="26.5" r="1.5" />
-                        <circle class="thought-bubble__dot thought-bubble__dot--3" cx="69" cy="26.5" r="1.5" />
-                        <path class="glyph" style={lambda} d={g.lambda.d} />
-                    </>
-                )}
-                {field.icon === 'computing' && (
-                    <>
-                        <path class="glyph" style={dollar} d={g.dollar.d} />
-                        <rect class="cursor" x={cursor.x} y={cursor.y} width={cursor.w} height={cursor.h} />
-                    </>
-                )}
-            </svg>
-            <span class="field-emblem__label"><MarkdownInline content={field.title} /></span>
-        </li>
-    ))}
-</ul>
+<div class="drawn field-emblem-wrap">
+    <DrawnEdges name="emblem" />
+    <ul class="field-emblem" aria-label="Areas of work">
+        {fields.map((field) => {
+            const strokes = hatching(field.icon);
+            return (
+                <li class={`drawn field-emblem__tile field-emblem__tile--${field.accent} field-emblem__tile--${field.icon}`}>
+                    <svg class="field-emblem__hatch field-emblem__hatch--wide" width="168" height="168" aria-hidden="true">
+                        <path d={strokes.wide} />
+                    </svg>
+                    <svg class="field-emblem__hatch field-emblem__hatch--narrow" width="89" height="72" aria-hidden="true">
+                        <path d={strokes.narrow} />
+                    </svg>
+                    <DrawnEdges name={`tile:${field.icon}`} />
+                    <svg class="field-emblem__icon" viewBox="0 0 100 100" aria-hidden="true">
+                        {field.icon === 'linguistics' && (
+                            <>
+                                <path class="syllable-tree__edge syllable-tree__edge--rime" pathLength="1" d="M50 64 L65 44 L80 64" />
+                                <path class="syllable-tree__edge syllable-tree__edge--syllable" pathLength="1" d="M20 44 L42.5 24 L62.76 42" />
+                                <path class="glyph" style={schwa} d={g.schwa.d} />
+                                <path class="syllable-tree__leaf syllable-tree__leaf--onset" transform={attr(onset)} d={g.j.d} />
+                                <path class="syllable-tree__leaf syllable-tree__leaf--coda" transform={attr(coda)} d={g.p.d} />
+                            </>
+                        )}
+                        {field.icon === 'mathematics' && (
+                            <>
+                                <defs>
+                                    <linearGradient id="sum-heart-fill" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0" style="stop-color: var(--heart-top)" />
+                                        <stop offset="1" style="stop-color: var(--heart-bottom)" />
+                                    </linearGradient>
+                                </defs>
+                                <path class="glyph" style={sigma} d={g.sigma.d} />
+                                <path
+                                    class="sum__inf"
+                                    pathLength="1"
+                                    transform={`translate(${round(sigCx - infW / 2)} ${round(stackTop)}) scale(${round(infW / 20)})`}
+                                    d="M10 5 C7.5 0.5 1 0.5 1 5 C1 9.5 7.5 9.5 10 5 C12.5 0.5 19 0.5 19 5 C19 9.5 12.5 9.5 10 5"
+                                />
+                                <g class="sum__lower">
+                                    <path transform={attr(lowK)} d={g.kItalic.d} />
+                                    <path transform={attr(lowEq)} d={g.equals.d} />
+                                    <path transform={attr(lowZero)} d={g.zero.d} />
+                                </g>
+                                <path
+                                    class="sum__heart"
+                                    transform={`translate(${round(heartX)} ${round(heartY)}) scale(${round(heartW / 32)})`}
+                                    d="M16 27.5 C3 17.5 -1 9.5 4.5 4.5 C9.5 0.5 14.5 2.5 16 7 C17.5 2.5 22.5 0.5 27.5 4.5 C33 9.5 29 17.5 16 27.5 Z"
+                                />
+                                <path class="sum__exp" transform={attr(exp)} d={g.kItalic.d} />
+                            </>
+                        )}
+                        {field.icon === 'logic' && (
+                            <>
+                                <circle class="thought-bubble__trail thought-bubble__trail--1" cx="41.5" cy="52.5" r="1.6" />
+                                <circle class="thought-bubble__trail thought-bubble__trail--2" cx="46" cy="45" r="2.6" />
+                                <path class="thought-bubble__cloud" pathLength="1" d="M44 35 A8 8 0 0 1 42 21 A9 9 0 0 1 56 16 A9 9 0 0 1 71 17 A8 8 0 0 1 80 27 A8 8 0 0 1 75 36 A8 8 0 0 1 61 37 A8 8 0 0 1 44 35" />
+                                <circle class="thought-bubble__dot thought-bubble__dot--1" cx="53" cy="26.5" r="1.5" />
+                                <circle class="thought-bubble__dot thought-bubble__dot--2" cx="61" cy="26.5" r="1.5" />
+                                <circle class="thought-bubble__dot thought-bubble__dot--3" cx="69" cy="26.5" r="1.5" />
+                                <path class="glyph" style={lambda} d={g.lambda.d} />
+                            </>
+                        )}
+                        {field.icon === 'computing' && (
+                            <>
+                                <path class="glyph" style={dollar} d={g.dollar.d} />
+                                <rect class="cursor" x={cursor.x} y={cursor.y} width={cursor.w} height={cursor.h} />
+                            </>
+                        )}
+                    </svg>
+                    <span class="field-emblem__label"><MarkdownInline content={field.title} /></span>
+                </li>
+            );
+        })}
+    </ul>
+</div>

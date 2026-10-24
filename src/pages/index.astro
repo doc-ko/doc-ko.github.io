@@ -5,7 +5,7 @@ import FieldDiagram from '../components/FieldDiagram.astro';
 import HomeHero from '../components/HomeHero.astro';
 import MarkdownCopy from '../components/MarkdownCopy.astro';
 import MarkdownInline from '../components/MarkdownInline.astro';
-import NoteBlock from '../components/NoteBlock.astro';
+import Note from '../components/Note.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { homepage } from '../data/homepage.js';
 
@@ -43,12 +43,13 @@ const { meta, hero, sections, fields, propositions, garden } = homepage;
 					/>
 					<div class="proposition-grid">
 						{propositions.map((item) => (
-							<NoteBlock
-								kind={item.kind}
+							<Note
+								label={item.kind}
 								title={item.title}
 								notation={item.notation}
 								body={item.body}
-								accent={item.accent}
+								dot="ink"
+								seed={item.title}
 							/>
 						))}
 					</div>

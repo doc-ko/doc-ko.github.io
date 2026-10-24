@@ -1,0 +1,21 @@
+---
+import DrawnEdges from './DrawnEdges.astro';
+
+// Code in a pencil bracket: a rule down the left with a one-unit hook at the
+// top and the bottom pointing inward, and no line on the right. The language
+// label sits on the top row beside the top hook. Wide code scrolls.
+//
+//   lang  label for the top row, e.g. "js"; leave out for none
+//   seed  gives the wobble its own shape
+//
+// Put a fenced code block in the slot.
+const { lang, seed = lang ?? 'code' } = Astro.props;
+---
+
+<div class="drawn code-block">
+    <DrawnEdges name={`code:${seed}`} keys="uld" tone="pencil" ink />
+    {lang && <p class="code-block__lang">{lang}</p>}
+    <div class="code-block__code">
+        <slot />
+    </div>
+</div>

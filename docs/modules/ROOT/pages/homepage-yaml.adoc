@@ -238,10 +238,9 @@ Each item:
 | Markdown (block)
 | Block text.
 
-| `accent`
-| Plain
-| Colour of the label. Defaults to `amber`. See <<accents>>.
 |===
+
+The corner dot of each block is always ink, so there is no `accent`.
 
 == garden
 
@@ -274,7 +273,8 @@ The closing section.
 `accent` accepts `amber`, `cyan`, or `violet`.
 These match the colour variables in `src/styles/tokens.css`.
 `paper` is also valid for `fields`: the drawing keeps the default text colour.
-Any other value, or leaving it out, falls back to the default text colour, except in `propositions` where the default is `amber`.
+Any other value, or leaving it out, falls back to the default text colour.
+`propositions` has no `accent`: their corner dots are always ink.
 The hover animation on the hero emblem belongs to the `icon`, not the accent; see xref:customising-the-site.adoc[].
 
 == Not In The YAML

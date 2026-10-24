@@ -1,9 +1,27 @@
 ---
+import DrawnEdges from './DrawnEdges.astro';
+import Dot from './Dot.astro';
 import EmailLink from './EmailLink.astro';
+
+// The current page gets an ink dot under its label and aria-current.
+const path = Astro.url.pathname;
+const links = [
+    { href: '/', label: 'Home', current: path === '/' },
+    { href: '/about/', label: 'About', current: path.startsWith('/about') },
+];
 ---
 
-<div class="nav-links" id="primary-navigation">
-    <a href="/">Home</a>
-    <a href="/about/">About</a>
-    <EmailLink>Contact</EmailLink>
+<div class="drawn nav-links" id="primary-navigation">
+    <DrawnEdges name="menu" />
+    {links.map((link) => (
+        <a class="drawn tab navlink" href={link.href} aria-current={link.current ? 'page' : undefined}>
+            <DrawnEdges name={`tab:${link.label}`} keys="ltr" />
+            <span>{link.label}</span>
+            {link.current && <Dot />}
+        </a>
+    ))}
+    <EmailLink class="drawn tab navlink navlink--wide">
+        <DrawnEdges name="tab:Contact" keys="ltr" />
+        <span>Contact</span>
+    </EmailLink>
 </div>

@@ -1,0 +1,58 @@
+---
+import DrawnEdges from './DrawnEdges.astro';
+import Dot from './Dot.astro';
+import MarkdownCopy from './MarkdownCopy.astro';
+import MarkdownInline from './MarkdownInline.astro';
+
+// A note: something set apart from the running text. One component, two
+// shapes, and a label that is whatever you write (never a type).
+//
+//   variant    inline (a pen box, in the flow) or margin (a pencil rule and a dot)
+//   label      small mono heading; markdown inline
+//   title      an optional heading line under the label
+//   notation   small mono text beside the label
+//   body       markdown; leave out to use the slot
+//   highlight  fill the whole note with the highlighter: amber, cyan or violet
+//   hatched    hatch the padding ring in a colour: amber, cyan, violet or ink
+//   dot        a coloured corner dot: ink, amber, cyan or violet; margin notes
+//              default to amber
+//   seed       gives the wobble its own shape; defaults to the label, so two
+//              notes with the same label (or none) share one wobble unless
+//              they get different seeds
+const {
+    variant = 'inline',
+    label,
+    title,
+    notation,
+    body,
+    highlight,
+    hatched,
+    dot = variant === 'margin' ? 'amber' : undefined,
+    seed,
+} = Astro.props;
+
+const margin = variant === 'margin';
+const name = `note:${seed ?? label ?? variant}`;
+const classes = [
+    'drawn',
+    'note',
+    `note--${variant}`,
+    highlight && `note--highlight note--${highlight}`,
+    hatched && `note--hatched note--hatch-${hatched}`,
+].filter(Boolean);
+---
+
+<div class={classes.join(' ')} role="note">
+    <DrawnEdges name={name} keys={margin ? 'l' : 'trbl'} tone={margin ? 'pencil' : 'pen'} />
+    {dot && <Dot color={dot} />}
+    {(label || notation) && (
+        <p class="note__label">
+            {label && <span class={`note__label-text note__label-text--${dot ?? 'plain'}`}><MarkdownInline content={label} /></span>}
+            {notation && <code><MarkdownInline content={notation} /></code>}
+        </p>
+    )}
+    {title && <h3 class="note__title"><MarkdownInline content={title} /></h3>}
+    <div class="note__body">
+        {body ? <MarkdownCopy content={body} /> : <slot />}
+    </div>
+</div>

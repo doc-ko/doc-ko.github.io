@@ -64,7 +64,7 @@ The redesign plan (`.claude/plans/dot-grid-redesign.md` on branch `claude/design
 **MDX is the default post format** (decided 2026-10-24). It uses the official `@astrojs/mdx` integration, which inherits the site's `markdown` config (remark and rehype plugins, Shiki) by default, so it does not fight Astro. It supports content collections.
 
 - Posts are `.mdx`; the collection also accepts `.md`, so the scaffold and the About page are not forced to change.
-- **No imports per post.** Render with `<Content components={{ MarginNote, Note, ... }} />` in the post route, so any site component is usable in every post without an import line. This is the main way MDX reduces tweaking rather than adding it.
+- **No imports per post.** Render with `<Content components={{ Note, ... }} />` in the post route, so any site component is usable in every post without an import line. This is the main way MDX reduces tweaking rather than adding it.
 - **Cost:** `<` and `{` in prose are syntax, so a stray one fails the build with a file and line. Write `\{`, `\<` or `&lt;` in prose. Inside code fences and `$...$` they are safe.
 - **Must verify in step 0:** `remark-directive`, `remarkEmail`, `remarkAiText` and `remark-math` all run on `.mdx` in the upgraded Astro, including `$a<b$` and `{` inside maths, and `:ai[...]` text. The `restore()` fallback in `remarkAiText` rebuilds stray `:word` from source; confirm it behaves in MDX. Also confirm MDX does not use the Rust Markdown processor if that becomes the default, since it would skip these plugins.
 - The superseded `next` branch was an earlier MDX prototype; ignore it.

@@ -23,55 +23,52 @@
         --violet: light-dark(#5a3ca8, #b99cff);
         --accent-soft: light-dark(rgb(148 85 0 / 12%), rgb(231 173 79 / 13%));
         --cyan-soft: light-dark(rgb(11 95 112 / 12%), rgb(101 215 234 / 13%));
-        --violet-soft: light-dark(rgb(90 60 168 / 12%), rgb(185 156 255 / 13%));
         --focus: var(--cyan);
         --link-line: light-dark(rgb(119 66 0 / 45%), rgb(231 173 79 / 45%));
 
         /* Lines and fills */
         --line: light-dark(rgb(42 40 37 / 16%), rgb(230 211 168 / 17%));
         --line-strong: light-dark(rgb(42 40 37 / 34%), rgb(244 214 154 / 32%));
-        --paper-soft: light-dark(rgb(42 40 37 / 7%), rgb(240 231 210 / 11%));
-        --grid-line: light-dark(rgb(42 40 37 / 5%), rgb(240 231 210 / 3%));
-        --header-bg: light-dark(rgb(232 230 225 / 82%), rgb(7 16 21 / 82%));
         --code-bg: light-dark(#f3f2ee, #05090d);
         --shadow: 0 22px 60px light-dark(rgb(42 40 37 / 16%), rgb(0 0 0 / 22%));
 
-        /* Filled-card tokens. Only the old cards use these (lemma, note block,
-           work card, field emblem panel, garden strip, nav menu). Remove them
-           when the pen-drawn Note replaces those cards (Phase 3, #13). Not from
-           the brief, so the light values are provisional. */
-        --bg-ruled: light-dark(#e1dfd9, #0a1319);
-        --surface: light-dark(#efede9, #101a21);
+        /* Filled surfaces still in use: inline code, the AI note. */
         --surface-muted: light-dark(#dfddd7, #0d171f);
         --surface-raised: light-dark(#f3f2ee, #14212a);
-        --sheen: light-dark(rgb(255 255 255 / 30%), rgb(240 231 210 / 4%));
-        --card-bg: light-dark(rgb(243 242 238 / 72%), rgb(16 26 33 / 72%));
-        --panel-bg: light-dark(rgb(223 221 215 / 78%), rgb(9 18 24 / 78%));
-        --panel-bg-2: light-dark(rgb(243 242 238 / 62%), rgb(16 26 33 / 62%));
-        --shadow-ink: light-dark(rgb(42 40 37 / 10%), rgb(0 0 0 / 12%));
 
-        /* From the brief; used by the grid and pen work (#17). */
+        /* The grid dots and the pen: dots, ink pen, pencil, highlighter. */
         --dots: light-dark(rgb(60 55 45 / 20%), rgb(240 231 210 / 13%));
         --pen: light-dark(rgb(42 40 37 / 56%), rgb(240 231 210 / 42%));
         --pencil: light-dark(rgb(70 66 60 / 40%), rgb(240 231 210 / 24%));
         --hl-amber: light-dark(rgb(255 196 40 / 30%), rgb(231 173 79 / 24%));
+        --hl-cyan: light-dark(rgb(60 205 225 / 26%), rgb(101 215 234 / 20%));
+        --hl-violet: light-dark(rgb(175 140 255 / 26%), rgb(185 156 255 / 22%));
 
         /* Illustration colours (field emblems) */
         --heart-top: #e45a50;
         --heart-bottom: #a9292b;
-        --heart-stroke: light-dark(#7d1d20, #7d1d20);
+        --heart-stroke: #7d1d20;
+
+        /* The ?grid overlay and its off-grid outlines (grid.css). Brighter in dark. */
+        --debug: light-dark(rgb(220 40 90), rgb(255 90 130));
 
         /* Which Shiki theme variable code uses. */
         --shiki: light-dark(var(--shiki-light), var(--shiki-dark));
 
         --ai-underline-color: light-dark(rgb(80 78 74 / 55%), rgb(185 173 148 / 45%));
 
+        /* The grid. Every line of text and every box edge sits on a multiple of
+           --u. --col is the content column: a whole number of units, never wider
+           than 1080px, with at least 16px of paper on each side. 100cqw is the
+           width of <body> (see grid.css), so a scrollbar does not shift the dots. */
+        --u: 24px;
+        --gutter: 16px;
+        --col: min(1080px, round(down, 100cqw - 2 * var(--gutter), var(--u)));
+
         /* Non-colour tokens */
-        --max-width: 1120px;
-        --notebook-width: 1080px;
         --content-width: 70ch;
         --reading-width: 43rem;
-        --serif: "Iowan Old Style", "STIX Two Text", "Palatino Linotype", Palatino, Georgia, serif;
+        --serif: "Literata", "Iowan Old Style", "STIX Two Text", "Palatino Linotype", Palatino, Georgia, serif;
         --mono: "SFMono-Regular", "Cascadia Mono", "Liberation Mono", ui-monospace, Menlo, Consolas, monospace;
         --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         /* How text marked as AI-generated looks; see [data-origin="ai"]. */
@@ -86,5 +83,37 @@
 
     :root[data-theme="dark"] {
         color-scheme: dark;
+    }
+
+    /* Browsers without round() get fixed column widths, each a whole number of
+       units, instead. */
+    @supports not (width: round(down, 10px, 3px)) {
+        :root {
+            --col: calc(100cqw - 2 * var(--gutter));
+        }
+
+        @media (min-width: 680px) {
+            :root { --col: 648px; }
+        }
+
+        @media (min-width: 768px) {
+            :root { --col: 720px; }
+        }
+
+        @media (min-width: 864px) {
+            :root { --col: 816px; }
+        }
+
+        @media (min-width: 960px) {
+            :root { --col: 912px; }
+        }
+
+        @media (min-width: 1056px) {
+            :root { --col: 1008px; }
+        }
+
+        @media (min-width: 1112px) {
+            :root { --col: 1080px; }
+        }
     }
 }

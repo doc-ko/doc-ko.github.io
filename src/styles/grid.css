@@ -1,3 +1,28 @@
+/* Literata, self-hosted (SIL Open Font License; see public/fonts/OFL-Literata.txt). */
+@font-face {
+    font-family: "Literata";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/literata-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Literata";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("/fonts/literata-latin-600-normal.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Literata";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/literata-latin-400-italic.woff2") format("woff2");
+}
+
 @layer grid {
     :where(*) {
         box-sizing: border-box;
@@ -5,13 +30,11 @@
 
     html {
         min-height: 100%;
-        background:
-            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 50% 0 / 72px 72px,
-            repeating-linear-gradient(180deg, transparent 0 31px, var(--grid-line) 31px 32px),
-            var(--bg);
+        background: var(--bg);
         color: var(--ink);
         font-family: var(--serif);
-        line-height: 1.62;
+        font-size: 16px;
+        line-height: var(--u);
         text-rendering: optimizeLegibility;
     }
 
@@ -19,16 +42,31 @@
         margin: 0;
     }
 
+    /* <body> is the size container that --col measures against (100cqw). */
     body {
-        min-height: 100vh;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
+        container-type: inline-size;
         background: transparent;
     }
 
     body,
     button {
         font: inherit;
+    }
+
+    /* The page wrapper carries the dots, not <html> or 100vw, so a scrollbar
+       on Windows cannot shift them. A dot is 2px below the top of each line
+       and one sits on the left edge of the column. The tile is 24px with the
+       dot at its centre, so the tile starts 12px before the dot (-12px) and
+       the 50% (which means (width - tile) / 2) gets 12px back: together they
+       cancel, leaving (width - column) / 2. */
+    .page {
+        min-height: 100vh;
+        min-height: round(down, 100vh, var(--u));
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        background:
+            radial-gradient(circle, var(--dots) 1.1px, transparent 1.6px)
+            calc(50% - var(--col) / 2) -10px / var(--u) var(--u);
     }
 
     a {
@@ -52,9 +90,12 @@
     img {
         max-width: 100%;
         height: auto;
-        border-radius: 4px;
     }
 
+    /* Headings. Sizes and line heights are whole units. The halo knocks the
+       dots out from behind the letters so big type stays crisp: a stroke in
+       the paper colour, painted under the fill. Where paint-order does not
+       apply to HTML text, a soft shadow does a similar job. */
     :where(h1, h2, h3) {
         margin: 0;
     }
@@ -63,22 +104,62 @@
     h2,
     h3 {
         color: var(--ink-strong);
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: 0;
-        line-height: 1.1;
+    }
+
+    /* Only 40px and up: their descenders reach the next dot row. Body text and
+       h3 clear the rows. */
+    h1,
+    h2 {
+        text-shadow: 0 0 4px var(--bg), 0 0 4px var(--bg);
+    }
+
+    @supports (paint-order: stroke fill) and (-webkit-text-stroke: 1px red) {
+        h1 {
+            -webkit-text-stroke: 4px var(--bg);
+            paint-order: stroke fill;
+            text-shadow: none;
+        }
+
+        h2 {
+            -webkit-text-stroke: 3px var(--bg);
+            paint-order: stroke fill;
+            text-shadow: none;
+        }
     }
 
     h1 {
         max-width: 760px;
-        font-size: clamp(2.35rem, 4.7vw, 4.15rem);
+        font-size: 40px;
+        line-height: 48px;
     }
 
     h2 {
-        font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+        font-size: 32px;
+        line-height: 48px;
     }
 
     h3 {
-        font-size: 1.18rem;
+        font-size: 20px;
+        line-height: var(--u);
+    }
+
+    @media (min-width: 680px) {
+        h1 {
+            font-size: 64px;
+            line-height: 72px;
+        }
+
+        /* A page title is smaller than the homepage headline. */
+        .site-main:not(.site-main--no-title) > h1 {
+            font-size: 48px;
+            line-height: 48px;
+        }
+
+        h2 {
+            font-size: 40px;
+        }
     }
 
     :where(p) {
@@ -87,18 +168,27 @@
 
     p + p,
     p + ul,
+    p + ol,
     ul + p,
-    :is(p, ul) + .ai-text,
-    .ai-text + :is(p, ul, .ai-text) {
-        margin-top: 1rem;
+    ol + p,
+    :is(p, ul, ol) + .ai-text,
+    .ai-text + :is(p, ul, ol, .ai-text) {
+        margin-top: var(--u);
     }
 
-    :where(ul) {
-        padding-left: 1.25rem;
+    /* Headings inside running text: two units above, nothing below (a heading's
+       own line height is the gap). */
+    :where(p, ul, ol, pre, .katex-display) + :is(h2, h3) {
+        margin-top: calc(2 * var(--u));
+    }
+
+    :where(ul, ol) {
+        margin: 0;
+        padding-left: var(--u);
     }
 
     li + li {
-        margin-top: 0.55rem;
+        margin-top: 0;
     }
 
     .markdown-copy > :first-child {
@@ -110,7 +200,7 @@
     }
 
     .markdown-copy :is(ul, ol) {
-        margin: 0.65rem 0 0;
+        margin: var(--u) 0 0;
     }
 
     .markdown-copy :is(strong, b) {
@@ -118,24 +208,32 @@
         font-weight: 600;
     }
 
+    /* Inline code never changes the height of its line: the line height is a
+       fixed length, and an inline box's padding and border do not count. */
     code {
         border: 1px solid var(--line);
         border-radius: 3px;
-        padding: 0.1rem 0.28rem;
+        padding: 0 0.28rem;
         background: var(--surface-muted);
         color: var(--ink);
         font-family: var(--mono);
         font-size: 0.86em;
     }
 
+    /* Code blocks. Every line is one unit tall; a scrollbar would add height,
+       so the unit script (grid.js) pads the block back up. Phase 3 replaces
+       the box with the pencil bracket. */
     pre {
         max-width: 100%;
+        margin: var(--u) 0 0;
         overflow-x: auto;
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 1rem;
+        border-radius: 0;
+        padding: var(--u);
         background: var(--code-bg);
+        box-shadow: inset 0 0 0 1px var(--line);
         color: var(--ink);
+        font-size: 14px;
+        line-height: var(--u);
     }
 
     /* Shiki emits both themes as variables; --shiki is set in tokens.css. */
@@ -151,6 +249,7 @@
     /* Wide display maths scrolls inside its own box instead of widening the page. */
     .katex-display {
         max-width: 100%;
+        margin: var(--u) 0;
         overflow-x: auto;
         overflow-y: hidden;
     }
@@ -160,6 +259,7 @@
         padding: 0;
         background: transparent;
         color: inherit;
+        font-size: inherit;
     }
 
     .visually-hidden {
@@ -172,80 +272,94 @@
         user-select: none;
     }
 
+    /* Boxes whose height the stylesheet cannot know (an image, a code block
+       with a scrollbar, display maths) get --grid-pad from grid.js: the
+       extra bottom padding that rounds the box up to whole units. The
+       selectors (this rule and the pre rule below) must match SELECTOR in
+       grid.js. Without the script the page still works; lines below drift
+       off the dots. */
+    main :is(img, .katex-display) {
+        padding-bottom: var(--grid-pad, 0px);
+    }
+
+    /* An inline image sits on the text baseline and leaves a descender gap
+       under itself, which would put the line box off the grid. */
+    main img {
+        vertical-align: bottom;
+    }
+
+    /* A bare <pre> keeps its unit of padding all round and adds --grid-pad
+       on top. It has its own rule because :is() takes the specificity of its
+       strongest argument (.katex-display), which would beat this rule. A
+       .code-block pre sets its own padding in devices.css, a later layer. */
+    main pre {
+        padding-bottom: calc(var(--u) + var(--grid-pad, 0px));
+    }
+
+    /* The content column. */
     .site-main {
-        width: min(100% - 2rem, var(--max-width));
+        width: var(--col);
         margin: 0 auto;
-        padding: clamp(2.5rem, 6vw, 5rem) 0;
+        padding: calc(2 * var(--u)) 0 calc(3 * var(--u));
     }
 
     .site-main--no-title {
-        width: 100%;
-        padding: 0;
+        padding-top: 0;
     }
 
     .site-main > h1 {
-        margin-bottom: 1.25rem;
-    }
-
-    .section-band {
-        padding: clamp(3.25rem, 7vw, 5.5rem) 1rem;
-    }
-
-    .section-band--muted {
-        border-block: 1px solid var(--line);
-        background: var(--surface-muted);
-    }
-
-    .section-inner {
-        width: min(100%, var(--max-width));
-        margin: 0 auto;
+        margin-bottom: var(--u);
     }
 
     .notebook-home {
-        border-top: 1px solid transparent;
-    }
-
-    .notebook-hero,
-    .notebook-section {
-        padding-inline: 1rem;
+        padding-top: 0;
     }
 
     .notebook-hero {
-        padding-top: clamp(3.25rem, 7vw, 5.75rem);
-        padding-bottom: clamp(3rem, 6vw, 5rem);
+        padding-top: calc(2 * var(--u));
+        padding-bottom: calc(2 * var(--u));
     }
 
     .notebook-section {
-        padding-block: clamp(3.75rem, 7vw, 6.5rem);
-    }
-
-    .notebook-section--ruled {
-        border-block: 1px solid var(--line);
-        background:
-            linear-gradient(90deg, transparent, var(--sheen) 50%, transparent),
-            var(--bg-ruled);
-    }
-
-    .notebook-section--closing {
-        border-top: 1px solid var(--line);
-        padding-bottom: clamp(4rem, 8vw, 7rem);
+        padding-block: calc(2 * var(--u));
     }
 
     .notebook-grid {
-        width: min(100%, var(--notebook-width));
-        margin: 0 auto;
         display: grid;
-        grid-template-columns: minmax(0, var(--reading-width)) minmax(13rem, 17rem);
-        gap: clamp(2rem, 6vw, 5rem);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 17rem);
+        gap: calc(2 * var(--u));
         align-items: start;
     }
 
     .notebook-grid--hero {
-        grid-template-columns: minmax(0, 0.88fr) minmax(21rem, 0.72fr);
-        align-items: center;
+        grid-template-columns: minmax(0, 0.88fr) minmax(0, 0.72fr);
     }
 
     .hero-manuscript {
         min-width: 0;
+    }
+
+    /* Tooling: ?grid on any URL draws the unit lines and the column edges, and
+       outlines every box in <main> whose top or height is off the grid (see
+       grid-check.js). */
+    .show-grid {
+        position: relative;
+    }
+
+    .show-grid::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 100;
+        pointer-events: none;
+        background:
+            linear-gradient(90deg, transparent calc(50% - var(--col) / 2), color-mix(in srgb, var(--debug) 45%, transparent) 0 calc(50% - var(--col) / 2 + 1px), transparent 0 calc(50% + var(--col) / 2 - 1px), color-mix(in srgb, var(--debug) 45%, transparent) 0 calc(50% + var(--col) / 2), transparent 0),
+            repeating-linear-gradient(180deg, color-mix(in srgb, var(--debug) 22%, transparent) 0 1px, transparent 1px var(--u));
+    }
+
+    .grid-off {
+        outline: 1px solid color-mix(in srgb, var(--debug) 90%, transparent);
+        outline-offset: -1px;
+        background-color: color-mix(in srgb, var(--debug) 12%, transparent);
     }
 }

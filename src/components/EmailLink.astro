@@ -3,6 +3,8 @@ import { emailReversed } from '../data/contact.js';
 
 // Links to the contact address without putting it in the HTML; see
 // src/data/contact.js. With no content, the link text becomes the address.
+// Any other attribute (class, aria-label) passes through to the link.
+const attributes = Astro.props;
 ---
 
-<a data-email={emailReversed}><slot /></a>
+<a data-email={emailReversed} {...attributes}><slot /></a>

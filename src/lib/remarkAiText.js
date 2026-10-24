@@ -1,7 +1,7 @@
 // AI-generated text is declared by hand, never detected. In Markdown, mark a
 // phrase with :ai[...] and whole blocks with a :::ai container; unmarked text
 // counts as written by Karl. Each marked element gets data-origin="ai", which
-// is what global.css styles. A phrase can carry an explanation that shows on
+// is what devices.css styles. A phrase can carry an explanation that shows on
 // hover and focus: :ai[AInese]{note="..."}.
 
 const TAG = {

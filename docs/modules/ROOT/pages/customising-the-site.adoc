@@ -297,7 +297,7 @@ It imports the homepage data and renders components in this order:
 
 . `HomeHero`
 . fields section with `SectionHeading` and `FieldDiagram` (the cards)
-. method section with `SectionHeading` and `NoteBlock` cards
+. method section with `SectionHeading` and `Note` boxes
 . closing garden section
 
 If you remove or rename a property in `homepage.yaml`, update the component that reads it.
@@ -305,20 +305,20 @@ For example, `FieldDiagram.astro` expects every field item to have `icon`, `titl
 
 == 10. Change Colours And Typography
 
-Start at the top of `src/styles/global.css`.
+Start at the top of `src/styles/tokens.css`.
 
-The main design tokens are CSS variables:
+The main design tokens are CSS variables.
+Each colour is a `light-dark(light, dark)` pair:
 
 [source,css]
 ----
 :root {
-    --bg: #071015;
-    --surface: #101a21;
-    --ink: #f0e7d2;
-    --accent: #e7ad4f;
-    --cyan: #65d7ea;
-    --violet: #b99cff;
-    --serif: "Iowan Old Style", Georgia, serif;
+    --bg: light-dark(#e8e6e1, #071015);
+    --ink: light-dark(#2a2a2c, #f0e7d2);
+    --accent: light-dark(#945500, #e7ad4f);
+    --cyan: light-dark(#0b5f70, #65d7ea);
+    --violet: light-dark(#5a3ca8, #b99cff);
+    --serif: "Literata", Georgia, serif;
     --mono: "SFMono-Regular", ui-monospace, monospace;
 }
 ----
@@ -328,10 +328,10 @@ That keeps the design consistent across pages.
 
 Common edits:
 
-* Background colour: `--bg` and `--bg-ruled`.
+* Background colour: `--bg`.
 * Body text colour: `--ink`, `--ink-strong`, and `--muted`.
 * Highlight colours: `--accent`, `--cyan`, and `--violet`.
-* Maximum page width: `--max-width`.
+* Page column: `--col` (a whole number of 24px units, at most 1080px) and `--u`, the 24px grid unit.
 * Reading column width: `--content-width` and `--reading-width`.
 * Typeface choices: `--serif`, `--sans`, and `--mono`.
 
@@ -358,11 +358,11 @@ To regenerate it, for example to change a glyph:
 
 The glyph list is at the top of `scripts/extract-glyphs.py`.
 The font licences are in `src/lib/glyph-licenses/`.
-Adding a new icon means adding its glyphs to that list, giving it a block in `FieldEmblem.astro`, adding an entry in `src/lib/icons.js` for the small version used on the section 01 cards, and adding its hover rules in `global.css`.
+Adding a new icon means adding its glyphs to that list, giving it a block in `FieldEmblem.astro`, adding an entry in `src/lib/icons.js` for the small version used on the section 01 cards, and adding its hover rules in `src/styles/devices.css`.
 
 === Hover animations
 
-The styles are the `.field-emblem` rules in `src/styles/global.css`.
+The styles are the `.field-emblem` rules in `src/styles/devices.css`.
 Each tile takes its colour from its `accent`, using the same colour variables as the rest of the site.
 The tiles are not links, so they show a normal cursor and do nothing when clicked.
 The animation belongs to the `icon`, so reordering or recolouring the fields does not change it:
@@ -453,7 +453,7 @@ Also check that `BaseLayout.astro` still imports `src/scripts/menu.js`.
 
 === A Style Change Affected Too Much
 
-Look for broad selectors in `src/styles/global.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.markdown-copy`, `.lemma-card`, and `.button-link`.
+Look for broad selectors in `src/styles/grid.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.markdown-copy` and `.button-link`.
 
 == 15. Suggested Editing Workflow
 
@@ -487,3 +487,22 @@ To move it to another domain, change all of these together:
 * The DNS records at the domain registrar.
 
 GitHub ignores `public/CNAME` when a workflow deploys the site, so the *Settings > Pages* value is the one that counts.
+
+== 17. Keep Things On The Grid
+
+The page is laid out on a 24px grid: every line of text and every box edge sits on a multiple of 24px, and the dots in the background mark the lines.
+Add `?grid` to any page address (for example `/about/?grid`) to draw the lines and outline every box that is off the grid in red.
+
+To check every page at phone and desktop width, in both themes, run:
+
+[source,sh]
+----
+npm run test:grid
+----
+
+It builds the site and fails with the name, top and height of any box in `main` that is not a whole number of units.
+The first time, run `npx playwright install chromium` to download the test browser.
+
+Keep new spacing in whole units: use `var(--u)` and multiples of it for margins, padding and heights, and avoid borders on boxes (they add height).
+Use `Note`, `PencilRule` and the other drawn devices for lines instead; their lines are SVG and take no space.
+Images, code blocks and display maths have heights the stylesheet cannot know; `src/scripts/grid.js` pads each one up to the next whole unit.

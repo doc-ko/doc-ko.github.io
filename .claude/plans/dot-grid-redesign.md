@@ -107,8 +107,7 @@ Follow `AGENTS.md`, especially the dev-server rules and "Working with the owner"
 - [x] Brief updated with the decisions
 - [x] Canvas updated with the decisions (version 4: Literata, oberio.me, ink status notes, section 01, bracket code block on the post template, footer on every page). Frame heights for the footer were estimated; check nothing is clipped.
 - [x] Phase 1 (#16): tokens use `light-dark()`; theme set by `data-theme` on `<html>`; toggle in `ThemeToggle.astro`, `src/scripts/theme.js`
-- [ ] Phase 2
-- [ ] Phase 3
+- [x] Phase 2 and 3 (#17): grid, Literata, `?grid` overlay, `tests/grid.spec.js`, `src/lib/pen.js`, `Note`, `DrawnEdges`, `Dot`, `PencilRule`, `Highlight`, `CodeBlock`, hatched `FieldEmblem`, drawn header. Not blocking this merge or #17 (decided 2026-10-24); still worth doing: Firefox halo, 1x wobble, margin note vs bracket on a real post; image heights are padded by script only (no build-time rounding yet)
 - [ ] Phase 4
 - [ ] Phase 5
 - [ ] Phase 6
