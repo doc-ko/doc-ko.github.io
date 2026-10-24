@@ -72,6 +72,7 @@
 
         /* Non-colour tokens */
         /* How text marked as AI-generated looks; see [data-origin="ai"]. */
+        --ai-outline-style: dashed;
         --ai-outline-thickness: 1px;
         --ai-outline-offset: 0.26em;
         --content-width: 70ch;

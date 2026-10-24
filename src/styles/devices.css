@@ -6,7 +6,7 @@
     [data-origin="ai"] {
         color: var(--ai-text-color);
         text-decoration-line: overline underline;
-        text-decoration-style: solid;
+        text-decoration-style: var(--ai-outline-style);
         text-decoration-color: var(--ai-outline-color);
         text-decoration-thickness: var(--ai-outline-thickness);
         text-underline-offset: var(--ai-outline-offset);
@@ -18,7 +18,7 @@
        underline so that it replaces it instead of mixing with it. */
     [data-origin="ai"] a {
         position: relative;
-        text-decoration-style: solid;
+        text-decoration-style: var(--ai-outline-style);
         text-decoration-color: var(--ai-outline-color);
         text-decoration-thickness: var(--ai-outline-thickness);
         text-underline-offset: var(--ai-outline-offset);
@@ -44,7 +44,7 @@
        heading declares its own. */
     [data-origin="ai"] :is(h1, h2, h3, h4, h5, h6) {
         text-decoration-line: overline underline;
-        text-decoration-style: solid;
+        text-decoration-style: var(--ai-outline-style);
         text-decoration-color: var(--ai-text-color);
         text-decoration-thickness: var(--ai-outline-thickness);
     }

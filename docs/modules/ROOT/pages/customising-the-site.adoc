@@ -290,7 +290,7 @@ An unknown `field`, `variant`, `highlight`, `hatched` or `dot` value stops the b
 
 Mark any text that AI wrote, so readers can tell it apart from text you wrote.
 Nothing detects AI text automatically: text counts as yours unless you mark it.
-Marked text gets a faint line above and below it, and hovering over it shows "AI-generated".
+Marked text gets a faint dashed line above and below it, and hovering over it shows "AI-generated".
 
 Mark a phrase with `:ai[...]`, and mark whole paragraphs or lists with an `:::ai` block:
 
@@ -339,17 +339,18 @@ That label is hidden on screen and left out when someone copies the text.
 
 === Change how AI text looks
 
-The look is set by four variables in `src/styles/tokens.css`:
+The look is set by five variables in `src/styles/tokens.css`:
 
 [source,css]
 ----
 --ai-text-color: light-dark(#4d6378, #9fb1bc);
 --ai-outline-color: light-dark(rgb(77 99 120 / 50%), rgb(150 175 190 / 38%));
+--ai-outline-style: dashed;
 --ai-outline-thickness: 1px;
 --ai-outline-offset: 0.26em;
 ----
 
-The marking is text in a cooler blue-grey than the rest of the site, with a thin overline and underline, drawn on every line of the text, so wrapped lines get a pair each.
+The marking is text in a cooler blue-grey than the rest of the site, with a thin dashed overline and underline, drawn on every line of the text, so wrapped lines get a pair each.
 This also applies inside `:::ai` blocks and `origin: ai` pages, line by line.
 For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `devices.css`.
 Every marked element has the `data-origin="ai"` attribute, so that one rule covers them all.
