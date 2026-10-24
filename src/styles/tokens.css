@@ -23,7 +23,6 @@
         --violet: light-dark(#5a3ca8, #b99cff);
         --accent-soft: light-dark(rgb(148 85 0 / 12%), rgb(231 173 79 / 13%));
         --cyan-soft: light-dark(rgb(11 95 112 / 12%), rgb(101 215 234 / 13%));
-        --violet-soft: light-dark(rgb(90 60 168 / 12%), rgb(185 156 255 / 13%));
         --focus: var(--cyan);
         --link-line: light-dark(rgb(119 66 0 / 45%), rgb(231 173 79 / 45%));
 
@@ -48,7 +47,10 @@
         /* Illustration colours (field emblems) */
         --heart-top: #e45a50;
         --heart-bottom: #a9292b;
-        --heart-stroke: light-dark(#7d1d20, #7d1d20);
+        --heart-stroke: #7d1d20;
+
+        /* The ?grid overlay and its off-grid outlines (grid.css). Brighter in dark. */
+        --debug: light-dark(rgb(220 40 90), rgb(255 90 130));
 
         /* Which Shiki theme variable code uses. */
         --shiki: light-dark(var(--shiki-light), var(--shiki-dark));

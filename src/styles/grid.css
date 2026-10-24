@@ -274,13 +274,21 @@
 
     /* Boxes whose height the stylesheet cannot know (an image, a code block
        with a scrollbar, display maths) get --grid-pad from grid.js: the
-       extra bottom padding that rounds the box up to whole units. Without the
-       script the page still works; lines below drift off the dots. */
-    [data-grid-pad] {
+       extra bottom padding that rounds the box up to whole units. The
+       selector list must match SELECTOR in grid.js. Without the script the
+       page still works; lines below drift off the dots. */
+    main :is(img, pre, .katex-display) {
         padding-bottom: var(--grid-pad, 0px);
     }
 
-    pre[data-grid-pad] {
+    /* An inline image sits on the text baseline and leaves a descender gap
+       under itself, which would put the line box off the grid. */
+    main img {
+        vertical-align: bottom;
+    }
+
+    /* A bare <pre> already has a unit of padding all round; keep it. */
+    main pre {
         padding-bottom: calc(var(--u) + var(--grid-pad, 0px));
     }
 
@@ -341,13 +349,13 @@
         z-index: 100;
         pointer-events: none;
         background:
-            linear-gradient(90deg, transparent calc(50% - var(--col) / 2), rgb(220 40 90 / 45%) 0 calc(50% - var(--col) / 2 + 1px), transparent 0 calc(50% + var(--col) / 2 - 1px), rgb(220 40 90 / 45%) 0 calc(50% + var(--col) / 2), transparent 0),
-            repeating-linear-gradient(180deg, rgb(220 40 90 / 22%) 0 1px, transparent 1px var(--u));
+            linear-gradient(90deg, transparent calc(50% - var(--col) / 2), color-mix(in srgb, var(--debug) 45%, transparent) 0 calc(50% - var(--col) / 2 + 1px), transparent 0 calc(50% + var(--col) / 2 - 1px), color-mix(in srgb, var(--debug) 45%, transparent) 0 calc(50% + var(--col) / 2), transparent 0),
+            repeating-linear-gradient(180deg, color-mix(in srgb, var(--debug) 22%, transparent) 0 1px, transparent 1px var(--u));
     }
 
     .grid-off {
-        outline: 1px solid rgb(220 40 90 / 90%);
+        outline: 1px solid color-mix(in srgb, var(--debug) 90%, transparent);
         outline-offset: -1px;
-        background-color: rgb(220 40 90 / 12%);
+        background-color: color-mix(in srgb, var(--debug) 12%, transparent);
     }
 }

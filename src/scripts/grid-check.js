@@ -1,6 +1,7 @@
 // Finds boxes in <main> whose top or height is not a whole number of units.
-// Only block-level boxes count: an inline box sits inside a line, and the
-// line height is already a whole number of units.
+// Plain inline boxes are skipped: they sit inside a line, and the line height
+// is already a whole number of units. Inline-block and inline-flex boxes have
+// a height of their own, so they are checked.
 const UNIT = 24;
 const TOLERANCE = 0.5;
 const SKIP_INSIDE = 'svg, .katex, .visually-hidden, [data-grid-ignore]';
@@ -32,7 +33,7 @@ export function findOffGrid() {
     for (const element of main.querySelectorAll('*')) {
         if (element.closest(SKIP_INSIDE)) continue;
         const style = getComputedStyle(element);
-        if (style.display === 'none' || style.display === 'contents' || style.display.startsWith('inline')) continue;
+        if (style.display === 'none' || style.display === 'contents' || style.display === 'inline') continue;
         if (style.position === 'absolute' || style.position === 'fixed') continue;
 
         const box = element.getBoundingClientRect();

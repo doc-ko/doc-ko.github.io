@@ -70,19 +70,16 @@ propositions:
     notation: "In Progress"
     body: >-
       Adding a bit more personal flair to the visual design, plus a light and dark mode.
-    accent: "amber"
   - kind: ":ai[Placeholder]"
     title: ":ai[Copy]"
     notation: ":ai[copy ≈ previous site]"
     body: >-
       :ai[Wording is borrowed from the previous site and will be rewritten.]
-    accent: "cyan"
   - kind: ":ai[Missing]"
     title: ":ai[Content]"
     notation: ":ai[TODO]"
     body: >-
       :ai[The blog, writing samples, and a settled purpose for this site.]
-    accent: "violet"
 
 garden:
   number: "03 / :ai[contact and paths]"

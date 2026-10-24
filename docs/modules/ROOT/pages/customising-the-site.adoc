@@ -358,11 +358,11 @@ To regenerate it, for example to change a glyph:
 
 The glyph list is at the top of `scripts/extract-glyphs.py`.
 The font licences are in `src/lib/glyph-licenses/`.
-Adding a new icon means adding its glyphs to that list, giving it a block in `FieldEmblem.astro`, adding an entry in `src/lib/icons.js` for the small version used on the section 01 cards, and adding its hover rules in `global.css`.
+Adding a new icon means adding its glyphs to that list, giving it a block in `FieldEmblem.astro`, adding an entry in `src/lib/icons.js` for the small version used on the section 01 cards, and adding its hover rules in `src/styles/devices.css`.
 
 === Hover animations
 
-The styles are the `.field-emblem` rules in `src/styles/global.css`.
+The styles are the `.field-emblem` rules in `src/styles/devices.css`.
 Each tile takes its colour from its `accent`, using the same colour variables as the rest of the site.
 The tiles are not links, so they show a normal cursor and do nothing when clicked.
 The animation belongs to the `icon`, so reordering or recolouring the fields does not change it:
@@ -453,7 +453,7 @@ Also check that `BaseLayout.astro` still imports `src/scripts/menu.js`.
 
 === A Style Change Affected Too Much
 
-Look for broad selectors in `src/styles/global.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.markdown-copy`, `.lemma-card`, and `.button-link`.
+Look for broad selectors in `src/styles/grid.css`, especially global element selectors like `a`, `h1`, `h2`, `p`, `code`, and shared component classes like `.markdown-copy` and `.button-link`.
 
 == 15. Suggested Editing Workflow
 
@@ -488,7 +488,7 @@ To move it to another domain, change all of these together:
 
 GitHub ignores `public/CNAME` when a workflow deploys the site, so the *Settings > Pages* value is the one that counts.
 
-== 12. Keep Things On The Grid
+== 17. Keep Things On The Grid
 
 The page is laid out on a 24px grid: every line of text and every box edge sits on a multiple of 24px, and the dots in the background mark the lines.
 Add `?grid` to any page address (for example `/about/?grid`) to draw the lines and outline every box that is off the grid in red.

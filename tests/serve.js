@@ -10,8 +10,9 @@ createServer(async (request, response) => {
     const path = normalize(decodeURIComponent(new URL(request.url, 'http://x').pathname));
     const file = join('dist', path.endsWith('/') ? `${path}index.html` : path);
     try {
+        const body = await readFile(file);
         response.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream' });
-        response.end(await readFile(file));
+        response.end(body);
     } catch {
         response.writeHead(404).end('not found');
     }

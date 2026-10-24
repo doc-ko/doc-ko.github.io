@@ -27,6 +27,6 @@ npm run build
 == Mental Model
 
 This is a small Astro site.
-Most pages live under `src/pages/`, shared layout and interface pieces live under `src/components/` and `src/layouts/`, and the main visual system lives in `src/styles/global.css`.
+Most pages live under `src/pages/`, shared layout and interface pieces live under `src/components/` and `src/layouts/`, and the visual system lives in the four files under `src/styles/`.
 
 For routine homepage copy changes, start with `src/data/homepage.yaml` before editing component markup.

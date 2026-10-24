@@ -16,7 +16,9 @@ import MarkdownInline from './MarkdownInline.astro';
 //   hatched    hatch the padding ring in a colour: amber, cyan, violet or ink
 //   dot        a coloured corner dot: ink, amber, cyan or violet; margin notes
 //              default to amber
-//   seed       gives the wobble its own shape; defaults to the label
+//   seed       gives the wobble its own shape; defaults to the label, so two
+//              notes with the same label (or none) share one wobble unless
+//              they get different seeds
 const {
     variant = 'inline',
     label,

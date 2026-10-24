@@ -200,6 +200,12 @@
             display: flex;
         }
 
+        /* An open menu pushes the page down instead of covering it: the
+           header grows by the menu's 8 units plus a one-unit gap. */
+        .site-header:has(.nav-links.expanded) {
+            height: calc(12 * var(--u));
+        }
+
         .nav-links .tab {
             width: 100%;
             height: calc(2 * var(--u));

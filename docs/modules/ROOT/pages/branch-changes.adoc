@@ -1,113 +1,120 @@
 = Branch Changes
-:description: Functional changes introduced by the ai-rewrite branch.
+:description: What the dot-grid branch changes compared with main, and what main already holds from earlier work.
 
-This document describes the functional changes in the `ai-rewrite` branch compared with `main`.
+This document describes the `design/dot-grid-devices` branch compared with `main`.
+It then summarises the earlier work that is already on `main`, so you can see how the site got to its current shape.
 
 == Summary
 
-The branch turns the site from a lightly customised Astro tutorial blog into a more intentional personal site for technical writing.
-The new direction is a dark, mathematical-notebook style: restrained typography, symbolic glyphs, margin notes, and a homepage that behaves more like a table of contents than a portfolio landing page.
+The site is a personal blog for technical writing.
+The design is a notebook page: a recycled-grey (or dark) sheet with a dot grid, and boxes and rules drawn like pen lines through the dots.
+This branch builds that grid and the drawn elements, and adds a test that keeps every page on the grid.
+Plans and decisions are in `.claude/plans/dot-grid-redesign.md`, and the work is tracked in issue #17.
 
-== Main Website Changes
+== What This Branch Changes
 
-=== Homepage Rewrite
+=== The 24px Grid
 
-The homepage in `src/pages/index.astro` has been rebuilt around a notebook-style structure:
+Every line of text and every box edge sits on a multiple of 24px, which is the grid unit `--u`.
+The dots in the page background mark the lines.
 
-* Hero section with a short statement, working lemma, primary links, and a four-symbol emblem.
-* Field section for mathematics, computer science, philosophy, and linguistics.
-* Formal note blocks for definitions, propositions, and corollaries.
-* Closing section with a contact email and a GitHub link.
+* The content column is a whole number of units wide, never wider than 1080px, and is one column under 680px.
+* Headings and body text use whole-unit line heights.
+* The text typeface is Literata, self-hosted in `public/fonts/` (regular, semibold and italic).
+  `BaseLayout.astro` preloads the two upright weights.
+* Boxes whose height is not known in advance (images, scrolling code blocks, display maths) are rounded up to whole units by `src/scripts/grid.js`.
+  The page still works without the script; the lines below such a box just drift off the dots.
 
-Most homepage text is now centralised in `src/data/homepage.yaml`, with a small loader in `src/data/homepage.js` and notes in `src/data/README.md`.
-Homepage copy fields support Markdown through `src/components/MarkdownCopy.astro`, `src/components/MarkdownInline.astro`, and the shared renderer in `src/lib/homepageMarkdown.js`.
+=== The Grid Check
 
-=== New Homepage Components
+Add `?grid` to any page address to draw the unit lines and outline every box that is off the grid in red.
+`src/scripts/grid-check.js` does the measuring.
 
-The branch adds small, focused Astro components under `src/components/`:
+`npm run test:grid` builds the site and runs the same check on every page at phone and desktop width, in both themes, using Playwright.
+A second test splices an image of odd height, a long code block and display maths into a copy of the About page, and checks that they pad out to whole units.
+That copy exists only inside the test; it is not a route and does not appear in `dist/`.
+The build workflow in `.github/workflows/build.yml` runs the check on every pull request.
 
-* `HomeHero.astro` renders the homepage hero and emblem stack.
-* `FieldEmblem.astro` renders the four field icons in the hero as SVG paths; `src/lib/glyphs.js` holds the outlines.
-* `FieldDiagram.astro` renders the field cards.
-* `SectionHeading.astro` renders numbered section headings.
-* `Note.astro` renders notes: a pen-drawn box in the text, or a pencil rule and dot in the margin.
-* `DrawnEdges.astro`, `Dot.astro`, `PencilRule.astro`, `Highlight.astro` and `CodeBlock.astro` are the other drawn devices; `src/lib/pen.js` draws every wobbly line, hatch and highlighter end at build time.
-* `MarkdownCopy.astro` and `MarkdownInline.astro` render Markdown-backed homepage copy while preserving the existing component structure.
+=== Pen-Drawn Elements
 
-These components keep the homepage page file readable while leaving the copy in `src/data/homepage.yaml`.
+`src/lib/pen.js` draws every wobbly line, hatch and highlighter end at build time.
+The same seed always gives the same drawing.
+The components that use it, under `src/components/`:
 
-=== Visual System Refresh
+* `Note.astro` renders a note: a pen-drawn box in the text, or a pencil rule and dot in the margin.
+  It replaces `NoteBlock.astro` and `MarginNote.astro`, which are removed.
+* `DrawnEdges.astro` draws the edges of any box.
+* `Dot.astro`, `PencilRule.astro` and `Highlight.astro` are the small pieces.
+* `CodeBlock.astro` wraps code in a pencil bracket.
+* `FieldEmblem.astro` now has hatched tiles drawn at build time and keeps its hover animations.
 
-The styles are split under cascade layers into `src/styles/tokens.css` (colours and other variables), `grid.css` (base and page layout), `devices.css` (notes, cards, the field emblem, buttons, tags) and `pages.css` (header, footer, homepage and entry pages).
-Together they define:
+=== Header And Menu
 
-* A light ("recycled grey") and a dark palette, switched by the header toggle, as CSS variables.
-* Serif, sans, and monospace type roles.
-* Shared header, footer, buttons, tags, work cards, and content lists.
-* Homepage-specific notebook grids, the field emblem, field cards, and note blocks.
-* Responsive layouts for tablet and mobile widths.
+The header and navigation are drawn with the same pen elements: tabs, a dot under the current page, and a rule under the header.
+Under 680px the links fold into a menu opened by the hamburger button.
+`src/scripts/menu.js` runs it.
 
-The design variables are in `src/styles/tokens.css`.
-Every colour is written once there as `light-dark(light, dark)`.
+=== Colours And Styles
+
+Every colour is written once in `src/styles/tokens.css` as a `light-dark(light, dark)` pair.
+The red `?grid` overlay colour is one of them (`--debug`).
+
+The styles are split under cascade layers into `tokens.css` (colours and other variables), `grid.css` (the grid, base elements and page layout), `devices.css` (notes, the code bracket, the field emblem, buttons, tags) and `pages.css` (header, footer, homepage sections).
+
+== Already On Main
+
+=== Light And Dark Themes
+
+A light ("recycled grey") and a dark palette, switched by the header toggle.
+The theme follows the system setting until you choose one, and `src/scripts/theme.js` remembers the choice.
+
+=== Homepage
+
+The homepage in `src/pages/index.astro` has a hero with a short statement, a note and a four-symbol emblem, a field section, a section of notes about the state of the site, and a closing section with links.
+Most of its text is in `src/data/homepage.yaml`, loaded by `src/data/homepage.js`.
+Fields accept Markdown through `src/components/MarkdownCopy.astro`, `src/components/MarkdownInline.astro` and `src/lib/homepageMarkdown.js`.
+The keys are documented in xref:homepage-yaml.adoc[].
 
 === Site Shell And Navigation
 
-The shared site frame has been updated:
-
-* `src/layouts/BaseLayout.astro` now handles metadata, skip link, shared header, shared footer, and optional hidden page title support.
-* `src/components/Header.astro` and `src/components/Navigation.astro` now expose a concise primary navigation: Home, About, Contact.
+* `src/layouts/BaseLayout.astro` handles metadata, the skip link, the header, the footer and the optional hidden page title.
+* The navigation lists Home, About and Contact.
 * The header logo reads `oberio.me`.
-* `src/components/Footer.astro` now shows the copyright line and four buttons: LinkedIn, GitHub, Repo, and Docs.
-* `src/scripts/menu.js` supports the responsive mobile navigation.
+* `src/components/Footer.astro` shows the copyright line and four buttons: LinkedIn, GitHub, Repo and Docs.
 
 === AI-Generated Text Marking
 
 Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin: ai` in a page's frontmatter.
 Marked text has a dashed underline.
-A marked phrase can carry a note that shows on hover, tap, or keyboard focus; the homepage uses one on "AInese" to explain the underline.
-The marking works in Markdown pages and in Markdown values in `homepage.yaml`.
-`src/lib/remarkAiText.js` holds the plugin.
-`src/lib/markdownPlugins.js` lists it with the other Markdown plugins, and `astro.config.mjs` and `src/lib/homepageMarkdown.js` both use that list.
+A marked phrase can carry a note that shows on hover, tap, or keyboard focus.
+`src/lib/remarkAiText.js` holds the plugin, and `src/lib/markdownPlugins.js` lists it with the other Markdown plugins.
 
-=== Removed Content
+=== Maths And Code In Posts
 
-The site no longer holds documentation work samples, so the old portfolio pages and their replacements under `src/pages/work/` are gone.
-The first blog post and the chess-family draft were removed too.
-The blog and tag pages are still there, ready for new posts; `/blog/` shows "No posts yet." while it is empty.
-
-=== Markdown Post Layout
-
-`src/layouts/MarkdownPostLayout.astro` now supports richer page metadata:
-
-* Description and byline.
-* Optional image.
-* Details panel for role, tools, audience, outcome, and tags.
-* Shared content layout for blog posts.
-
-=== About Page
-
-The About page has been rewritten to focus on developer-facing documentation, technical writing, and engineering fluency.
-The profile image was removed from the About page.
-
-=== Domain And Deployment
-
-The site now publishes at `oberio.me` instead of `docko.dev`.
-`astro.config.mjs` sets `site` to `https://oberio.me`, and `public/CNAME` names the same domain.
-The GitHub Pages workflow in `.github/workflows/deploy.yml` uses current action versions, because the old `v1` actions no longer deploy.
-The contact email moved to the `oberio.me` domain.
-The footer Docs button still points at `docs.docko.dev`.
+Posts support maths through KaTeX and syntax-highlighted code through Shiki, both following the active theme.
 
 === Contact Email Hidden From Scrapers
 
 The contact address is stored backwards in `src/data/contact.js` and turned back round by `src/scripts/email.js` in the browser, so it does not appear readably in the repo or the built pages.
-The navigation, homepage, and About page link to it through `EmailLink.astro`, `email: true` in `homepage.yaml` lists, or `:email[]` in Markdown.
+The navigation, homepage and About page link to it through `EmailLink.astro`, `email: true` in `homepage.yaml` lists, or `:email[]` in Markdown.
 See xref:customising-the-site.adoc#contact-email[].
+
+=== Domain And Deployment
+
+The site publishes at `oberio.me`.
+`astro.config.mjs` sets `site` to `https://oberio.me`, and `public/CNAME` names the same domain.
+`.github/workflows/deploy.yml` deploys to GitHub Pages.
+The footer Docs button still points at `docs.docko.dev`.
+
+=== Removed Content
+
+The site no longer holds documentation work samples.
+The blog and tag pages are still there, ready for new posts; `/blog/` shows "No posts yet." while it is empty.
 
 === Local Agent Tooling
 
-The branch adds the `agent-browser` skill under `.agents/skills/` and records it in `skills-lock.json`.
-`AGENTS.md` tells agents to use it to check pages in a browser.
-It does not affect the public website.
+The repo includes the `agent-browser` skill under `.agents/skills/`, recorded in `skills-lock.json`, and agent instructions in `AGENTS.md`.
+None of it affects the public website.
 
 == Most Important Files
 
@@ -124,11 +131,17 @@ Use this map when deciding where to make a change.
 | Change homepage structure
 | `src/pages/index.astro`
 
-| Change homepage visual sections
-| `src/components/*.astro`
+| Change colours
+| `src/styles/tokens.css`
 
-| Change colors, spacing, typography, cards, and responsive behavior
-| `src/styles/tokens.css` for colours; `grid.css`, `devices.css` and `pages.css` for the rest
+| Change spacing, typography and page layout
+| `src/styles/grid.css` and `src/styles/pages.css`
+
+| Change notes, the code bracket, buttons and tags
+| `src/styles/devices.css` and the matching component in `src/components/`
+
+| Change how lines are drawn
+| `src/lib/pen.js`
 
 | Change navigation links
 | `src/components/Navigation.astro`
@@ -140,7 +153,7 @@ Use this map when deciding where to make a change.
 | `src/pages/about/index.md`
 
 | Add a blog post
-| `src/pages/posts/*.md`
+| `src/pages/posts/`
 
 | Change Markdown post metadata layout
 | `src/layouts/MarkdownPostLayout.astro`
@@ -155,13 +168,18 @@ Use this map when deciding where to make a change.
 | `src/data/contact.js`
 
 | Change how AI-marked text looks
-| `--ai-underline-*` variables and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/tokens.css` and `src/styles/devices.css`
+| `--ai-underline-*` variables in `src/styles/tokens.css` and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/devices.css`
+
+| Check the grid
+| `?grid` on any page, or `npm run test:grid`
 |===
 
 == What To Watch
 
 * The homepage data object shape matters.
-  Components expect fields like `hero.links`, `fields`, `propositions`, and `garden.links`.
+  Components expect fields like `hero.links`, `fields`, `propositions` and `garden.links`.
+* Anything whose height is not a whole number of 24px units pushes every line below it off the dots.
+  Run `npm run test:grid` after layout changes.
 * Markdown pages should include `tags`; the tag pages depend on frontmatter tags.
 * External links in `LinkButton.astro` automatically open in a new tab when the URL starts with `http`.
-* The visual style is concentrated in one global stylesheet, so broad CSS edits can affect many pages.
+* The styles are shared by every page, so a broad selector in `src/styles/grid.css` can affect many pages.
