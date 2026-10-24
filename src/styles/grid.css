@@ -182,6 +182,19 @@
         margin-top: calc(2 * var(--u));
     }
 
+    /* In a post, a heading has one blank row above it and one below, and a
+       code box has one blank row below it. The heading rule above gives two
+       rows above; this one, scoped to the post, replaces it. A note's title
+       is not a subheading. */
+    .entry-content :where(p, ul, ol, pre, .katex-display, .code-block, .note) + :is(h2, h3) {
+        margin-top: var(--u);
+    }
+
+    .entry-content :is(h2, h3):not(.note__title) + *,
+    .entry-content .code-block + * {
+        margin-top: var(--u);
+    }
+
     :where(ul, ol) {
         margin: 0;
         padding-left: var(--u);

@@ -4,7 +4,9 @@
 // a height of their own, so they are checked.
 const UNIT = 24;
 const TOLERANCE = 0.5;
-const SKIP_INSIDE = 'svg, .katex, .visually-hidden, [data-grid-ignore]';
+// A note's label is a caption written on the border line, on purpose
+// off the baseline (see devices.css).
+const SKIP_INSIDE = 'svg, .katex, .visually-hidden, [data-grid-ignore], .note > .note__label';
 
 const onGrid = (value) => {
     const remainder = ((value % UNIT) + UNIT) % UNIT;

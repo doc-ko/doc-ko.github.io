@@ -1,5 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import PencilRule from '../components/PencilRule.astro';
+import Tag from '../components/Tag.astro';
 import 'katex/dist/katex.min.css';
 const { frontmatter } = Astro.props;
 const tags = frontmatter.tags ?? [];
@@ -31,9 +33,11 @@ const detailItems = [
             {frontmatter.image && <img class="entry-image" src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} /> }
         </header>
 
+        <PencilRule name="post-header" />
+
         {(detailItems.length > 0 || tags.length > 0) && (
             <aside aria-label="Page details">
-                <dl class="entry-details">
+                <dl class:list={['entry-details', detailItems.length === 0 && 'entry-details--captioned']}>
                     {detailItems.map(([label, value, valueOrigin]) => (
                         <div>
                             <dt>{label}</dt>
@@ -45,9 +49,7 @@ const detailItems = [
                         <div>
                             <dt>Tags</dt>
                             <dd class="tags">
-                                {tags.map((tag) => (
-                                    <a class="tag" href={`/tags/${tag}/`}>{tag}</a>
-                                ))}
+                                {tags.map((tag) => <Tag tag={tag} />)}
                             </dd>
                         </div>
                     )}
