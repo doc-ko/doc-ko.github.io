@@ -107,7 +107,8 @@ hero:
 
 | `meta.description`
 | Plain
-| Search engine description, and the description in link previews.
+| Search engine description, the description in link previews, and the text under the title on the homepage's preview card image.
+It is also the fallback description for any page that does not set its own.
 |===
 
 == hero
