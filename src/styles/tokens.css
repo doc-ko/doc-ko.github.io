@@ -10,10 +10,6 @@
 
         /* Paper and ink. Light is "recycled grey" with graphite ink. */
         --bg: light-dark(#e8e6e1, #071015);
-        --bg-ruled: light-dark(#e1dfd9, #0a1319);
-        --surface: light-dark(#efede9, #101a21);
-        --surface-muted: light-dark(#dfddd7, #0d171f);
-        --surface-raised: light-dark(#f3f2ee, #14212a);
         --ink: light-dark(#2a2a2c, #f0e7d2);
         --ink-strong: light-dark(#141416, #fff6de);
         --muted: light-dark(#504e4a, #b9ad94);
@@ -36,13 +32,22 @@
         --line-strong: light-dark(rgb(42 40 37 / 34%), rgb(244 214 154 / 32%));
         --paper-soft: light-dark(rgb(42 40 37 / 7%), rgb(240 231 210 / 11%));
         --grid-line: light-dark(rgb(42 40 37 / 5%), rgb(240 231 210 / 3%));
-        --sheen: light-dark(rgb(255 255 255 / 30%), rgb(240 231 210 / 4%));
         --header-bg: light-dark(rgb(232 230 225 / 82%), rgb(7 16 21 / 82%));
+        --code-bg: light-dark(#f3f2ee, #05090d);
+        --shadow: 0 22px 60px light-dark(rgb(42 40 37 / 16%), rgb(0 0 0 / 22%));
+
+        /* Filled-card tokens. Only the old cards use these (lemma, note block,
+           work card, field emblem panel, garden strip, nav menu). Remove them
+           when the pen-drawn Note replaces those cards (Phase 3, #13). Not from
+           the brief, so the light values are provisional. */
+        --bg-ruled: light-dark(#e1dfd9, #0a1319);
+        --surface: light-dark(#efede9, #101a21);
+        --surface-muted: light-dark(#dfddd7, #0d171f);
+        --surface-raised: light-dark(#f3f2ee, #14212a);
+        --sheen: light-dark(rgb(255 255 255 / 30%), rgb(240 231 210 / 4%));
         --card-bg: light-dark(rgb(243 242 238 / 72%), rgb(16 26 33 / 72%));
         --panel-bg: light-dark(rgb(223 221 215 / 78%), rgb(9 18 24 / 78%));
         --panel-bg-2: light-dark(rgb(243 242 238 / 62%), rgb(16 26 33 / 62%));
-        --code-bg: light-dark(#f3f2ee, #05090d);
-        --shadow: 0 22px 60px light-dark(rgb(42 40 37 / 16%), rgb(0 0 0 / 22%));
         --shadow-ink: light-dark(rgb(42 40 37 / 10%), rgb(0 0 0 / 12%));
 
         /* From the brief; used by the grid and pen work (#17). */
