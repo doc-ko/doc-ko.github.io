@@ -33,14 +33,13 @@ const el = (type, style, children) => ({ type, props: { style, children } });
 // Long titles drop a size so they still fit in three lines.
 const titleSize = (title) => (title.length > 40 ? 64 : title.length > 18 ? 76 : 92);
 
-export async function renderCard({ title, description, byline }) {
-    const line = [
-        el('span', { fontSize: 34, color: MUTED }, 'oberio.me'),
-        ...byline.flatMap((part) => [
-            el('span', { fontSize: 30, color: MUTED, margin: '0 16px' }, '·'),
-            el('span', { fontSize: 30, color: MUTED }, part),
-        ]),
-    ];
+// showSite is false when the title already says oberio.me.
+export async function renderCard({ title, description, byline, showSite = true }) {
+    const parts = showSite ? ['oberio.me', ...byline] : byline;
+    const line = parts.flatMap((part, i) => [
+        i > 0 && el('span', { fontSize: 30, color: MUTED, margin: '0 16px' }, '·'),
+        el('span', { fontSize: i === 0 && showSite ? 34 : 30, color: MUTED }, part),
+    ]).filter(Boolean);
 
     const card = el(
         'div',

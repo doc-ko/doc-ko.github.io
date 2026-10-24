@@ -5,10 +5,11 @@ import '../styles/tokens.css';
 import '../styles/grid.css';
 import '../styles/devices.css';
 import '../styles/pages.css';
-import { siteName, siteDescription } from '../lib/site.js';
+import { siteName } from '../lib/site.js';
+import { homepage } from '../data/homepage.js';
 const {
     pageTitle,
-    description = siteDescription,
+    description = homepage.meta.description,
     hideTitle = false,
     // Path of the link-preview card, and what kind of page it previews.
     image = '/og/default.png',
