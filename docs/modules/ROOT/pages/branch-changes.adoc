@@ -30,8 +30,8 @@ The branch adds small, focused Astro components under `src/components/`:
 * `FieldEmblem.astro` renders the four field icons in the hero as SVG paths; `src/lib/glyphs.js` holds the outlines.
 * `FieldDiagram.astro` renders the field cards.
 * `SectionHeading.astro` renders numbered section headings.
-* `MarginNote.astro` renders side notes.
-* `NoteBlock.astro` renders the definition/proposition cards.
+* `Note.astro` renders notes: a pen-drawn box in the text, or a pencil rule and dot in the margin.
+* `DrawnEdges.astro`, `Dot.astro`, `PencilRule.astro`, `Highlight.astro` and `CodeBlock.astro` are the other drawn devices; `src/lib/pen.js` draws every wobbly line, hatch and highlighter end at build time.
 * `MarkdownCopy.astro` and `MarkdownInline.astro` render Markdown-backed homepage copy while preserving the existing component structure.
 
 These components keep the homepage page file readable while leaving the copy in `src/data/homepage.yaml`.

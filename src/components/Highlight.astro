@@ -1,0 +1,13 @@
+---
+import { highlighterEnds } from '../lib/pen.js';
+
+// Quiet emphasis: this matters. Use two or three on a screen at most. The ends
+// of the swipe are uneven, differently for every phrase.
+//
+//   field  amber (the default), cyan or violet, when a field is meant
+const { field = 'amber' } = Astro.props;
+const text = await Astro.slots.render('default');
+const ends = highlighterEnds(text);
+---
+
+<mark class={`highlight highlight--${field}`} style={`border-radius: ${ends}`}><Fragment set:html={text} /></mark>

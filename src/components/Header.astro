@@ -1,5 +1,6 @@
 ---
 import Hamburger from './Hamburger.astro';
+import PencilRule from './PencilRule.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import Navigation from './Navigation.astro';
 ---
@@ -11,6 +12,9 @@ import Navigation from './Navigation.astro';
         <div class="nav-tools">
             <ThemeToggle />
             <Hamburger />
+        </div>
+        <div class="header-rule">
+            <PencilRule name="header" units={0} />
         </div>
     </nav>
 </header>

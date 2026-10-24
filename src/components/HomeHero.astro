@@ -3,7 +3,7 @@ import EmailLink from './EmailLink.astro';
 import FieldEmblem from './FieldEmblem.astro';
 import MarkdownCopy from './MarkdownCopy.astro';
 import MarkdownInline from './MarkdownInline.astro';
-import MarginNote from './MarginNote.astro';
+import Note from './Note.astro';
 
 const { hero, fields = [] } = Astro.props;
 ---
@@ -15,13 +15,7 @@ const { hero, fields = [] } = Astro.props;
             <h1 id="home-title"><MarkdownInline content={hero.headline} /></h1>
             <MarkdownCopy class="hero-lede" content={hero.lede} />
 
-            <article class="lemma-card">
-                <p class="lemma-card__label">
-                    <span><MarkdownInline content={hero.lemma.label} /></span>
-                    <code><MarkdownInline content={hero.lemma.notation} /></code>
-                </p>
-                <MarkdownCopy class="lemma-card__body" content={hero.lemma.body} />
-            </article>
+            <Note label={hero.lemma.label} notation={hero.lemma.notation} body={hero.lemma.body} dot="ink" seed="hero" />
 
             <nav class="quiet-links" aria-label="Homepage links">
                 {hero.links.map((link) => (
@@ -32,7 +26,7 @@ const { hero, fields = [] } = Astro.props;
 
         <div class="hero-diagram-stack">
             <FieldEmblem fields={fields} />
-            <MarginNote label={hero.margin.label} body={hero.margin.body} />
+            <Note variant="margin" label={hero.margin.label} body={hero.margin.body} seed="areas" />
         </div>
     </div>
 </section>

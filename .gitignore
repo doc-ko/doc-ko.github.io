@@ -31,3 +31,7 @@ pnpm-debug.log*
 # Claude working files
 .claude/scratch/
 .claude/worktrees/
+
+# Playwright output
+test-results/
+playwright-report/

@@ -1,5 +1,8 @@
+/* Page layout and the header, footer and homepage sections. Every height and
+   gap is a whole number of 24px units (--u) so lines stay on the dots; the
+   ?grid overlay and tests/grid.spec.js check that. */
 @layer pages {
-.skip-link {
+    .skip-link {
         position: fixed;
         top: 0.75rem;
         left: 0.75rem;
@@ -17,24 +20,25 @@
         transform: translateY(0);
     }
 
+    /* ---- Header ------------------------------------------------------------
+       Three units tall. The items are cells a whole number of units wide; the
+       pencil rule runs along the dot row under them. */
     .site-header {
         height: calc(3 * var(--u));
-        box-shadow: inset 0 -1px 0 var(--line);
-        background: var(--header-bg);
-        backdrop-filter: blur(18px);
     }
 
     .site-nav {
+        position: relative;
         width: var(--col);
         height: 100%;
         margin: 0 auto;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
+        align-items: flex-start;
     }
 
     .site-logo {
+        margin-right: auto;
+        padding-top: var(--u);
         color: var(--ink-strong);
         font-feature-settings: "smcp";
         font-variant-caps: small-caps;
@@ -42,70 +46,180 @@
         text-decoration: none;
     }
 
-    .hamburger {
-        width: 2.75rem;
-        height: 2.75rem;
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.28rem;
+    .header-rule {
+        position: absolute;
+        top: calc(3 * var(--u));
+        right: 0;
+        left: 0;
+    }
+
+    .nav-links {
+        display: flex;
+    }
+
+    .nav-tools {
+        display: flex;
+    }
+
+    /* A cell of the header: hover draws a tab from the dot row above down onto
+       the header rule; keyboard focus draws it in the focus colour. */
+    .tab {
+        position: relative;
+        display: block;
+        height: calc(3 * var(--u));
+        margin: 0;
+        border: 0;
+        padding: var(--u) 0 0 var(--u);
         background: transparent;
-        color: var(--ink);
+        color: var(--muted);
         cursor: pointer;
+        text-decoration: none;
+    }
+
+    .tab .drawn-edge {
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+
+    .tab:hover .drawn-edge,
+    .tab:focus-visible .drawn-edge {
+        opacity: 1;
+    }
+
+    .tab:hover {
+        color: var(--ink-strong);
+    }
+
+    .tab:focus-visible {
+        outline: none;
+    }
+
+    .tab:focus-visible .drawn-edge {
+        --sw: 2px;
+        color: var(--focus);
+    }
+
+    .tab:focus-visible .drawn-edge__ink {
+        display: none;
+    }
+
+    .navlink {
+        width: calc(4 * var(--u));
+        font-family: var(--sans);
+        font-size: 12.5px;
+        font-weight: 560;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+
+    .navlink--wide {
+        width: calc(5 * var(--u));
+    }
+
+    .navlink[aria-current="page"] {
+        color: var(--ink-strong);
+    }
+
+    /* The current page: an ink dot on the dot row under its label, at the
+       first letter. */
+    .navlink[aria-current="page"] .dot {
+        top: 46.5px;
+        left: 20.5px;
+    }
+
+    .iconbtn {
+        width: calc(2 * var(--u));
+        padding: 0;
+        color: var(--ink);
+    }
+
+    .iconbtn:hover {
+        color: var(--ink-strong);
+    }
+
+    .iconbtn > svg,
+    .hamburger__lines {
+        position: absolute;
+        top: var(--u);
+        left: 13px;
+        width: 22px;
+        height: 22px;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    .hamburger__lines {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
     }
 
     .hamburger .line {
         display: block;
-        width: 1.15rem;
         height: 1px;
-        border-radius: 1px;
         background-color: currentColor;
     }
 
-    .nav-links {
-        position: absolute;
-        top: calc(3 * var(--u));
-        right: var(--gutter);
-        left: var(--gutter);
-        z-index: 10;
+    .theme-toggle[aria-pressed="true"] .theme-toggle__sun,
+    .theme-toggle[aria-pressed="false"] .theme-toggle__moon {
         display: none;
-        flex-direction: column;
-        gap: 0.25rem;
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 0.5rem;
-        background: var(--surface);
-        box-shadow: var(--shadow);
     }
 
-    .nav-links.expanded {
-        display: flex;
+    @media (min-width: 680px) {
+        .nav-links > .drawn-edge {
+            display: none;
+        }
+
+        .nav-tools {
+            margin-left: 0;
+        }
     }
 
-    .nav-links a {
-        border-radius: 4px;
-        padding: 0.72rem 0.85rem;
-        color: var(--muted);
-        font-family: var(--sans);
-        font-size: 0.78rem;
-        font-weight: 560;
-        letter-spacing: 0.05em;
-        text-decoration: none;
-        text-transform: uppercase;
+    /* Under 680px the links fold into a menu: a pen-drawn box under the header. */
+    @media (max-width: 679px) {
+        .hamburger {
+            display: block;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: calc(3 * var(--u));
+            right: 0;
+            left: 0;
+            z-index: 10;
+            display: none;
+            flex-direction: column;
+            padding: var(--u) 0;
+            background: var(--bg);
+        }
+
+        .nav-links.expanded {
+            display: flex;
+        }
+
+        .nav-links .tab {
+            width: 100%;
+            height: calc(2 * var(--u));
+            padding: calc(var(--u) / 2) 0 0 var(--u);
+        }
+
+        .nav-links .navlink[aria-current="page"] .dot {
+            top: 28.5px;
+        }
+
+        /* In the menu the first dot row is the box's own, so the tab edges are
+           left out and hover is a plain colour change. */
+        .nav-links .tab .drawn-edge {
+            display: none;
+        }
     }
 
-    .nav-links a:hover,
-    .nav-links a:focus-visible {
-        background: var(--paper-soft);
-        color: var(--ink-strong);
-    }
-
-    .hero h1,
+    /* ---- Homepage ----------------------------------------------------------- */
     .hero-manuscript h1 {
-        margin-top: 0.75rem;
+        margin-top: 0;
     }
 
     .hero-lede,
@@ -113,286 +227,114 @@
     .entry-description {
         max-width: 660px;
         color: var(--muted);
-        font-size: clamp(1.03rem, 1.6vw, 1.18rem);
+        font-size: 17px;
     }
 
     .hero-lede {
-        margin-top: 1.25rem;
+        margin-top: var(--u);
+    }
+
+    .hero-diagram-stack {
+        display: grid;
+        gap: calc(2 * var(--u));
     }
 
     .notebook-section-heading {
         max-width: var(--reading-width);
         display: grid;
-        grid-template-columns: 3.5rem minmax(0, 1fr);
-        gap: 1rem;
+        grid-template-columns: calc(2 * var(--u)) minmax(0, 1fr);
+        gap: 0 var(--u);
         align-items: start;
     }
 
-    .notebook-section-heading h2 {
-        font-size: clamp(1.65rem, 3vw, 2.45rem);
+    .section-number {
+        padding-top: var(--u);
+        color: var(--cyan);
     }
 
     .notebook-section-note {
         max-width: 42rem;
-        margin-top: 0.85rem;
+        margin-top: var(--u);
         color: var(--muted);
     }
 
-    .section-number {
-        padding-top: 0.45rem;
-        color: var(--cyan);
-    }
-
     .field-diagram {
-        margin-top: 2rem;
+        margin-top: calc(2 * var(--u));
         display: grid;
-        gap: 1.25rem;
     }
 
     .field-list {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.8rem;
+        gap: var(--u);
     }
 
     .field-card {
         min-width: 0;
-        border-top: 1px solid var(--line);
-        padding-top: 0.85rem;
+        padding-top: var(--u);
         display: grid;
-        grid-template-columns: 3rem minmax(0, 1fr);
-        gap: 0.85rem;
+        grid-template-columns: calc(2 * var(--u)) minmax(0, 1fr);
+        gap: 0 var(--u);
+        background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
     }
 
     .field-card__symbol {
-        width: 2rem;
-        height: 2rem;
+        width: 32px;
+        height: 32px;
         color: var(--ink-strong);
         fill: currentcolor;
     }
 
     .field-card h3 {
-        font-size: 1.02rem;
+        font-size: 20px;
     }
 
     .field-card__description {
-        margin-top: 0.28rem;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-size: 15px;
     }
 
-    .field-card--amber .field-card__symbol,
-    .note-block--amber .note-block__label {
+    .field-card--amber .field-card__symbol {
         color: var(--accent);
     }
 
-    .field-card--cyan .field-card__symbol,
-    .note-block--cyan .note-block__label {
+    .field-card--cyan .field-card__symbol {
         color: var(--cyan);
     }
 
-    .field-card--violet .field-card__symbol,
-    .note-block--violet .note-block__label {
+    .field-card--violet .field-card__symbol {
         color: var(--violet);
     }
 
     .proposition-grid {
-        margin-top: 2rem;
+        margin-top: calc(2 * var(--u));
         display: grid;
-        gap: 1rem;
+        gap: calc(2 * var(--u));
     }
 
-    .note-block {
-        padding: 1rem 1.1rem;
-    }
-
-    .note-block h3 {
-        margin-top: 0.85rem;
+    .proposition-grid > .note {
+        margin-top: 0;
     }
 
     .garden-strip {
-        width: min(100%, var(--notebook-width));
-        margin: 0 auto;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: clamp(1.25rem, 3vw, 2rem);
+        padding-top: var(--u);
         display: grid;
         grid-template-columns: minmax(0, 1fr) max-content;
-        gap: 2rem;
+        gap: 0 calc(2 * var(--u));
         align-items: end;
-        background:
-            linear-gradient(180deg, var(--sheen), transparent),
-            var(--panel-bg-2);
-    }
-
-    .garden-strip h2 {
-        margin-top: 0.5rem;
+        background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
     }
 
     .garden-note {
         max-width: 46rem;
-        margin-top: 0.75rem;
         color: var(--muted);
     }
 
-    .actions {
-        margin-top: 1.75rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-
-    .hero-panel {
-        min-width: 0;
-        padding: 1.25rem;
-    }
-
-    .clean-list {
-        margin: 1rem 0 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    .clean-list li {
-        padding-top: 0.85rem;
-        border-top: 1px solid var(--line);
-    }
-
-    .clean-list li:first-child {
-        padding-top: 0;
-        border-top: 0;
-    }
-
-    .split-section {
-        display: grid;
-        grid-template-columns: minmax(15rem, 0.75fr) minmax(0, 1.25fr);
-        gap: clamp(2rem, 5vw, 4rem);
-    }
-
-    .split-section h2,
-    .section-heading h2,
-    .contact-strip h2 {
-        margin-top: 0.45rem;
-    }
-
-    .strength-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.5rem;
-    }
-
-    .strength-grid article {
-        border-top: 1px solid var(--line-strong);
-        padding-top: 0.9rem;
-    }
-
-    .strength-grid p,
-    .work-card p,
-    .section-note,
-    .contact-callout p {
-        color: var(--muted);
-    }
-
-    .strength-grid h3 + p,
-    .work-card h3 + p,
-    .work-card h2 + p,
-    .contact-callout h2 + p {
-        margin-top: 0.65rem;
-    }
-
-    .section-heading {
-        max-width: 720px;
-    }
-
-    .work-grid,
-    .work-list {
-        margin-top: 2rem;
-        display: grid;
-        gap: 1rem;
-    }
-
-    .work-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .work-card {
-        min-width: 0;
-        padding: 1.25rem;
-    }
-
-    .work-card h2,
-    .work-card h3 {
-        margin-top: 0.45rem;
-    }
-
-    .work-card a {
-        color: var(--ink-strong);
-        text-decoration-color: var(--link-line);
-    }
-
-    .work-card--wide {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.42fr);
-        gap: 1.5rem;
-        align-items: start;
-    }
-
-    .section-note {
-        max-width: 760px;
-        margin-top: 1.25rem;
-    }
-
-    .contact-band {
-        border-top: 1px solid var(--line);
-    }
-
-    .contact-strip,
-    .contact-callout {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1.5rem;
-    }
-
-    .contact-callout {
-        margin-top: 2rem;
-        padding: 1.25rem;
-    }
-
-    .intro-block {
-        max-width: var(--content-width);
-    }
-
-    .compact-details,
-    .entry-details {
-        margin: 0;
-    }
-
-    .compact-details div + div,
-    .entry-details div + div {
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid var(--line);
-    }
-
-    dt {
-        color: var(--warm);
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-    }
-
-    dd {
-        margin: 0.3rem 0 0;
-        color: var(--ink);
-    }
-
+    /* ---- Pages with Markdown content ------------------------------------------ */
     .markdown-entry {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.42fr);
-        gap: clamp(2rem, 5vw, 4rem);
+        grid-template-columns: minmax(0, 1fr) minmax(0, calc(13 * var(--u)));
+        gap: 0 calc(2 * var(--u));
     }
 
     .entry-header {
@@ -402,17 +344,18 @@
     }
 
     .entry-byline {
-        margin-top: 1rem;
+        margin-top: var(--u);
         display: flex;
         flex-wrap: wrap;
-        gap: 0.4rem 0.9rem;
+        gap: 0 var(--u);
         color: var(--muted);
         font-family: var(--mono);
-        font-size: 0.86rem;
+        font-size: 13px;
     }
 
     .entry-image {
-        margin-top: 1.5rem;
+        display: block;
+        margin-top: var(--u);
     }
 
     .markdown-entry > aside {
@@ -421,8 +364,29 @@
         min-width: 0;
     }
 
+    /* Phase 5 (#19) turns the details box into a note. */
     .entry-details {
-        padding: 1rem;
+        margin: var(--u) 0 0;
+        padding: var(--u);
+        box-shadow: inset 0 0 0 1px var(--line);
+    }
+
+    .entry-details div + div {
+        margin-top: var(--u);
+    }
+
+    dt {
+        color: var(--warm);
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    dd {
+        margin: 0;
+        color: var(--ink);
     }
 
     .entry-content {
@@ -431,81 +395,46 @@
         max-width: var(--content-width);
     }
 
-    .entry-content h2 {
-        margin-top: 2.5rem;
-        font-size: 1.9rem;
-    }
-
-    .entry-content h3 {
-        margin-top: 1.75rem;
-    }
-
-    .entry-content p,
-    .entry-content ul,
-    .entry-content ol,
-    .entry-content pre {
-        margin-top: 1rem;
+    .entry-content > :first-child {
+        margin-top: var(--u);
     }
 
     .content-list {
         max-width: var(--content-width);
-        margin-top: 1.5rem;
+        margin-top: var(--u);
     }
 
     .text-link {
         color: var(--accent-dark);
     }
 
+    /* ---- Footer ----------------------------------------------------------------- */
     .site-footer {
         width: var(--col);
         margin: 0 auto;
         padding: calc(2 * var(--u)) 0;
-        background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 1.5rem;
+        gap: var(--u);
+        background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
     }
 
     .copyright {
         color: var(--muted-2);
         font-family: var(--mono);
-        font-size: 0.78rem;
+        font-size: 12px;
     }
 
     .footer-links {
         justify-content: flex-end;
     }
 
-    @media (min-width: 720px) {
-        .hamburger {
-            display: none;
-        }
-
-        .nav-links {
-            position: static;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: auto;
-            border: 0;
-            padding: 0;
-            background: transparent;
-            box-shadow: none;
-        }
-    }
-
     @media (max-width: 920px) {
         .notebook-grid,
         .notebook-grid--hero,
-        .split-section,
-        .work-card--wide,
         .markdown-entry {
-            grid-template-columns: 1fr;
-        }
-
-        .hero-diagram-stack {
-            max-width: 680px;
+            grid-template-columns: minmax(0, 1fr);
         }
 
         .markdown-entry > aside,
@@ -514,13 +443,6 @@
             grid-row: auto;
         }
 
-        .work-grid,
-        .strength-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .contact-strip,
-        .contact-callout,
         .site-footer {
             align-items: flex-start;
             flex-direction: column;
@@ -532,13 +454,8 @@
     }
 
     @media (max-width: 680px) {
-        .notebook-hero {
-            padding-top: 3.5rem;
-        }
-
         .notebook-section-heading {
-            grid-template-columns: 1fr;
-            gap: 0.35rem;
+            grid-template-columns: minmax(0, 1fr);
         }
 
         .section-number {
@@ -547,25 +464,11 @@
 
         .field-list,
         .garden-strip {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 520px) {
-        .notebook-hero,
-        .notebook-section,
-        .section-band {
-            padding-inline: 1rem;
+            grid-template-columns: minmax(0, 1fr);
         }
 
-        .lemma-card__label,
-        .note-block__label {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .actions {
-            width: 100%;
+        .garden-strip {
+            gap: var(--u) 0;
         }
     }
 
@@ -576,47 +479,6 @@
             animation-duration: 0.001ms !important;
             animation-iteration-count: 1 !important;
             scroll-behavior: auto !important;
-        }
-    }
-
-    .hero-diagram-stack {
-        display: grid;
-        gap: 1.25rem;
-    }
-
-    .nav-tools {
-        order: 3;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .theme-toggle {
-        width: 2.75rem;
-        height: 2.75rem;
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: transparent;
-        color: var(--ink);
-        cursor: pointer;
-    }
-
-    .theme-toggle:hover {
-        background: var(--paper-soft);
-        color: var(--ink-strong);
-    }
-
-    .theme-toggle[aria-pressed="true"] .theme-toggle__sun,
-    .theme-toggle[aria-pressed="false"] .theme-toggle__moon {
-        display: none;
-    }
-
-    @media (min-width: 720px) {
-        .nav-links {
-            margin-left: auto;
         }
     }
 }

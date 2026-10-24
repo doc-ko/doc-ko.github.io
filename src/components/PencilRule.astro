@@ -1,0 +1,12 @@
+---
+import DrawnEdges from './DrawnEdges.astro';
+
+// A pencil line that separates: the header from the page, one row of a list
+// from the next. Structure only; it never carries meaning. It takes `units`
+// grid lines of height and draws the rule along its top dot row.
+const { name = 'rule', units = 1 } = Astro.props;
+---
+
+<div class="drawn pencil-rule" style={`--units: ${units}`} aria-hidden="true">
+    <DrawnEdges name={`rule:${name}`} keys="t" tone="pencil" />
+</div>
