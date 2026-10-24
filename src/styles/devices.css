@@ -391,7 +391,6 @@
     }
 
     .quiet-links,
-    .garden-links,
     .footer-links {
         display: flex;
         flex-wrap: wrap;
@@ -403,7 +402,6 @@
     }
 
     .quiet-links a,
-    .garden-links a,
     .footer-links > a:not(.button-link) {
         color: var(--muted);
         font-family: var(--mono);
@@ -411,14 +409,12 @@
         text-decoration: none;
     }
 
-    .quiet-links a::before,
-    .garden-links a::before {
+    .quiet-links a::before {
         content: "↳ ";
         color: var(--cyan);
     }
 
     .quiet-links a:hover,
-    .garden-links a:hover,
     .footer-links > a:not(.button-link):hover {
         color: var(--ink-strong);
     }

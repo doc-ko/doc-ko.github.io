@@ -112,10 +112,6 @@
         text-transform: uppercase;
     }
 
-    .navlink--wide {
-        width: calc(5 * var(--u));
-    }
-
     .navlink[aria-current="page"] {
         color: var(--ink-strong);
     }
@@ -264,76 +260,14 @@
         color: var(--muted);
     }
 
-    .field-diagram {
-        margin-top: calc(2 * var(--u));
-        display: grid;
-    }
-
-    .field-list {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: var(--u);
-    }
-
-    .field-card {
-        min-width: 0;
-        padding-top: var(--u);
-        display: grid;
-        grid-template-columns: calc(2 * var(--u)) minmax(0, 1fr);
-        gap: 0 var(--u);
-        background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
-    }
-
-    .field-card__symbol {
-        width: 32px;
-        height: 32px;
-        color: var(--ink-strong);
-        fill: currentcolor;
-    }
-
-    .field-card h3 {
-        font-size: 20px;
-    }
-
-    .field-card__description {
-        color: var(--muted);
-        font-size: 15px;
-    }
-
-    .field-card--amber .field-card__symbol {
-        color: var(--accent);
-    }
-
-    .field-card--cyan .field-card__symbol {
-        color: var(--cyan);
-    }
-
-    .field-card--violet .field-card__symbol {
-        color: var(--violet);
-    }
-
-    .proposition-grid {
+    .note-grid {
         margin-top: calc(2 * var(--u));
         display: grid;
         gap: calc(2 * var(--u));
     }
 
-    .proposition-grid > .note {
+    .note-grid > .note {
         margin-top: 0;
-    }
-
-    .garden-strip {
-        padding-top: var(--u);
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) max-content;
-        gap: 0 calc(2 * var(--u));
-        align-items: end;
-        background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
-    }
-
-    .garden-note {
-        max-width: 46rem;
-        color: var(--muted);
     }
 
     /* ---- Pages with Markdown content ------------------------------------------ */
@@ -468,14 +402,6 @@
             padding-top: 0;
         }
 
-        .field-list,
-        .garden-strip {
-            grid-template-columns: minmax(0, 1fr);
-        }
-
-        .garden-strip {
-            gap: var(--u) 0;
-        }
     }
 
     @media (prefers-reduced-motion: reduce) {

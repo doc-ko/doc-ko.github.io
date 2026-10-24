@@ -1,7 +1,6 @@
 ---
 import DrawnEdges from './DrawnEdges.astro';
 import Dot from './Dot.astro';
-import EmailLink from './EmailLink.astro';
 
 // The current page gets an ink dot under its label and aria-current.
 const path = Astro.url.pathname;
@@ -20,8 +19,4 @@ const links = [
             {link.current && <Dot />}
         </a>
     ))}
-    <EmailLink class="drawn tab navlink navlink--wide">
-        <DrawnEdges name="tab:Contact" keys="ltr" />
-        <span>Contact</span>
-    </EmailLink>
 </div>

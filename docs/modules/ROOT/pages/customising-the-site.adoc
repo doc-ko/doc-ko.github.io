@@ -39,11 +39,10 @@ Start with `src/data/homepage.yaml`.
 That file controls most homepage words, labels, and links:
 
 * `meta`: browser title and search description.
-* `hero`: opening label, headline, lede, lemma, top links, and margin note.
-* `sections`: section numbers, headings, and notes.
-* `fields`: the subject cards in section 01.
-* `propositions`: definition/proposition/corollary blocks.
-* `garden`: closing section text and links.
+* `hero`: opening label, headline, lede, status note, top links, and margin note.
+* `sections`: the number, heading, and note of section 01.
+* `fields`: the four subjects drawn in the hero emblem.
+* `notes`: the status notes in section 01.
 
 For every key, where it appears, and whether it is Markdown or plain text, see xref:homepage-yaml.adoc[].
 
@@ -59,7 +58,7 @@ hero:
   headline: "Technical writing for developer tools."
   lede: >-
     A public notebook for API docs and formal ideas.
-  # Keep lemma, links, and margin in place.
+  # Keep note, links, and margin in place.
 ----
 
 After saving, refresh the local site and check the homepage on desktop and a narrow browser width.
@@ -86,8 +85,6 @@ Use site-relative links for internal pages, such as `/about/`.
 Use full URLs for external sites.
 Use `email: true` instead of `href` to link to the contact email; see <<contact-email>>.
 
-The closing homepage links are in `garden.links`.
-
 == 4. Change The Main Navigation
 
 Edit `src/components/Navigation.astro`.
@@ -99,11 +96,9 @@ The current navigation is:
 <div class="nav-links" id="primary-navigation">
     <a href="/">Home</a>
     <a href="/about/">About</a>
-    <EmailLink>Contact</EmailLink>
 </div>
 ----
 
-`EmailLink` is imported at the top of the file; see <<contact-email>>.
 Keep the `nav-links` class and `primary-navigation` id.
 The mobile menu script uses them.
 
@@ -207,7 +202,7 @@ Rules to keep in mind:
 * Put images beside the Markdown file or in `public/`, then reference them from Markdown.
 
 The homepage doesn't link to the blog yet.
-To add the link, add an item to `garden.links` in `src/data/homepage.yaml`:
+To add the link, add an item to `hero.links` in `src/data/homepage.yaml`:
 
 [source,yaml]
 ----
@@ -296,12 +291,10 @@ For structural changes, edit `src/pages/index.astro`.
 It imports the homepage data and renders components in this order:
 
 . `HomeHero`
-. fields section with `SectionHeading` and `FieldDiagram` (the cards)
-. method section with `SectionHeading` and `Note` boxes
-. closing garden section
+. section 01 with `SectionHeading` and `Note` boxes
 
 If you remove or rename a property in `homepage.yaml`, update the component that reads it.
-For example, `FieldDiagram.astro` expects every field item to have `icon`, `title`, `description`, and `accent`.
+For example, `FieldEmblem.astro` expects every field item to have `icon`, `title`, `description`, and `accent`.
 
 == 10. Change Colours And Typography
 

@@ -1,15 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import EmailLink from '../components/EmailLink.astro';
-import FieldDiagram from '../components/FieldDiagram.astro';
 import HomeHero from '../components/HomeHero.astro';
-import MarkdownCopy from '../components/MarkdownCopy.astro';
-import MarkdownInline from '../components/MarkdownInline.astro';
 import Note from '../components/Note.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { homepage } from '../data/homepage.js';
 
-const { meta, hero, sections, fields, propositions, garden } = homepage;
+const { meta, hero, sections, fields, notes } = homepage;
 ---
 
 <BaseLayout
@@ -20,19 +16,6 @@ const { meta, hero, sections, fields, propositions, garden } = homepage;
 	<div class="notebook-home">
 		<HomeHero hero={hero} fields={fields} />
 
-		<section class="notebook-section" aria-labelledby="fields-title">
-			<div class="notebook-grid">
-				<div>
-					<SectionHeading
-						number={sections.fields.number}
-						title={sections.fields.title}
-						note={sections.fields.note}
-					/>
-					<FieldDiagram fields={fields} />
-				</div>
-			</div>
-		</section>
-
 		<section class="notebook-section" aria-labelledby="method-title">
 			<div class="notebook-grid">
 				<div>
@@ -41,8 +24,8 @@ const { meta, hero, sections, fields, propositions, garden } = homepage;
 						title={sections.method.title}
 						note={sections.method.note}
 					/>
-					<div class="proposition-grid">
-						{propositions.map((item) => (
+					<div class="note-grid">
+						{notes.map((item) => (
 							<Note
 								label={item.kind}
 								title={item.title}
@@ -54,21 +37,6 @@ const { meta, hero, sections, fields, propositions, garden } = homepage;
 						))}
 					</div>
 				</div>
-			</div>
-		</section>
-
-		<section class="notebook-section notebook-section--closing" aria-labelledby="garden-title">
-			<div class="garden-strip">
-				<div>
-					<p class="eyebrow"><MarkdownInline content={garden.number} /></p>
-					<h2 id="garden-title"><MarkdownInline content={garden.heading} /></h2>
-					<MarkdownCopy class="garden-note" content={garden.note} />
-				</div>
-				<nav class="garden-links" aria-label="Digital garden links">
-					{garden.links.map((link) => (
-						link.email ? <EmailLink>{link.label}</EmailLink> : <a href={link.href}>{link.label}</a>
-					))}
-				</nav>
 			</div>
 		</section>
 	</div>
