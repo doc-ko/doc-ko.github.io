@@ -82,9 +82,18 @@
         transition: opacity 120ms ease, visibility 120ms;
     }
 
-    .ai-text:is(:hover, :focus) > .ai-note {
+    /* :hover is limited to devices that really hover; on touch it sticks after
+       a tap. Taps toggle .is-open instead (scripts/ai-note.js). */
+    .ai-text:is(:focus-visible, .is-open) > .ai-note {
         opacity: 1;
         visibility: visible;
+    }
+
+    @media (hover: hover) {
+        .ai-text:hover > .ai-note {
+            opacity: 1;
+            visibility: visible;
+        }
     }
 
     /* Narrow screens have no room beside the word, so pin the note to the bottom. */
