@@ -62,21 +62,22 @@ for (const viewport of viewports) {
             );
             expect(off).toEqual([]);
 
-            // The code block's <pre> is padded once, not twice.
-            const doubled = await page.evaluate(() => {
-                const pre = document.querySelector('.code-block pre');
-                return parseFloat(getComputedStyle(pre).paddingBottom) % 24 !== 0 ? 'off' : getComputedStyle(pre).paddingBottom;
+            // grid.js sets --grid-pad on each <pre>. A <pre> inside .code-block gets
+            // exactly that as bottom padding (not doubled); a bare <pre> keeps its
+            // unit of padding and adds it on top. The pad is not always a whole
+            // number of units: where scrollbars take room it is the remainder.
+            const padding = await page.evaluate(() => {
+                const read = (pre) => ({
+                    padding: parseFloat(getComputedStyle(pre).paddingBottom),
+                    pad: parseFloat(pre.style.getPropertyValue('--grid-pad')) || 0,
+                });
+                return {
+                    code: read(document.querySelector('.code-block pre')),
+                    bare: read([...document.querySelectorAll('main pre')].find((el) => !el.closest('.code-block'))),
+                };
             });
-            expect(doubled).not.toBe('off');
-
-            // A bare <pre> keeps its unit of padding at the bottom, plus whatever
-            // grid.js adds, so it is at least one unit and a whole number of them.
-            const bare = await page.evaluate(() => {
-                const pre = [...document.querySelectorAll('main pre')].find((el) => !el.closest('.code-block'));
-                return parseFloat(getComputedStyle(pre).paddingBottom);
-            });
-            expect(bare).toBeGreaterThanOrEqual(24);
-            expect(bare % 24).toBe(0);
+            expect(padding.code.padding).toBeCloseTo(padding.code.pad, 1);
+            expect(padding.bare.padding).toBeCloseTo(24 + padding.bare.pad, 1);
         });
     }
 }
