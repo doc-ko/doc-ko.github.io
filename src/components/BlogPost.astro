@@ -1,6 +1,6 @@
 ---
-const { url, title } = Astro.props
+const { url, title, origin, mark = false } = Astro.props
 const href = url.endsWith('/') ? url : `${url}/`;
 ---
 
-<li><a class="text-link" href={href}>{title}</a></li>
+<li data-origin={origin === 'ai' ? 'ai' : undefined}><a class="text-link" href={href}>{title}</a>{mark && origin === 'ai' && <span class="ai-tag" title="AI-generated" data-grid-ignore>AI</span>}</li>

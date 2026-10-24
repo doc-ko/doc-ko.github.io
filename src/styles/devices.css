@@ -1,18 +1,52 @@
 @layer devices {
-/* Text declared AI-generated with :ai[...], :::ai, or `origin: ai`. Change the
-       tokens in :root to restyle it, or replace this rule for a different marker. */
+/* Text declared AI-generated with :ai[...], :::ai, or `origin: ai`. A faint rule
+       above and below each line of the text, and the text is a little more muted. Decorations pass down to every line
+       inside a marked block and don't change line height, so the 24px grid is
+       untouched. Change the tokens in :root to restyle it. */
     [data-origin="ai"] {
-        text-decoration-line: underline;
-        text-decoration-style: var(--ai-underline-style);
-        text-decoration-color: var(--ai-underline-color);
-        text-decoration-thickness: var(--ai-underline-thickness);
-        text-underline-offset: var(--ai-underline-offset);
+        color: var(--ai-text-color);
+        text-decoration-line: overline underline;
+        text-decoration-style: var(--ai-outline-style);
+        text-decoration-color: var(--ai-outline-color);
+        text-decoration-thickness: var(--ai-outline-thickness);
+        text-underline-offset: var(--ai-outline-offset);
     }
 
+    /* A link in marked text keeps the AI rules on top, in the AI colour (some
+       browsers draw the lines passed down through a link in the link's own
+       decoration colour). Its bottom line is the link's gold, drawn over the AI
+       underline so that it replaces it instead of mixing with it. */
     [data-origin="ai"] a {
-        text-decoration-style: var(--ai-underline-style);
-        text-decoration-thickness: var(--ai-underline-thickness);
-        text-underline-offset: var(--ai-underline-offset);
+        position: relative;
+        text-decoration-style: var(--ai-outline-style);
+        text-decoration-color: var(--ai-outline-color);
+        text-decoration-thickness: var(--ai-outline-thickness);
+        text-underline-offset: var(--ai-outline-offset);
+    }
+
+    [data-origin="ai"] a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: var(--ai-link-bottom, 0px);
+        height: 2px;
+        background: var(--link-line-solid);
+        pointer-events: none;
+    }
+
+    [data-origin="ai"] a:hover::after {
+        background: currentColor;
+    }
+
+    /* Headings keep their own text colour, but their rules take the AI tone. A
+       decoration is drawn in the colour of the box that declares it, so the
+       heading declares its own. */
+    [data-origin="ai"] :is(h1, h2, h3, h4, h5, h6) {
+        text-decoration-line: overline underline;
+        text-decoration-style: var(--ai-outline-style);
+        text-decoration-color: var(--ai-text-color);
+        text-decoration-thickness: var(--ai-outline-thickness);
     }
 
     /* :ai[...]{note="..."} shows its note on hover and focus. */
@@ -72,12 +106,89 @@
         }
     }
 
-    /* An inherited underline can't be switched off, but it skips inline blocks,
-       so this keeps code blocks readable inside marked text. */
+    /* Boxes the text marking can't reach (code, display maths, images) and notes
+       get a cross-hatched strip with "AI" on top instead. An inherited decoration
+       can't be switched off, but it skips inline blocks, so code and maths are
+       made inline blocks to keep them unmarked, with their own text colour. */
     [data-origin="ai"] pre {
         display: inline-block;
         width: 100%;
         vertical-align: top;
+        color: var(--ink);
+    }
+
+    /* Display maths is made an inline block in MarkdownPostLayout.astro, because
+       katex.min.css is not in a layer and would beat a rule here. */
+    [data-origin="ai"] .katex-display {
+        color: var(--ink);
+    }
+
+    [data-origin="ai"] :is(.code-block, .note, .katex-display, p:has(> img)) {
+        position: relative;
+    }
+
+    /* A note already uses its own ::before (the hatched ring) and ::after (the
+       highlight fill), so its strip is drawn on the note body instead. */
+    [data-origin="ai"] :is(.code-block, .katex-display, p:has(> img))::before,
+    [data-origin="ai"] .note > .note__body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(-0.75 * var(--u));
+        width: 10px;
+        background:
+            repeating-linear-gradient(135deg, var(--ai-outline-color) 0 1px, transparent 1px 5px),
+            repeating-linear-gradient(45deg, var(--ai-outline-color) 0 1px, transparent 1px 5px);
+        pointer-events: none;
+    }
+
+    [data-origin="ai"] :is(.code-block, .katex-display, p:has(> img))::after,
+    [data-origin="ai"] .note > .note__body::after {
+        content: "AI";
+        position: absolute;
+        top: 0;
+        left: calc(-0.75 * var(--u));
+        width: 10px;
+        padding: 4px 0 3px;
+        background: var(--bg);
+        color: var(--ai-text-color);
+        font: italic 600 9px/9px var(--mono);
+        text-align: center;
+        pointer-events: none;
+    }
+
+    /* Display maths clips anything outside its box, so its strip sits inside. */
+    [data-origin="ai"] .katex-display::before,
+    [data-origin="ai"] .katex-display::after {
+        left: 0;
+    }
+
+    /* A note's text takes the AI tone like body text. Its label and title keep
+       their own colours, and a highlighted note keeps ink on its fill. */
+    [data-origin="ai"] .note {
+        color: var(--ai-text-color);
+    }
+
+    /* The pen frame of a marked code block or note takes the AI colour. */
+    [data-origin="ai"] .code-block .drawn-edge,
+    [data-origin="ai"] .note > .drawn-edge {
+        color: var(--ai-text-color);
+    }
+
+    /* The small AI mark after a post's title on the blog index. Other lists mark
+       AI posts with the link rules alone. The mark sets its own decoration so it
+       doesn't inherit the rules of its marked list item. Its negative vertical margin
+       and middle alignment keep it from stretching the 24px line on any font. */
+    .ai-tag {
+        display: inline-block;
+        margin: -8px 0 -8px 0.5em;
+        padding: 2px 4px;
+        vertical-align: middle;
+        border: 1px solid var(--ai-outline-color);
+        color: var(--ai-text-color);
+        font: italic 600 10px/1 var(--mono);
+        text-decoration: none;
     }
 
     /* Small mono labels: 12px on a 24px line. */

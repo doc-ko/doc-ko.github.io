@@ -11,7 +11,7 @@ const pageTitle = 'Blog'
 	<ul class="content-list">
 		{
 			allPosts.map((post) =>
-			<BlogPost url={postUrl(post)} title={post.data.title} />)
+			<BlogPost url={postUrl(post)} title={post.data.title} origin={post.data.origin} mark />)
 		}
 	</ul>
 </BaseLayout>

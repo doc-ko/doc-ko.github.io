@@ -11,7 +11,7 @@ hero:
   kicker: "By [@doc-ko](https://www.github.com/doc-ko)"
   headline: "Work in progress"
   lede: >-
-    Apologies for the :ai[AI-generated text]{note="Text with a dashed underline, like
+    Apologies for the :ai[AI-generated text]{note="Text with lines above and below it, like
     this word, was written by AI."}; I'll get round to it at some point.
   note:
     label: "☢️ TO BE UNSLOPPIFIED"
