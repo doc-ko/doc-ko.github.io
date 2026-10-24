@@ -8,13 +8,25 @@ const { fields = [] } = Astro.props;
 
 // Each tile is hatched in its field's colour, drawn at build time in two sizes:
 // 7 x 7 units (wide, with a clear row for the label) and 3 units tall (narrow,
-// hatching only behind the drawing). devices.css picks one by container width.
+// hatching only behind the drawing). The wide size also has the label row's
+// strokes as separate paths, each with a place in a scattered order, so they
+// can be drawn in one by one when the label steps aside. devices.css picks one by container width.
 const WIDE = { width: 168, height: 168 };
 const NARROW = { width: 89, height: 72 };
 const LABEL_ROW = [[0, 116, 168, 146]];
+// Gives each stroke a place (0, 1, 2...) in a fixed scattered order.
+const scatter = (strokes) => {
+    const key = (i) => (i * 7919) % 97;
+    const ranked = strokes.map((_, i) => i).sort((a, b) => key(a) - key(b));
+    return strokes.map((d, i) => ({ d, order: ranked.indexOf(i) }));
+};
 const hatching = (icon) => ({
     wide: hatch(`tile-${icon}`, { ...WIDE, skip: LABEL_ROW }),
-    narrow: hatch(`tile-${icon}`, NARROW),
+    wideGap: scatter(
+        hatch(`tile-${icon}`, { ...WIDE, skip: LABEL_ROW, gaps: true })
+            .split(/(?=M)/)
+            .filter(Boolean),
+    ),
 });
 
 // Every symbol is an SVG path, not text, so it looks the same on every device.
@@ -121,6 +133,11 @@ const cursor = {
                 <li class={`drawn field-emblem__tile field-emblem__tile--${field.accent} field-emblem__tile--${field.icon}`}>
                     <svg class="field-emblem__hatch field-emblem__hatch--wide" width="168" height="168" aria-hidden="true">
                         <path d={strokes.wide} />
+                        <g class="field-emblem__hatch-gap">
+                            {strokes.wideGap.map((stroke) => (
+                                <path pathLength="1" style={`--order:${stroke.order}`} d={stroke.d} />
+                            ))}
+                        </g>
                     </svg>
                     <svg class="field-emblem__hatch field-emblem__hatch--narrow" width="89" height="72" aria-hidden="true">
                         <path d={strokes.narrow} />

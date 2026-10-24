@@ -485,6 +485,17 @@
         stroke-opacity: 0.5;
     }
 
+    /* The label row's strokes: undrawn while the label shows, pen-drawn in a
+       scattered order when it steps aside on hover. */
+    .field-emblem__hatch-gap path {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+    }
+
+    .field-emblem__tile:hover .field-emblem__hatch-gap path {
+        stroke-dashoffset: 0;
+    }
+
     .field-emblem__hatch--narrow {
         display: none;
     }
@@ -648,6 +659,29 @@
 
         .field-emblem__tile:hover .field-emblem__label {
             transition-delay: 0s;
+        }
+
+        /* The gap strokes are drawn one by one, after the same per-tile delay
+           as the label on the way out, and straight away on hover. */
+        .field-emblem__hatch-gap path {
+            transition: stroke-dashoffset 0.22s ease calc(var(--leave, 0.15s) + var(--order) * 14ms);
+        }
+
+        .field-emblem__tile--linguistics {
+            --leave: 0.5s;
+        }
+
+        .field-emblem__tile--mathematics {
+            --leave: 0.8s;
+        }
+
+        .field-emblem__tile--logic,
+        .field-emblem__tile--computing {
+            --leave: 0.7s;
+        }
+
+        .field-emblem__tile:hover .field-emblem__hatch-gap path {
+            transition-delay: calc(var(--order) * 14ms);
         }
 
         .glyph {

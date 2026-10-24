@@ -101,6 +101,10 @@ export function edges(name, keys, options) {
     return [...keys].map((key) => edge(name, key, options));
 }
 
+// How far a stroke stops short of a skipped rectangle's edge, in y: a little
+// under the pen's round end, so two strokes meeting there touch, not overlap.
+const JOIN = 0.3;
+
 /**
  * Hatching: 1px strokes at 45 degrees, `spacing` px apart, each a little
  * shorter and bent differently so it looks drawn rather than printed.
@@ -108,12 +112,13 @@ export function edges(name, keys, options) {
  *
  * @param {string} name  Seed.
  * @param {{ width: number, height: number, inset?: number, spacing?: number,
- *   skip?: Array<[number, number, number, number]> }} shape
+ *   skip?: Array<[number, number, number, number]>, gaps?: boolean }} shape
  *   `skip` lists rectangles `[x0, y0, x1, y1]` the strokes stay out of, such
- *   as the row a label sits on.
+ *   as the row a label sits on. With `gaps` set, the strokes are drawn only
+ *   inside those rectangles instead, so they can fill in what `skip` leaves.
  * @returns {string}  One SVG path `d` for every stroke.
  */
-export function hatch(name, { width, height, inset = 5, spacing = 5.5, skip = [] }) {
+export function hatch(name, { width, height, inset = 5, spacing = 5.5, skip = [], gaps = false }) {
     const random = rng(hash(`${name}:hatch`));
     const x0 = inset;
     const y0 = inset;
@@ -123,23 +128,38 @@ export function hatch(name, { width, height, inset = 5, spacing = 5.5, skip = []
 
     // Strokes run down and to the left: every point has x + y = c.
     for (let c = x0 + y0 + 3; c < x1 + y1 - 3; c += spacing) {
-        let spans = [[Math.max(y0, c - x1), Math.min(y1, c - x0)]];
+        // Each span is [from, to, cutFrom, cutTo]; a cut end sits exactly on the
+        // edge of a skipped rectangle, so the strokes either side of it meet there.
+        let spans = [[Math.max(y0, c - x1), Math.min(y1, c - x0), false, false]];
 
-        for (const [sx0, sy0, sx1, sy1] of skip) {
+        if (gaps) {
+            const [top, bottom] = spans[0];
+            spans = skip
+                .map(([sx0, sy0, sx1, sy1]) => {
+                    const from = Math.max(top, sy0, c - sx1);
+                    const to = Math.min(bottom, sy1, c - sx0);
+                    return [from, to, from === sy0, to === sy1];
+                })
+                .filter(([from, to]) => to > from);
+        } else for (const [sx0, sy0, sx1, sy1] of skip) {
             // Where this stroke is inside the skipped rectangle, in y.
             const from = Math.max(sy0, c - sx1);
             const to = Math.min(sy1, c - sx0);
             if (from >= to) continue;
-            spans = spans.flatMap(([a, b]) => {
-                if (to <= a || from >= b) return [[a, b]];
-                return [[a, from], [to, b]].filter(([p, q]) => q > p);
+            spans = spans.flatMap(([a, b, cutA, cutB]) => {
+                if (to <= a || from >= b) return [[a, b, cutA, cutB]];
+                return [[a, from, cutA, true], [to, b, true, cutB]].filter(([p, q]) => q > p);
             });
         }
 
-        for (const [from, to] of spans) {
-            // Each end stops a little short, by a different amount.
-            const a = from + random() * 2.5;
-            const b = to - random() * 2.5;
+        for (const [from, to, cutFrom, cutTo] of spans) {
+            // Each end stops a little short, by a different amount, except
+            // where it meets another set of strokes: there both stop JOIN short
+            // of the edge, so their round ends touch without doubling up.
+            const shortA = random() * 2.5;
+            const shortB = random() * 2.5;
+            const a = from + (cutFrom ? JOIN : shortA);
+            const b = to - (cutTo ? JOIN : shortB);
             if (b - a < 4) continue;
             const bend = (random() * 2 - 1) * 0.5;
             const ax = c - a;
