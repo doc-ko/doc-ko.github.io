@@ -436,7 +436,7 @@
     .site-footer {
         width: var(--col);
         margin: 0 auto;
-        padding: calc(2 * var(--u)) 0;
+        padding: var(--u) 0 calc(2 * var(--u));
         display: flex;
         align-items: center;
         flex-wrap: wrap;
@@ -445,11 +445,12 @@
         background: linear-gradient(var(--line), var(--line)) top / 100% 1px no-repeat;
     }
 
-    /* What the AI marking means; a row of its own under the copyright and links. */
+    /* What the AI marking means; a row of its own directly above the copyright, with no blank line between (the
+       negative margin cancels the footer's gap). */
     .footer-key {
-        order: 1;
+        order: -1;
         flex-basis: 100%;
-        margin: 0;
+        margin: 0 0 calc(-1 * var(--u));
         color: var(--muted-2);
         font-family: var(--mono);
         font-size: 12px;

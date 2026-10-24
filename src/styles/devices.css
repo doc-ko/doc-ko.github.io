@@ -176,14 +176,17 @@
         color: var(--ai-text-color);
     }
 
-    /* The [AI] tag after a post's title in lists, like Wikipedia's [citation needed]. */
+    /* The small AI mark after a post's title on the blog index. Other lists mark
+       AI posts with the link rules alone. The mark sets its own decoration so it
+       doesn't inherit the rules of its marked list item. */
     .ai-tag {
-        margin-left: 0.25em;
-        font-size: 0.75em;
-        font-style: italic;
-        color: var(--muted);
-        vertical-align: super;
-        line-height: 0;
+        display: inline-block;
+        margin-left: 0.5em;
+        padding: 2px 4px;
+        border: 1px solid var(--ai-outline-color);
+        color: var(--ai-text-color);
+        font: italic 600 10px/1 var(--mono);
+        text-decoration: none;
     }
 
     /* Small mono labels: 12px on a 24px line. */

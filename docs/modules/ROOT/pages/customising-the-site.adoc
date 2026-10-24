@@ -145,7 +145,7 @@ The footer holds the copyright line and a row of `LinkButton` links:
 
 Add or remove `LinkButton` lines to change the buttons.
 
-Below them is a one-line key to the AI marking, written with a `data-origin="ai"` span so it shows the marking itself.
+Above the copyright line is a one-line key to the AI marking, written with a `data-origin="ai"` span so it shows the marking itself.
 Change its wording in `Footer.astro` if you change how AI text looks.
 
 `LinkButton.astro` automatically adds `target="_blank"` and `rel="noreferrer"` for links that start with `http`.
@@ -313,7 +313,8 @@ The date, tools, and tags are not marked.
 Code blocks, display maths and images inside marked text keep their normal look, because the text marking would make them hard to read.
 Notes get the same treatment, except that a note's body text takes the AI colour like the rest of the text.
 Instead, each of these boxes gets a strip of cross-hatching down its left edge with "AI" written on it, and the pen frame of a code block or note is drawn in the AI colour.
-Posts marked with `origin: ai` also get a small `[AI]` tag after their title in the blog list and on tag pages.
+Posts marked with `origin: ai` also show their title in the blog list and on tag pages with the AI rules above and below the link.
+The blog index adds a small boxed `AI` after the title as well.
 
 The same syntax works in `src/data/homepage.yaml`, with some limits.
 See the Value Types section of xref:homepage-yaml.adoc[] for them.
@@ -352,9 +353,12 @@ The look is set by five variables in `src/styles/tokens.css`:
 
 The marking is text in a cooler blue-grey than the rest of the site, with a thin dashed overline and underline, drawn on every line of the text, so wrapped lines get a pair each.
 This also applies inside `:::ai` blocks and `origin: ai` pages, line by line.
+Headings keep their own text colour, but their lines take the AI tone.
+A link in marked text keeps the AI lines above it, and its gold underline is drawn over the AI underline so the two don't mix.
+The gold comes from `--link-line-solid` in `tokens.css`, a version of the link underline colour without transparency.
 For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `devices.css`.
 Every marked element has the `data-origin="ai"` attribute, so that one rule covers them all.
-The strip is the `::before` and `::after` rules on `[data-origin="ai"]` boxes in `devices.css`, and the `[AI]` tag in the blog list is the `.ai-tag` rule.
+The strip is the `::before` and `::after` rules on `[data-origin="ai"]` boxes in `devices.css`, and the small `AI` mark on the blog index is the `.ai-tag` rule.
 The note's box is styled by the `.ai-note` rule.
 
 === Words that start with a colon
