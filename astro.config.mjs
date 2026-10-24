@@ -16,7 +16,7 @@ export default defineConfig({
             rehypePlugins: [rehypeKatex],
         }),
         // Both themes are emitted as CSS variables (--shiki-light, --shiki-dark)
-        // with no background, so global.css picks the theme and the background.
+        // with no background, so tokens.css picks the theme and the background.
         shikiConfig: {
             themes: { light: 'github-light', dark: 'github-dark' },
             defaultColor: false,

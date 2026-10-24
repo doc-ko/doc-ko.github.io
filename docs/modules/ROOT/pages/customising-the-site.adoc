@@ -267,18 +267,18 @@ That label is hidden on screen and left out when someone copies the text.
 
 === Change how AI text looks
 
-The look is set by four variables at the top of `src/styles/global.css`:
+The look is set by four variables in `src/styles/tokens.css`:
 
 [source,css]
 ----
 --ai-underline-style: dashed;
---ai-underline-color: rgb(185 173 148 / 45%);
+--ai-underline-color: light-dark(rgb(80 78 74 / 55%), rgb(185 173 148 / 45%));
 --ai-underline-thickness: 0.05em;
 --ai-underline-offset: 0.26em;
 ----
 
 For a dotted or wavy line, set `--ai-underline-style` to `dotted` or `wavy`.
-For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `global.css`.
+For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `devices.css`.
 Every marked element has the `data-origin="ai"` attribute, so that one rule covers them all.
 The note's box is styled by the `.ai-note` rule.
 

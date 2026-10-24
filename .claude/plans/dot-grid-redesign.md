@@ -106,7 +106,7 @@ Follow `AGENTS.md`, especially the dev-server rules and "Working with the owner"
 - [x] Brief critique and the five pre-build decisions
 - [x] Brief updated with the decisions
 - [x] Canvas updated with the decisions (version 4: Literata, oberio.me, ink status notes, section 01, bracket code block on the post template, footer on every page). Frame heights for the footer were estimated; check nothing is clipped.
-- [ ] Phase 1
+- [x] Phase 1 (#16): tokens use `light-dark()`; theme set by `data-theme` on `<html>`; toggle in `ThemeToggle.astro`, `src/scripts/theme.js`
 - [ ] Phase 2
 - [ ] Phase 3
 - [ ] Phase 4
