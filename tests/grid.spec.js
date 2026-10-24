@@ -68,6 +68,15 @@ for (const viewport of viewports) {
                 return parseFloat(getComputedStyle(pre).paddingBottom) % 24 !== 0 ? 'off' : getComputedStyle(pre).paddingBottom;
             });
             expect(doubled).not.toBe('off');
+
+            // A bare <pre> keeps its unit of padding at the bottom, plus whatever
+            // grid.js adds, so it is at least one unit and a whole number of them.
+            const bare = await page.evaluate(() => {
+                const pre = [...document.querySelectorAll('main pre')].find((el) => !el.closest('.code-block'));
+                return parseFloat(getComputedStyle(pre).paddingBottom);
+            });
+            expect(bare).toBeGreaterThanOrEqual(24);
+            expect(bare % 24).toBe(0);
         });
     }
 }

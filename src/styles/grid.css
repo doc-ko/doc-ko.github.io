@@ -275,9 +275,10 @@
     /* Boxes whose height the stylesheet cannot know (an image, a code block
        with a scrollbar, display maths) get --grid-pad from grid.js: the
        extra bottom padding that rounds the box up to whole units. The
-       selector list must match SELECTOR in grid.js. Without the script the
-       page still works; lines below drift off the dots. */
-    main :is(img, pre, .katex-display) {
+       selectors (this rule and the pre rule below) must match SELECTOR in
+       grid.js. Without the script the page still works; lines below drift
+       off the dots. */
+    main :is(img, .katex-display) {
         padding-bottom: var(--grid-pad, 0px);
     }
 
@@ -287,7 +288,10 @@
         vertical-align: bottom;
     }
 
-    /* A bare <pre> already has a unit of padding all round; keep it. */
+    /* A bare <pre> keeps its unit of padding all round and adds --grid-pad
+       on top. It has its own rule because :is() takes the specificity of its
+       strongest argument (.katex-display), which would beat this rule. A
+       .code-block pre sets its own padding in devices.css, a later layer. */
     main pre {
         padding-bottom: calc(var(--u) + var(--grid-pad, 0px));
     }
