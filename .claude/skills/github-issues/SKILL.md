@@ -15,6 +15,7 @@ Prefer the GitHub MCP tools (`mcp__plugin_github_github__*`, loaded through Tool
 If the MCP server failed to connect, use `gh` instead.
 The usual cause is that `GITHUB_PERSONAL_ACCESS_TOKEN` is not set in the environment Claude Code started from, so the plugin sends a bare `Bearer ` header and GitHub rejects it as badly formatted.
 `gh` authenticates separately (`GH_TOKEN` or the keyring) and normally works.
+`gh issue create` prints the new issue's URL and takes no `--json` flag; get the database `id` with `gh api repos/OWNER/REPO/issues/N --jq .id`.
 Tell the user about the broken server once, then carry on with `gh`.
 
 ## Before creating
