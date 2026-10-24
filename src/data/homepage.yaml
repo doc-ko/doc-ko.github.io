@@ -60,18 +60,20 @@ fields:
     accent: "cyan"
 
 notes:
-  - kind: "Overhauling"
-    title: "Visual design"
-    notation: "In Progress"
+  - kind: "Visuals"
+    title: "Notebook-style visual design"
+    notation: "Refining"
     body: >-
-      Adding a bit more personal flair to the visual design, plus a light and dark mode.
-  - kind: ":ai[Placeholder]"
-    title: ":ai[Copy]"
-    notation: ":ai[copy ≈ previous site]"
+      Adding a visual design language, with ability to clearly mark AI-written content.
+  - origin: ai
+    kind: "Placeholder"
+    title: "Copy"
+    notation: "copy ≈ previous site + AI"
     body: >-
-      :ai[Wording is borrowed from the previous site and will be rewritten.]
-  - kind: ":ai[Missing]"
-    title: ":ai[Content]"
-    notation: ":ai[TODO]"
+      Wording is borrowed from the previous site and will be rewritten.
+  - origin: ai
+    kind: "Missing"
+    title: "Content"
+    notation: "TODO"
     body: >-
-      :ai[The blog, writing samples, and a settled purpose for this site.]
+      The blog, writing samples, and a settled purpose for this site.

@@ -313,6 +313,7 @@ The date, tools, and tags are not marked.
 Code blocks, display maths and images inside marked text keep their normal look, because the text marking would make them hard to read.
 Notes get the same treatment, except that a note's body text takes the AI colour like the rest of the text.
 Instead, each of these boxes gets a strip of cross-hatching down its left edge with "AI" written on it, and the pen frame of a code block or note is drawn in the AI colour.
+On the homepage, add `origin: ai` to an item in `notes` to give that whole note the same strip and frame.
 Posts marked with `origin: ai` also show their title in the blog list and on tag pages with the AI rules above and below the link.
 The blog index adds a small boxed `AI` after the title as well.
 
