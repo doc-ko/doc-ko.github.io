@@ -1,10 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogPost from '../components/BlogPost.astro'
-// import.meta.glob, unlike Astro.glob, allows an empty posts folder.
-const allPosts = Object.values(import.meta.glob('./posts/*.md', { eager: true }))
-	.filter((post) => !post.frontmatter.draft)
-	.sort((a, b) => new Date(b.frontmatter.pubDate).valueOf() - new Date(a.frontmatter.pubDate).valueOf());
+import { getPosts, postUrl } from '../lib/posts.js';
+const allPosts = await getPosts();
 const pageTitle = 'Blog'
 ---
 
@@ -13,7 +11,7 @@ const pageTitle = 'Blog'
 	<ul class="content-list">
 		{
 			allPosts.map((post) =>
-			<BlogPost url={post.url} title={post.frontmatter.title} />)
+			<BlogPost url={postUrl(post)} title={post.data.title} />)
 		}
 	</ul>
 </BaseLayout>
