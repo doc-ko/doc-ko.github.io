@@ -1,0 +1,14 @@
+---
+import { loop } from '../lib/pen.js';
+
+// A pen-drawn circle round a word. Put it inside the word's element (the
+// element needs position: relative); it is laid over the word and stretched to
+// fit. Whether it shows, and the draw-in, are set in devices.css.
+//
+//   name  seed: the same name always draws the same loop
+const { name } = Astro.props;
+---
+
+<svg class="pen-loop" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+    <path d={loop(name)} pathLength="1" />
+</svg>

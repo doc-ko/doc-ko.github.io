@@ -50,7 +50,7 @@ The components that use it, under `src/components/`:
 
 === Header And Menu
 
-The header and navigation are drawn with the same pen elements: tabs, a dot under the current page, and a rule under the header.
+The header and navigation are drawn with the same pen elements: a pen circle round the current page (drawn in on hover for the others), and a rule under the header.
 Under 680px the links fold into a menu opened by the hamburger button.
 `src/scripts/menu.js` runs it.
 

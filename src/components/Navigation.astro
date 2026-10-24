@@ -1,8 +1,9 @@
 ---
 import DrawnEdges from './DrawnEdges.astro';
-import Dot from './Dot.astro';
+import PenLoop from './PenLoop.astro';
 
-// The current page gets an ink dot under its label and aria-current.
+// The current page is circled in pen and gets aria-current; hovering or focusing
+// another tab draws the same circle in.
 const path = Astro.url.pathname;
 const links = [
     { href: '/', label: 'Home', current: path === '/' },
@@ -13,10 +14,8 @@ const links = [
 <div class="drawn nav-links" id="primary-navigation">
     <DrawnEdges name="menu" />
     {links.map((link) => (
-        <a class="drawn tab navlink" href={link.href} aria-current={link.current ? 'page' : undefined}>
-            <DrawnEdges name={`tab:${link.label}`} keys="ltr" />
-            <span>{link.label}</span>
-            {link.current && <Dot />}
+        <a class="tab navlink" href={link.href} aria-current={link.current ? 'page' : undefined}>
+            <span>{link.label}<PenLoop name={`tab:${link.label}`} /></span>
         </a>
     ))}
 </div>

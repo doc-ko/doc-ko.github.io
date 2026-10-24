@@ -139,6 +139,48 @@
         stroke-width: calc(var(--sw) + 0.6px);
     }
 
+    /* A pen circle round a word (PenLoop). Drawn in on hover and focus; always
+       drawn for the current page. Not drawn = the stroke pushed just past its
+       end, so no round-cap speck is left behind. */
+    .pen-loop {
+        position: absolute;
+        inset: -5px -9px;
+        width: calc(100% + 18px);
+        height: calc(100% + 10px);
+        overflow: visible;
+        pointer-events: none;
+    }
+
+    .pen-loop path {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1px;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+        stroke-dasharray: 1 2;
+        stroke-dashoffset: 1.02;
+        transition: stroke-dashoffset 0.35s ease;
+    }
+
+    .tab:hover .pen-loop path,
+    .tab:focus-visible .pen-loop path,
+    [aria-current="page"] .pen-loop path {
+        stroke-dashoffset: 0;
+    }
+
+    /* While another tab is hovered or focused, the current page's circle is
+       taken back, so the circle seems to move to that tab. */
+    .nav-links:has(.tab:hover:not([aria-current])) [aria-current="page"] .pen-loop path,
+    .nav-links:has(.tab:focus-visible:not([aria-current])) [aria-current="page"] .pen-loop path {
+        stroke-dashoffset: 1.02;
+    }
+
+    .tab:focus-visible .pen-loop path {
+        stroke: var(--focus);
+        stroke-width: 2px;
+    }
+
     .drawn-edge--t {
         top: calc(var(--ey) - 4px);
         left: calc(var(--os) * -0.4);
