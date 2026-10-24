@@ -47,12 +47,20 @@ The components that use it, under `src/components/`:
 * `Dot.astro`, `PencilRule.astro` and `Highlight.astro` are the small pieces.
 * `CodeBlock.astro` wraps code in a pencil bracket.
 * `FieldEmblem.astro` now has hatched tiles drawn at build time and keeps its hover animations.
+* `PenLoop.astro` draws a pen circle round a word; the header uses it.
+* `IconHatch.astro` hatches the cell of an icon button, drawn at build time.
 
 === Header And Menu
 
-The header and navigation are drawn with the same pen elements: a pen circle round the current page (drawn in on hover for the others), and a rule under the header.
+The header and navigation are drawn with the same pen elements: a pen circle round the current page, and a rule under the header.
+Hovering or focusing another link draws the circle in there and takes it back from the current page, so the circle seems to move.
+The navigation lists Home and About; there is no Contact tab.
+
+The theme toggle's icon turns into the other one on hover, and its cell is hatched in the tone of the theme you would switch to.
+The hamburger is hatched the same way, and stays hatched while the menu is open.
 Under 680px the links fold into a menu opened by the hamburger button.
 `src/scripts/menu.js` runs it.
+Reduced motion turns the transitions and animations off.
 
 === Colours And Styles
 

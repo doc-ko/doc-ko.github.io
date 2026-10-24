@@ -67,7 +67,7 @@ Each phase ends with `npm run build` passing. Phases 1 to 3 are worth doing what
 - `src/lib/pen.js`: one copy of the seeded wobble, ink load, hatching and highlighter ends; pure functions, deterministic per seed.
 - Components: `DrawnEdges`, `Note` (inline or margin, optional label, highlight, hatched ring, corner dot), `PencilRule`, `Dot`, `Highlight` (CSS, `box-decoration-break: clone`), `CodeBlock` (the bracket).
 - Replace `NoteBlock`, `MarginNote` and the lemma card with `Note`. `FieldEmblem` gets build-time hatched tiles in both sizes and keeps its glyph animations.
-- Header: tab hover and focus, current-page dot, menu under 680px.
+- Header: current-page pen circle, drawn in on hover and focus (#38; first built as tab edges and a dot), menu under 680px.
 - Done when: the canvas specimen can be rebuilt from these components.
 
 ### Phase 4: homepage and YAML
@@ -108,7 +108,8 @@ Follow `AGENTS.md`, especially the dev-server rules and "Working with the owner"
 - [x] Canvas updated with the decisions (version 4: Literata, oberio.me, ink status notes, section 01, bracket code block on the post template, footer on every page). Frame heights for the footer were estimated; check nothing is clipped.
 - [x] Phase 1 (#16): tokens use `light-dark()`; theme set by `data-theme` on `<html>`; toggle in `ThemeToggle.astro`, `src/scripts/theme.js`
 - [x] Phase 2 and 3 (#17): grid, Literata, `?grid` overlay, `tests/grid.spec.js`, `src/lib/pen.js`, `Note`, `DrawnEdges`, `Dot`, `PencilRule`, `Highlight`, `CodeBlock`, hatched `FieldEmblem`, drawn header. Not blocking this merge or #17 (decided 2026-10-24); still worth doing: Firefox halo, 1x wobble, margin note vs bracket on a real post; image heights are padded by script only (no build-time rounding yet)
-- [ ] Phase 4
+- [x] Phase 4 (#18, merged 2026-10-24): homepage rebuilt, YAML keys renamed (`note`, `notes`), field diagram and garden strip removed, Contact tab removed from the header. Copy is still placeholder (#11)
+- [x] Header hover (#38, merged 2026-10-24): `PenLoop` circle for the current page and on hover; theme toggle morphs sun/moon with hatching in the other theme's tone (`IconHatch`); hamburger hatched, kept while open. Reduced motion for these is untested with the setting on
 - [ ] Phase 5
 - [ ] Phase 6
 - [ ] Phase 7
