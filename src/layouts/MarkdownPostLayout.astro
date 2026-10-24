@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import PencilRule from '../components/PencilRule.astro';
 import Tag from '../components/Tag.astro';
 import 'katex/dist/katex.min.css';
-const { frontmatter } = Astro.props;
+const { frontmatter, slug, description } = Astro.props;
 const tags = frontmatter.tags ?? [];
 const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
 const date = frontmatter.pubDate
@@ -22,7 +22,13 @@ const detailItems = [
 ].filter(Boolean);
 ---
 
-<BaseLayout pageTitle={frontmatter.title} description={frontmatter.description}>
+<BaseLayout
+    pageTitle={frontmatter.title}
+    description={description ?? frontmatter.description}
+    type="article"
+    image={`/og/posts/${slug}.png`}
+    publishedTime={machineDate || undefined}
+>
     <article class="markdown-entry">
         <header class="entry-header">
             {frontmatter.description && <p class="entry-description" data-origin={origin}>{frontmatter.description}</p>}

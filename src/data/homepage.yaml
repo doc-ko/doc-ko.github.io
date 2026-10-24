@@ -3,9 +3,9 @@
 # exports it to the Astro components.
 
 meta:
-  title: "WIP - oberio.me"
+  title: "oberio.me"
   description: >-
-    A website in want of a need.
+    Karl Oberio is a technical writer with engineering depth.
 
 hero:
   kicker: "By [@doc-ko](https://www.github.com/doc-ko)"

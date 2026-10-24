@@ -6,7 +6,7 @@ const tags = getTags(await getPosts());
 const pageTitle = "Tag Index";
 ---
 
-<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle} description="Every tag used on the blog.">
     <div class="tags">
         {tags.map((tag) =>
             <Tag tag={tag} label={`#${tag}`} />)}
