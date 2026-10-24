@@ -28,6 +28,7 @@ Issues track development, configuration and maintenance work: code, build and de
 No issue is needed for:
 
 - the owner writing or adding a new post (a `post/<slug>` branch is enough);
+- copy edits to existing pages, posts and `src/data/homepage.yaml` text, as long as no keys, components or layout change;
 - small fixes: a typo, a broken link, or a one-line change that does not alter behaviour;
 - questions, reading code and research.
 
