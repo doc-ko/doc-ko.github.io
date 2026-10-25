@@ -34,10 +34,9 @@ Never put the contact email address in an issue. The site stores it reversed in 
 
 Titles are short and say what is wrong or wanted ("Mobile: AI-generated text note can't be dismissed"), not "Bug".
 
-Use whichever shape fits:
-
-- **Bug:** Problem, Likely cause (with file paths), Expected, Notes.
-- **Planned work:** Background, Goal, Scope or To do, Open decisions, Related.
+Use the headings of whichever template in `.github/ISSUE_TEMPLATE/` fits: `bug.md` or `planned-work.md`.
+`gh` and the MCP tools don't apply templates, so copy the headings into the body yourself, and drop a heading with nothing under it.
+If neither fits, write a plain issue. Add a section to a template only when a real need comes up, not in advance.
 
 Link other issues with `#N` and design artifacts by URL.
 If the work changes `homepage.yaml` or components, add a line saying the docs under `docs/modules/ROOT/pages/` need updating in the same change, as `AGENTS.md` requires.
