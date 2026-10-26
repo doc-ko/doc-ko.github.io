@@ -88,7 +88,7 @@ The keys are documented in xref:homepage-yaml.adoc[].
 * `src/layouts/BaseLayout.astro` handles metadata, the skip link, the header, the footer and the optional hidden page title.
 * The navigation lists Home, Blog and About.
 * The header logo reads `oberio.me`.
-* `src/components/Footer.astro` shows the copyright line and four buttons: LinkedIn, GitHub, Repo and Docs.
+* `src/components/Footer.astro` shows one line under a pencil rule: the copyright, the AI-marking key, then links to LinkedIn, GitHub, Repo and Docs, with drawn vertical lines between the parts.
 
 === AI-Generated Text Marking
 
