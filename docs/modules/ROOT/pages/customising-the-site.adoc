@@ -557,7 +557,22 @@ You can also run the workflow by hand from the repository's Actions tab.
 Every pull request to `main` also runs `.github/workflows/build.yml`, which installs dependencies and runs `npm run build` without deploying.
 If the build fails, the pull request shows a red check, so you can fix the problem before it reaches `main`.
 That check does not open any browsers, so it does not run the grid, accessibility or reduced-motion checks.
-Run `npm run test:grid` on your machine before you push instead.
+Those run on your machine instead, before each push.
+
+A pre-push hook does this for you.
+A hook is a script git runs at a set moment; this one, `.githooks/pre-push`, runs when you type `git push`.
+`npm install` turns it on.
+If the commits you are pushing change the site or its tests (`src/`, `public/`, `tests/`, `astro.config.*`, `package.json`, `package-lock.json` or `playwright.config.js`), it runs `npm run test:grid`, which takes about a minute, and cancels the push if a check fails.
+Pushes that only change docs or notes go straight through.
+
+The hook also stops the push, with a message saying why, when:
+
+* site files have changes you have not committed, because the check would test those instead of what you are pushing;
+* you push a branch that is not the one checked out;
+* something is still serving pages on port 4323 from an earlier test run;
+* the test browsers are not installed (run `npx playwright install chromium firefox webkit`).
+
+To push once without the check, run `git push --no-verify`.
 
 The site is served at `oberio.me`.
 To move it to another domain, change all of these together:

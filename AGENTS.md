@@ -45,8 +45,9 @@ No issue is needed for:
 
 The pull-request check on GitHub only runs `npm run build`, to keep it fast. The browser checks run on this machine instead.
 
-- Run `npm run test:grid` before every push that changes what the site renders or how it is tested: `src/`, `public/`, `astro.config.*`, `package.json`, `package-lock.json`, `playwright.config.js` or `tests/`. Push only when it passes, and say so under "Checks" in the PR body.
-- Pushes that only touch `docs/`, `.claude/`, `AGENTS.md` or `.github/` need `npm run build` at most.
+- The pre-push hook (`.githooks/pre-push`) runs `npm run test:grid` when a push changes what the site renders or how it is tested, and cancels the push if a check fails. Its list of watched paths is the only copy; change it there. `npm install` turns the hook on; `git config core.hooksPath` should print `.githooks`.
+- A push that runs the checks takes about a minute, so give the Bash call a timeout of at least 5 minutes. Say under "Checks" in the PR body that they passed.
+- When the hook stops a push (uncommitted site files, a branch that is not checked out, a leftover server on port 4323, missing browsers), fix what it names and push again. Never use `git push --no-verify` unless the owner asks for it.
 - Do not add browser installs or Playwright runs back to `.github/workflows/build.yml`; the owner wants the PR check to finish in seconds.
 
 ## Dev server
