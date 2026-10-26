@@ -136,19 +136,22 @@ Visitors with JavaScript turned off see the link text but cannot click it, and a
 
 Edit `src/components/Footer.astro`.
 
-The footer holds the copyright line and a row of `LinkButton` links:
+The footer is one line under a pencil rule: the copyright, a one-line key to the AI marking, then "elsewhere" and a row of links.
+A short drawn vertical line separates the three parts.
+On narrow screens the parts stack and the vertical lines are hidden.
 
-[source,astro]
+The links are the `links` list at the top of `Footer.astro`:
+
+[source,js]
 ----
-<LinkButton link="https://github.com/doc-ko" text="GitHub" />
+['GitHub', 'https://github.com/doc-ko'],
 ----
 
-Add or remove `LinkButton` lines to change the buttons.
+Add or remove entries to change the links.
+The component adds the slashes between them and opens each in a new tab with `rel="noreferrer"`.
 
-Above the copyright line is a one-line key to the AI marking, written with a `data-origin="ai"` span so it shows the marking itself.
+The key to the AI marking is written with a `data-origin="ai"` span so it shows the marking itself.
 Change its wording in `Footer.astro` if you change how AI text looks.
-
-`LinkButton.astro` automatically adds `target="_blank"` and `rel="noreferrer"` for links that start with `http`.
 
 == 6. Edit The About Page
 

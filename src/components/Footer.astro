@@ -1,16 +1,35 @@
 ---
-import LinkButton from './LinkButton.astro'
+import PencilRule from './PencilRule.astro';
+import DrawnEdges from './DrawnEdges.astro';
+
+// One line under a pencil rule: the copyright, what the AI marking means, then
+// the links elsewhere. A short drawn vertical line sits between the three parts.
+// On narrow screens they stack and the vertical lines are hidden.
+const links = [
+    ['LinkedIn', 'https://linkedin.com/in/docko'],
+    ['GitHub', 'https://github.com/doc-ko'],
+    ['Repo', 'https://github.com/doc-ko/doc-ko.github.io'],
+    ['Docs', 'https://docs.docko.dev'],
+];
 ---
 
 <footer class="site-footer">
-    <p class="copyright">Copyright &copy; 2026 Karl Oberio</p>
-    <div class="footer-links" aria-label="Contact and site links">
-        <LinkButton link="https://linkedin.com/in/docko" text="LinkedIn" />
-        <LinkButton link="https://github.com/doc-ko" text="GitHub" />
-        <LinkButton link="https://github.com/doc-ko/doc-ko.github.io" text="Repo" />
-        <LinkButton link="https://docs.docko.dev" text="Docs" />
+    <PencilRule name="footer" units={0} />
+    <div class="footer-line">
+        <p class="copyright">Copyright &copy; 2026 Karl Oberio</p>
+        <span class="drawn footer-sep" aria-hidden="true"><DrawnEdges name="footer:sep-copyright" keys="l" tone="pencil" /></span>
+        <p class="footer-key">
+            <span data-origin="ai">AI-generated content</span> is marked as such.
+        </p>
+        <span class="drawn footer-sep" aria-hidden="true"><DrawnEdges name="footer:sep-key" keys="l" tone="pencil" /></span>
+        <nav class="footer-links" aria-label="Elsewhere">
+            <span class="footer-label">elsewhere</span>
+            {links.map(([text, href], i) => (
+                <>
+                    {i > 0 && <span class="footer-slash" aria-hidden="true">/</span>}
+                    <a href={href} target="_blank" rel="noreferrer">{text}</a>
+                </>
+            ))}
+        </nav>
     </div>
-    <p class="footer-key">
-        <span data-origin="ai">AI-generated content</span> is marked as such.
-    </p>
 </footer>
