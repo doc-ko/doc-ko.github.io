@@ -1,22 +1,21 @@
 ---
 import Note from './Note.astro';
+import { postUrl, postDate } from '../lib/posts.js';
 
 // One post in a list: a margin note whose label is the date, then the title as
 // a link and the description. Each note hangs from the one above, so a list
 // reads as a timeline. A post marked AI gets the AI strip and text marking.
 //
-//   url          the post's address
-//   title        the post's title
-//   date         shown as the note's label, e.g. 2026-10-24
-//   description  optional line under the title
-//   origin       ai marks the post as AI-generated
-const { url, title, date, description, origin } = Astro.props;
-const href = url.endsWith('/') ? url : `${url}/`;
+//   post  the post entry from the posts collection; the link, title, date,
+//         description and origin all come from it, so every list looks the same
+const { post } = Astro.props;
+const { title, description, origin } = post.data;
+const url = postUrl(post);
 ---
 
 <li>
-    <Note variant="margin" label={date} origin={origin} seed={url}>
-        <p><a class="text-link" href={href}>{title}</a></p>
+    <Note variant="margin" label={postDate(post)} origin={origin} seed={url}>
+        <p><a class="text-link" href={url}>{title}</a></p>
         {description && <p>{description}</p>}
     </Note>
 </li>
