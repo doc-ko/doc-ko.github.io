@@ -1,7 +1,7 @@
 ---
 import BlogPost from '../../components/BlogPost.astro'
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPosts, getTags, postUrl } from '../../lib/posts.js';
+import { getPosts, getTags, postUrl, postDate } from '../../lib/posts.js';
 
 export async function getStaticPaths() {
     const allPosts = await getPosts();
@@ -18,7 +18,7 @@ const { posts } = Astro.props;
 
 <BaseLayout pageTitle={tag} description={`Posts tagged ${tag}.`}>
     <p>Posts tagged with {tag}:</p>
-    <ul class="content-list">
-        {posts.map((post) => <BlogPost url={postUrl(post)} title={post.data.title} origin={post.data.origin} />)}
-    </ul>
+    <ol class="post-list">
+        {posts.map((post) => <BlogPost url={postUrl(post)} title={post.data.title} date={postDate(post)} description={post.data.description} origin={post.data.origin} />)}
+    </ol>
 </BaseLayout>

@@ -190,21 +190,6 @@
         color: var(--ai-text-color);
     }
 
-    /* The small AI mark after a post's title on the blog index. Other lists mark
-       AI posts with the link rules alone. The mark sets its own decoration so it
-       doesn't inherit the rules of its marked list item. Its negative vertical margin
-       and middle alignment keep it from stretching the 24px line on any font. */
-    .ai-tag {
-        display: inline-block;
-        margin: -8px 0 -8px 0.5em;
-        padding: 2px 4px;
-        vertical-align: middle;
-        border: 1px solid var(--ai-outline-color);
-        color: var(--ai-text-color);
-        font: italic 600 10px/1 var(--mono);
-        text-decoration: none;
-    }
-
     /* Small mono labels: 12px on a 24px line. */
     .eyebrow,
     .panel-label,
@@ -437,6 +422,19 @@
         left: calc(var(--u) + 12px);
         right: 0;
         justify-content: flex-start;
+    }
+
+    /* A marked margin note keeps its AI strip inside the box, between the pencil
+       line and the text, level with the body. The other boxes hang theirs in the
+       gutter. */
+    .note--margin[data-origin="ai"] > .note__body::before,
+    .note--margin[data-origin="ai"] > .note__body::after {
+        top: var(--u);
+        left: 8px;
+    }
+
+    .note--margin[data-origin="ai"] > .note__body::before {
+        bottom: 0;
     }
 
     .note__label {
