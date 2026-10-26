@@ -556,6 +556,8 @@ You can also run the workflow by hand from the repository's Actions tab.
 
 Every pull request to `main` also runs `.github/workflows/build.yml`, which installs dependencies and runs `npm run build` without deploying.
 If the build fails, the pull request shows a red check, so you can fix the problem before it reaches `main`.
+That check does not open any browsers, so it does not run the grid, accessibility or reduced-motion checks.
+Run `npm run test:grid` on your machine before you push instead.
 
 The site is served at `oberio.me`.
 To move it to another domain, change all of these together:
@@ -582,8 +584,30 @@ npm run test:grid
 ----
 
 It builds the site and fails with the name, top and height of any box in `main` that is not a whole number of units.
-The first time, run `npx playwright install chromium` to download the test browser.
+The first time, run `npx playwright install chromium firefox webkit` to download the test browsers.
+The same command also runs the accessibility and reduced-motion checks; see <<_18_check_accessibility_and_browsers>>.
 
 Keep new spacing in whole units: use `var(--u)` and multiples of it for margins, padding and heights, and avoid borders on boxes (they add height).
 Use `Note`, `PencilRule` and the other drawn devices for lines instead; their lines are SVG and take no space.
 Images, code blocks and display maths have heights the stylesheet cannot know; `src/scripts/grid.js` pads each one up to the next whole unit.
+
+== 18. Check Accessibility And Browsers
+
+`npm run test:grid` runs three kinds of check on every page, at phone and desktop width, in light and dark themes.
+Each runs in Chromium (Chrome and Edge), Firefox and WebKit (Safari's engine).
+
+* `tests/grid.spec.js` checks the 24px grid.
+* `tests/a11y.spec.js` runs axe-core against WCAG 2.2 level AA: colour contrast, names for buttons and links, landmarks, target size and similar.
+* `tests/motion.spec.js` turns on the "reduce motion" setting, moves the pointer over every tile, link and button, flips the theme, and fails if any animation still loops or any transition lasts longer than a blink.
+
+To run one browser or one check, pass its name:
+
+[source,sh]
+----
+npx playwright test --project=firefox
+npx playwright test a11y
+----
+
+A machine check cannot judge everything.
+Still try these by hand when you change a device: tab through the page and watch the focus outline, and zoom to 200%.
+A passing run does not replace looking at the page in a real browser, especially for the pen halo, the wobble of drawn lines and the animated emblem.

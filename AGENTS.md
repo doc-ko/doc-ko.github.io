@@ -25,6 +25,7 @@ Issues track development, configuration and maintenance work: code, build and de
 - Put `Refs #N` in the commit message and `Closes #N` in the PR body, so a PR that finishes only part of an issue does not close it.
 - Write PR bodies in the shape of `.github/pull_request_template.md`. Add a section to the template only when a real need comes up, not in advance.
 - Plans in `.claude/plans/` list their issue numbers.
+- Update a plan's status list in the same PR as the work it describes, not in a separate follow-up PR: every merge to `main` redeploys the site on GitHub Actions. When parallel PRs would edit the same status line, rebase or merge `main` into the later ones and resolve the conflict there.
 
 No issue is needed for:
 
@@ -37,8 +38,16 @@ No issue is needed for:
 
 - `npm run dev`: dev server with live reload at http://localhost:4321. The user normally has this running already.
 - `npm run build`: production build into `dist/`; run before committing larger changes
-- `npm run test:grid`: builds, then checks every page sits on the 24px grid (phone and desktop, both themes)
+- `npm run test:grid`: builds, then runs every Playwright check in Chromium, Firefox and WebKit: the 24px grid, WCAG 2.2 AA (axe-core) and reduced motion, on every page (phone and desktop, both themes)
 - `npm run docs`: build and serve the Antora docs with Docker at http://localhost:8080
+
+## Before pushing
+
+The pull-request check on GitHub only runs `npm run build`, to keep it fast. The browser checks run on this machine instead.
+
+- Run `npm run test:grid` before every push that changes what the site renders or how it is tested: `src/`, `public/`, `astro.config.*`, `package.json`, `package-lock.json`, `playwright.config.js` or `tests/`. Push only when it passes, and say so under "Checks" in the PR body.
+- Pushes that only touch `docs/`, `.claude/`, `AGENTS.md` or `.github/` need `npm run build` at most.
+- Do not add browser installs or Playwright runs back to `.github/workflows/build.yml`; the owner wants the PR check to finish in seconds.
 
 ## Dev server
 

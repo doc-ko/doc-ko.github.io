@@ -4,7 +4,7 @@
 
 ## Checks
 
-<!-- Usually `npm run build` and `npm run test:grid` (every page on the 24px grid), plus a look in the browser for visual changes. -->
+<!-- Usually `npm run build` and `npm run test:grid` (grid, accessibility, reduced motion, three browsers), plus a look in the browser for visual changes. -->
 -
 
 Docs: updated / not needed
