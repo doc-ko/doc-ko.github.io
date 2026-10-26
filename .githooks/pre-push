@@ -1,0 +1,92 @@
+#!/bin/sh
+# Runs the browser checks (`npm run test:grid`) before a push that changes what
+# the site renders or how it is tested. The PR check on GitHub only builds.
+# `npm install` turns this on (the prepare script sets core.hooksPath).
+# Skip it once with `git push --no-verify`.
+
+set -u
+
+# Paths that need the browser checks. This is the only copy of the list.
+watched='^(src/|public/|tests/|astro\.config\.|package\.json$|package-lock\.json$|playwright\.config\.js$)'
+# Markdown plugins: Astro caches rendered posts by file text, not plugin code.
+plugins='^src/lib/(remark[^/]*|markdownPlugins)\.js$'
+port=4323  # playwright.config.js
+
+remote=$1
+zero=0000000000000000000000000000000000000000
+head=$(git rev-parse HEAD)
+needs_test=no
+not_head=
+clear_cache=no
+
+say() { echo "pre-push: $*" >&2; }
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+    case $remote_ref in refs/heads/*) ;; *) continue ;; esac  # tags and other refs
+    [ "$local_sha" = "$zero" ] && continue                    # deleting a branch
+
+    # Compare with what the remote has; for a new branch, or a remote commit
+    # this clone has not fetched, compare with the remote's main instead.
+    if [ "$remote_sha" != "$zero" ] && git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+        base=$remote_sha
+    else
+        base=$(git merge-base "$local_sha" "refs/remotes/$remote/main" 2>/dev/null) || base=
+    fi
+    if [ -n "$base" ]; then
+        changed=$(git diff --name-only "$base" "$local_sha")
+    else
+        changed=$(git ls-tree -r --name-only "$local_sha")
+    fi
+
+    echo "$changed" | grep -Eq "$watched" || continue
+    needs_test=yes
+    [ "$local_sha" = "$head" ] || not_head="$not_head ${local_ref#refs/heads/}"
+    echo "$changed" | grep -Eq "$plugins" && clear_cache=yes
+done
+
+if [ "$needs_test" = no ]; then
+    exit 0
+fi
+
+# The test builds what is on disk, so that must be exactly what is being pushed.
+if [ -n "$not_head" ]; then
+    say "can't check${not_head}: it is not the branch checked out here."
+    say "Check it out and push again, or push with --no-verify if it was tested elsewhere."
+    exit 1
+fi
+dirty=$(git status --porcelain --untracked-files=all -- src public tests 'astro.config.*' package.json package-lock.json playwright.config.js)
+if [ -n "$dirty" ]; then
+    say "these site files have changes that are not committed, so the check would not test what you are pushing:"
+    echo "$dirty" >&2
+    say "Commit or stash them, then push again."
+    exit 1
+fi
+
+# reuseExistingServer would test whatever an old server on this port is serving.
+if lsof -nP -iTCP:$port -sTCP:LISTEN >/dev/null 2>&1; then
+    say "something is already listening on port $port, so the tests would check its pages, not this build."
+    say "It is probably a test server left over from an earlier run. Stop it, then push again."
+    exit 1
+fi
+
+if [ "$clear_cache" = yes ]; then
+    say "a Markdown plugin changed; clearing Astro's cached posts."
+    rm -f .astro/data-store.json node_modules/.astro/data-store.json
+fi
+
+say "site files changed; running npm run test:grid (about a minute)."
+log=$(mktemp)
+status=$(mktemp)
+# A pipeline reports tee's status, so npm's is written to a file.
+{ npm run test:grid </dev/null 2>&1; echo $? >"$status"; } | tee "$log"
+result=$(cat "$status")
+
+if [ "$result" = 0 ]; then
+    say "all checks passed."
+elif grep -q "Executable doesn't exist" "$log"; then
+    say "the test browsers are not installed. Run: npx playwright install chromium firefox webkit"
+else
+    say "checks failed, so the push was cancelled. The failures are listed above."
+fi
+rm -f "$log" "$status"
+[ "$result" = 0 ]
