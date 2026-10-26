@@ -33,7 +33,8 @@ Add `?grid` to any page address to draw the unit lines and outline every box tha
 `npm run test:grid` builds the site and runs the same check on every page at phone and desktop width, in both themes, using Playwright.
 A second test splices an image of odd height, a long code block and display maths into a copy of the About page, and checks that they pad out to whole units.
 That copy exists only inside the test; it is not a route and does not appear in `dist/`.
-The build workflow in `.github/workflows/build.yml` runs the check on every pull request.
+The check runs on your machine, not on GitHub: run `npm run test:grid` before you push.
+The build workflow in `.github/workflows/build.yml` only runs `npm run build` on each pull request, so it stays fast.
 
 The same command also runs an accessibility check (`tests/a11y.spec.js`, axe-core at WCAG 2.2 AA) and a reduced-motion check (`tests/motion.spec.js`), and every check runs in Chromium, Firefox and WebKit.
 The cross-browser run found two grid bugs that Chromium hid, now fixed in `src/styles/grid.css`:

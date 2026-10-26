@@ -24,7 +24,4 @@ jobs:
         run: npm ci
       - name: Build the site
         run: npm run build
-      - name: Install the test browsers
-        run: npx playwright install --with-deps chromium firefox webkit
-      - name: Check the grid, accessibility and reduced motion
-        run: npx playwright test
+      # The browser checks (`npm run test:grid`) run locally before each push, not here, to keep this check fast

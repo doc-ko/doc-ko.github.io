@@ -556,6 +556,8 @@ You can also run the workflow by hand from the repository's Actions tab.
 
 Every pull request to `main` also runs `.github/workflows/build.yml`, which installs dependencies and runs `npm run build` without deploying.
 If the build fails, the pull request shows a red check, so you can fix the problem before it reaches `main`.
+That check does not open any browsers, so it does not run the grid, accessibility or reduced-motion checks.
+Run `npm run test:grid` on your machine before you push instead.
 
 The site is served at `oberio.me`.
 To move it to another domain, change all of these together:

@@ -41,6 +41,14 @@ No issue is needed for:
 - `npm run test:grid`: builds, then runs every Playwright check in Chromium, Firefox and WebKit: the 24px grid, WCAG 2.2 AA (axe-core) and reduced motion, on every page (phone and desktop, both themes)
 - `npm run docs`: build and serve the Antora docs with Docker at http://localhost:8080
 
+## Before pushing
+
+The pull-request check on GitHub only runs `npm run build`, to keep it fast. The browser checks run on this machine instead.
+
+- Run `npm run test:grid` before every push that changes what the site renders or how it is tested: `src/`, `public/`, `astro.config.*`, `package.json`, `package-lock.json`, `playwright.config.js` or `tests/`. Push only when it passes, and say so under "Checks" in the PR body.
+- Pushes that only touch `docs/`, `.claude/`, `AGENTS.md` or `.github/` need `npm run build` at most.
+- Do not add browser installs or Playwright runs back to `.github/workflows/build.yml`; the owner wants the PR check to finish in seconds.
+
 ## Dev server
 
 The user runs `npm run dev` themselves and uses it as their live preview.
