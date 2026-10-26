@@ -25,7 +25,7 @@ Issues track development, configuration and maintenance work: code, build and de
 - Put `Refs #N` in the commit message and `Closes #N` in the PR body, so a PR that finishes only part of an issue does not close it.
 - Write PR bodies in the shape of `.github/pull_request_template.md`. Add a section to the template only when a real need comes up, not in advance.
 - Plans in `.claude/plans/` list their issue numbers.
-- Update a plan's status list in the same PR as the work it describes, not in a separate follow-up PR. When parallel PRs would edit the same status line, rebase or merge `main` into the later ones and resolve the conflict there.
+- Update a plan's status list in the same PR as the work it describes, not in a separate follow-up PR: every merge to `main` redeploys the site on GitHub Actions. When parallel PRs would edit the same status line, rebase or merge `main` into the later ones and resolve the conflict there.
 
 No issue is needed for:
 
