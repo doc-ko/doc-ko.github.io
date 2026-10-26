@@ -24,7 +24,7 @@ jobs:
         run: npm ci
       - name: Build the site
         run: npm run build
-      - name: Install the test browser
-        run: npx playwright install --with-deps chromium
-      - name: Check the 24px grid
+      - name: Install the test browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Check the grid, accessibility and reduced motion
         run: npx playwright test

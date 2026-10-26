@@ -35,6 +35,14 @@ A second test splices an image of odd height, a long code block and display math
 That copy exists only inside the test; it is not a route and does not appear in `dist/`.
 The build workflow in `.github/workflows/build.yml` runs the check on every pull request.
 
+The same command also runs an accessibility check (`tests/a11y.spec.js`, axe-core at WCAG 2.2 AA) and a reduced-motion check (`tests/motion.spec.js`), and every check runs in Chromium, Firefox and WebKit.
+The cross-browser run found two grid bugs that Chromium hid, now fixed in `src/styles/grid.css`:
+
+* Firefox made every list item 25px tall, because the bullet glyph grew the line.
+  `li::marker` now has `line-height: 0`.
+* Safari made every code block 0.44px too tall, because `pre` used the generic `monospace` font while the code inside used the `--mono` stack.
+  `pre` now uses `--mono`.
+
 === Pen-Drawn Elements
 
 `src/lib/pen.js` draws every wobbly line, hatch and highlighter end at build time.
@@ -185,7 +193,7 @@ Use this map when deciding where to make a change.
 | Change how AI-marked text looks
 | `--ai-outline-*` variables in `src/styles/tokens.css` and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/devices.css`
 
-| Check the grid
+| Check the grid, accessibility, reduced motion and browsers
 | `?grid` on any page, or `npm run test:grid`
 |===
 

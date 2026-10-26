@@ -38,7 +38,7 @@ No issue is needed for:
 
 - `npm run dev`: dev server with live reload at http://localhost:4321. The user normally has this running already.
 - `npm run build`: production build into `dist/`; run before committing larger changes
-- `npm run test:grid`: builds, then checks every page sits on the 24px grid (phone and desktop, both themes)
+- `npm run test:grid`: builds, then runs every Playwright check in Chromium, Firefox and WebKit: the 24px grid, WCAG 2.2 AA (axe-core) and reduced motion, on every page (phone and desktop, both themes)
 - `npm run docs`: build and serve the Antora docs with Docker at http://localhost:8080
 
 ## Dev server
