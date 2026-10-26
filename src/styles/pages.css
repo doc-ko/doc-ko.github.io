@@ -459,9 +459,17 @@
     /* The pencil rule is no taller than its own line, so the text sits on the
        row directly under it. */
     .footer-line {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: 1fr auto auto auto 1fr;
         align-items: baseline;
+    }
+
+    .copyright {
+        justify-self: start;
+    }
+
+    .footer-links {
+        justify-self: end;
     }
 
     .copyright,
@@ -499,6 +507,7 @@
     /* Three parts and two drawn lines need about 900px; below that they stack. */
     @media (max-width: 1000px) {
         .footer-line {
+            display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
