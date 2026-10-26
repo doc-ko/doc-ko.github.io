@@ -1156,4 +1156,33 @@
         background: var(--hl-amber);
         color: var(--ink-strong);
     }
+
+    /* On the tag index each tag takes a highlighter colour, a bigger swipe for
+       more posts, and its post count as a superscript. Hover still warms it. */
+    .tag--amber {
+        background: var(--hl-amber);
+    }
+
+    .tag--cyan {
+        background: var(--hl-cyan);
+    }
+
+    .tag--violet {
+        background: var(--hl-violet);
+    }
+
+    .tag--medium {
+        font-size: 15px;
+    }
+
+    .tag--large {
+        font-size: 17px;
+    }
+
+    .tag__count {
+        margin-left: 2px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 0;
+    }
 }
