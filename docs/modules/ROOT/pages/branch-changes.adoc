@@ -88,12 +88,12 @@ The keys are documented in xref:homepage-yaml.adoc[].
 * `src/layouts/BaseLayout.astro` handles metadata, the skip link, the header, the footer and the optional hidden page title.
 * The navigation lists Home, Blog and About.
 * The header logo reads `oberio.me`.
-* `src/components/Footer.astro` shows the copyright line and four buttons: LinkedIn, GitHub, Repo and Docs.
+* `src/components/Footer.astro` shows one line under a pencil rule: the copyright, the AI-marking key, then links to LinkedIn, GitHub, Repo and Docs, with drawn vertical lines between the parts.
 
 === AI-Generated Text Marking
 
 Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin: ai` in a page's frontmatter.
-Marked text has a faint dashed line above and below it, AI posts in lists get the same rules on their link (the blog index also adds a small `AI` mark), and code blocks, display maths, images and notes get a cross-hatched strip with "AI" instead of the text marking.
+Marked text has a faint dashed line above and below it, AI posts in lists get the same rules and a strip, and code blocks, display maths, images and notes get a cross-hatched strip with "AI" instead of the text marking.
 A marked phrase can carry a note that shows on hover, tap, or keyboard focus.
 `src/lib/remarkAiText.js` holds the plugin, and `src/lib/markdownPlugins.js` lists it with the other Markdown plugins.
 
@@ -124,7 +124,7 @@ The footer Docs button still points at `docs.docko.dev`.
 
 The site no longer holds documentation work samples.
 The tag index shows each tag as a highlighter swipe in one of three colours (chosen from the tag's name), with the number of posts as a small superscript and a slightly larger swipe for tags with more posts.
-The blog and tag pages are still there, ready for new posts; `/blog/` shows "No posts yet." while it is empty.
+The blog and tag pages are still there, ready for new posts; `/blog/` shows a "No posts yet" margin note while it is empty.
 
 === Local Agent Tooling
 
@@ -183,7 +183,7 @@ Use this map when deciding where to make a change.
 | `src/data/contact.js`
 
 | Change how AI-marked text looks
-| `--ai-outline-*` variables in `src/styles/tokens.css` and the `[data-origin="ai"]`, `.ai-tag` and `.ai-note` rules in `src/styles/devices.css`
+| `--ai-outline-*` variables in `src/styles/tokens.css` and the `[data-origin="ai"]` and `.ai-note` rules in `src/styles/devices.css`
 
 | Check the grid
 | `?grid` on any page, or `npm run test:grid`

@@ -136,19 +136,22 @@ Visitors with JavaScript turned off see the link text but cannot click it, and a
 
 Edit `src/components/Footer.astro`.
 
-The footer holds the copyright line and a row of `LinkButton` links:
+The footer is one line under a pencil rule: the copyright, a one-line key to the AI marking, then "elsewhere" and a row of links.
+A short drawn vertical line separates the three parts.
+On narrow screens the parts stack and the vertical lines are hidden.
 
-[source,astro]
+The links are the `links` list at the top of `Footer.astro`:
+
+[source,js]
 ----
-<LinkButton link="https://github.com/doc-ko" text="GitHub" />
+['GitHub', 'https://github.com/doc-ko'],
 ----
 
-Add or remove `LinkButton` lines to change the buttons.
+Add or remove entries to change the links.
+The component adds the slashes between them and opens each in a new tab with `rel="noreferrer"`.
 
-Above the copyright line is a one-line key to the AI marking, written with a `data-origin="ai"` span so it shows the marking itself.
+The key to the AI marking is written with a `data-origin="ai"` span so it shows the marking itself.
 Change its wording in `Footer.astro` if you change how AI text looks.
-
-`LinkButton.astro` automatically adds `target="_blank"` and `rel="noreferrer"` for links that start with `http`.
 
 == 6. Edit The About Page
 
@@ -314,8 +317,8 @@ Code blocks, display maths and images inside marked text keep their normal look,
 Notes get the same treatment, except that a note's body text takes the AI colour like the rest of the text.
 Instead, each of these boxes gets a strip of cross-hatching down its left edge with "AI" written on it, and the pen frame of a code block or note is drawn in the AI colour.
 On the homepage, add `origin: ai` to an item in `notes` to give that whole note the same strip and frame.
-Posts marked with `origin: ai` also show their title in the blog list and on tag pages with the AI rules above and below the link.
-The blog index adds a small boxed `AI` after the title as well.
+Posts marked with `origin: ai` also show in the blog list and on tag pages with the AI text marking and the strip.
+In the list the strip sits inside each entry, between the pencil line and the text, rather than in the margin.
 
 The same syntax works in `src/data/homepage.yaml`, with some limits.
 See the Value Types section of xref:homepage-yaml.adoc[] for them.
@@ -359,7 +362,7 @@ A link in marked text keeps the AI lines above it, and its gold underline is dra
 The gold comes from `--link-line-solid` in `tokens.css`, a version of the link underline colour without transparency.
 For a different kind of marker, such as a background tint, replace the `[data-origin="ai"]` rule in `devices.css`.
 Every marked element has the `data-origin="ai"` attribute, so that one rule covers them all.
-The strip is the `::before` and `::after` rules on `[data-origin="ai"]` boxes in `devices.css`, and the small `AI` mark on the blog index is the `.ai-tag` rule.
+The strip is the `::before` and `::after` rules on `[data-origin="ai"]` boxes in `devices.css`.
 The note's box is styled by the `.ai-note` rule.
 
 === Words that start with a colon

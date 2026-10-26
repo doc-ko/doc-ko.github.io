@@ -6,13 +6,6 @@ import 'katex/dist/katex.min.css';
 const { frontmatter, slug, description } = Astro.props;
 const tags = frontmatter.tags ?? [];
 const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
-const date = frontmatter.pubDate
-    ? new Date(frontmatter.pubDate).toLocaleDateString('en-NZ', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    })
-    : '';
 const machineDate = frontmatter.pubDate ? new Date(frontmatter.pubDate).toISOString().slice(0, 10) : '';
 const detailItems = [
     frontmatter.role && ['Role', frontmatter.role, origin],
@@ -33,7 +26,7 @@ const detailItems = [
         <header class="entry-header">
             {frontmatter.description && <p class="entry-description" data-origin={origin}>{frontmatter.description}</p>}
             <p class="entry-byline">
-                {date && <time datetime={machineDate}>{date}</time>}
+                {machineDate && <time datetime={machineDate}>{machineDate}</time>}
                 {frontmatter.author && <span>Written by {frontmatter.author}</span>}
             </p>
             {frontmatter.image && <img class="entry-image" src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} /> }
