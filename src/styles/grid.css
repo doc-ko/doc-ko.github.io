@@ -221,9 +221,12 @@
         font-weight: 600;
     }
 
-    /* Inline code never changes the height of its line: the line height is a
-       fixed length, and an inline box's padding and border do not count. */
+    /* Inline code never changes the height of its line. The mono font sits at a
+       different height inside the 24px line, which would stretch the line box
+       to 26px; a line height of 1 keeps the code's own box inside the line.
+       An inline box's padding and border do not count. */
     code {
+        line-height: 1;
         border: 1px solid var(--line);
         border-radius: 3px;
         padding: 0 0.28rem;
@@ -271,6 +274,7 @@
     }
 
     pre code {
+        line-height: inherit;
         border: 0;
         padding: 0;
         background: transparent;

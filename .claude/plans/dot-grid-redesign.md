@@ -112,5 +112,5 @@ Follow `AGENTS.md`, especially the dev-server rules and "Working with the owner"
 - [x] Header hover (#38, merged 2026-10-24): `PenLoop` circle for the current page and on hover; theme toggle morphs sun/moon with hatching in the other theme's tone (`IconHatch`); hamburger hatched, kept while open. Reduced motion for these is untested with the setting on
 - [x] Homepage margin note joined to the field emblem (#13): `.hero-diagram-stack` has no gap, so the note's pencil rule meets the emblem's bottom edge
 - [ ] Phase 5
-- [x] Phase 6 (#19, merged 2026-10-24): `src/lib/remarkDirectives.js` (`:::note`, `:hl`, `==`, code brackets) and `src/lib/penHtml.js`; `markShorthand` is in `markdownPlugins.js`. Known gap: inline `code` in a paragraph makes the line 26px tall and pushes the rest of a post off the grid (Phase 5)
+- [x] Phase 6 (#19, merged 2026-10-24): `src/lib/remarkDirectives.js` (`:::note`, `:hl`, `==`, code brackets) and `src/lib/penHtml.js`; `markShorthand` is in `markdownPlugins.js`. Inline `code` made its line 26px tall; fixed on `fix/inline-code-grid-19` with `line-height: 1` and a grid-test fixture (Phase 5)
 - [ ] Phase 7
