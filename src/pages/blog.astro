@@ -1,17 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogPost from '../components/BlogPost.astro'
-import { getPosts, postUrl } from '../lib/posts.js';
+import BlogPost from '../components/BlogPost.astro';
+import Note from '../components/Note.astro';
+import { getPosts, postUrl, postDate } from '../lib/posts.js';
 const allPosts = await getPosts();
 const pageTitle = 'Blog'
 ---
 
 <BaseLayout pageTitle={pageTitle} description="Writing by Karl Oberio.">
-	{allPosts.length === 0 && <p>No posts yet.</p>}
-	<ul class="content-list">
+	{allPosts.length === 0 && <Note variant="margin" label="No posts yet"><p>The first post will appear here.</p></Note>}
+	<ol class="post-list">
 		{
 			allPosts.map((post) =>
-			<BlogPost url={postUrl(post)} title={post.data.title} origin={post.data.origin} mark />)
+			<BlogPost url={postUrl(post)} title={post.data.title} date={postDate(post)} description={post.data.description} origin={post.data.origin} />)
 		}
-	</ul>
+	</ol>
 </BaseLayout>

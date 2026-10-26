@@ -346,6 +346,11 @@
         max-width: 820px;
     }
 
+    /* One blank row between the title and the description. */
+    .entry-header > .entry-description {
+        margin-top: var(--u);
+    }
+
     .entry-byline {
         margin-top: var(--u);
         display: flex;
@@ -423,9 +428,21 @@
         margin-top: 0;
     }
 
-    .content-list {
+    /* A list of posts: margin notes, each hanging from the one above. */
+    .post-list {
         max-width: var(--content-width);
-        margin-top: var(--u);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .post-list > li {
+        margin: 0;
+        padding: 0;
+    }
+
+    .post-list .note__body p {
+        margin: 0;
     }
 
     .text-link {
