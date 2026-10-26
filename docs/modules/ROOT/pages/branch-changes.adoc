@@ -123,6 +123,7 @@ The footer Docs button still points at `docs.docko.dev`.
 === Removed Content
 
 The site no longer holds documentation work samples.
+The tag index shows each tag as a highlighter swipe in one of three colours (chosen from the tag's name), with the number of posts as a small superscript and a slightly larger swipe for tags with more posts.
 The blog and tag pages are still there, ready for new posts; `/blog/` shows a "No posts yet" margin note while it is empty.
 
 === Local Agent Tooling

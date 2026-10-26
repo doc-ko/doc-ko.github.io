@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Tag from '../../components/Tag.astro';
-import { getPosts, getTags } from '../../lib/posts.js';
-const tags = getTags(await getPosts());
+import { getPosts, getTagCounts } from '../../lib/posts.js';
+const tags = getTagCounts(await getPosts());
 const pageTitle = "Tag Index";
 ---
 
 <BaseLayout pageTitle={pageTitle} description="Every tag used on the blog.">
     <div class="tags">
-        {tags.map((tag) =>
-            <Tag tag={tag} label={`#${tag}`} />)}
+        {tags.map(([tag, count]) =>
+            <Tag tag={tag} label={`#${tag}`} count={count} />)}
     </div>
 </BaseLayout>

@@ -1,12 +1,24 @@
 ---
-import { highlighterEnds } from '../lib/pen.js';
+import { highlighterEnds, hash } from '../lib/pen.js';
 
 // A tag as a quiet ink highlighter swipe, linking to its tag page. Every tag
 // gets its own uneven ends, the same way :hl phrases do.
 //
 //   tag    the tag's name; the link goes to /tags/<tag>/
 //   label  what to show; defaults to the name
-const { tag, label = tag } = Astro.props;
+//   count  on the tag index: how many posts use it. Shows the number as a small
+//          superscript, makes the swipe a little larger for more posts, and
+//          gives it its own highlighter colour (amber, cyan or violet, chosen
+//          from the name so it never changes)
+const { tag, label = tag, count } = Astro.props;
+
+const colours = ['amber', 'cyan', 'violet'];
+const classes = ['tag'];
+if (count !== undefined) {
+    classes.push(`tag--${colours[hash(tag) % colours.length]}`);
+    if (count >= 4) classes.push('tag--large');
+    else if (count >= 2) classes.push('tag--medium');
+}
 ---
 
-<a class="tag" href={`/tags/${tag}/`} style={`border-radius: ${highlighterEnds(tag)}`}>{label}</a>
+<a class:list={classes} href={`/tags/${tag}/`} style={`border-radius: ${highlighterEnds(tag)}`}>{label}{count !== undefined && <><sup class="tag__count" aria-hidden="true">{count}</sup><span class="visually-hidden"> ({count} {count === 1 ? 'post' : 'posts'})</span></>}</a>

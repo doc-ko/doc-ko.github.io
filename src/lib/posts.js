@@ -18,3 +18,8 @@ export function postDate(post) {
 export function getTags(posts) {
     return [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 }
+
+// Every tag with the number of posts that use it, in name order.
+export function getTagCounts(posts) {
+    return getTags(posts).map((tag) => [tag, posts.filter((post) => post.data.tags.includes(tag)).length]);
+}
