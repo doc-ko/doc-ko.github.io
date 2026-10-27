@@ -1,11 +1,13 @@
 import { createMarkdownProcessor } from '@astrojs/markdown-remark';
 import { markdownPlugins } from './markdownPlugins.js';
+import { rehypeExternalLinks } from './externalLinks.js';
 
 const processor = createMarkdownProcessor({
     gfm: true,
     smartypants: true,
     syntaxHighlight: false,
     remarkPlugins: markdownPlugins,
+    rehypePlugins: [rehypeExternalLinks],
     remarkRehype: {
         allowDangerousHtml: false,
     },

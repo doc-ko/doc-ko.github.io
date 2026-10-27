@@ -205,5 +205,6 @@ Use this map when deciding where to make a change.
 * Anything whose height is not a whole number of 24px units pushes every line below it off the dots.
   Run `npm run test:grid` after layout changes.
 * Markdown pages should include `tags`; the tag pages depend on frontmatter tags.
-* External links in `LinkButton.astro` automatically open in a new tab when the URL starts with `http`.
+* External links open in a new tab with `rel="noopener noreferrer"`.
+  `src/lib/externalLinks.js` decides what is external (a different host from `oberio.me`) and is used by the components and by the Markdown pipeline.
 * The styles are shared by every page, so a broad selector in `src/styles/grid.css` can affect many pages.

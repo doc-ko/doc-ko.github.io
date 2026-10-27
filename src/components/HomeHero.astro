@@ -4,6 +4,7 @@ import FieldEmblem from './FieldEmblem.astro';
 import MarkdownCopy from './MarkdownCopy.astro';
 import MarkdownInline from './MarkdownInline.astro';
 import Note from './Note.astro';
+import { externalLinkAttributes } from '../lib/externalLinks.js';
 
 const { hero, fields = [] } = Astro.props;
 ---
@@ -19,7 +20,7 @@ const { hero, fields = [] } = Astro.props;
 
             <nav class="quiet-links" aria-label="Homepage links">
                 {hero.links.map((link) => (
-                    link.email ? <EmailLink>{link.label}</EmailLink> : <a href={link.href}>{link.label}</a>
+                    link.email ? <EmailLink>{link.label}</EmailLink> : <a href={link.href} {...externalLinkAttributes(link.href)}>{link.label}</a>
                 ))}
             </nav>
         </div>

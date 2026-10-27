@@ -1,6 +1,7 @@
 ---
 import PencilRule from './PencilRule.astro';
 import DrawnEdges from './DrawnEdges.astro';
+import { externalLinkAttributes } from '../lib/externalLinks.js';
 
 // One line under a pencil rule: the copyright, what the AI marking means, then
 // the links elsewhere. A short drawn vertical line sits between the three parts.
@@ -27,7 +28,7 @@ const links = [
             {links.map(([text, href], i) => (
                 <>
                     {i > 0 && <span class="footer-slash" aria-hidden="true">/</span>}
-                    <a href={href} target="_blank" rel="noreferrer">{text}</a>
+                    <a href={href} {...externalLinkAttributes(href)}>{text}</a>
                 </>
             ))}
         </nav>
