@@ -1,11 +1,11 @@
 ---
+import { externalLinkAttributes } from '../lib/externalLinks.js';
+
 const { link, text, variant = 'secondary' } = Astro.props;
-const isExternal = link.startsWith('http');
 ---
 
 <a
     class={variant === 'primary' ? 'button-link' : 'button-link button-link--secondary'}
     href={link}
-    target={isExternal ? '_blank' : undefined}
-    rel={isExternal ? 'noreferrer' : undefined}
+    {...externalLinkAttributes(link)}
 >{text}</a>

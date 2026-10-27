@@ -83,6 +83,8 @@ hero:
 
 Use site-relative links for internal pages, such as `/about/`.
 Use full URLs for external sites.
+A link to any other host opens in a new tab with `rel="noopener noreferrer"`, whether it is in a component, in `homepage.yaml` or in Markdown.
+Links to `oberio.me`, `mailto:` links and `#` links stay in the same tab.
 Use `email: true` instead of `href` to link to the contact email; see <<contact-email>>.
 
 == 4. Change The Main Navigation
@@ -148,7 +150,7 @@ The links are the `links` list at the top of `Footer.astro`:
 ----
 
 Add or remove entries to change the links.
-The component adds the slashes between them and opens each in a new tab with `rel="noreferrer"`.
+The component adds the slashes between them and opens each in a new tab with `rel="noopener noreferrer"`.
 
 The key to the AI marking is written with a `data-origin="ai"` span so it shows the marking itself.
 Change its wording in `Footer.astro` if you change how AI text looks.
