@@ -322,6 +322,11 @@ On the homepage, add `origin: ai` to an item in `notes` to give that whole note 
 Posts marked with `origin: ai` also show in the blog list and on tag pages with the AI text marking and the strip.
 In the list the strip sits inside each entry, between the pencil line and the text, rather than in the margin.
 
+To mark only a post's description, for example when you wrote the post and a model drafted the summary, add `descriptionOrigin: ai` to its frontmatter instead of `origin: ai`.
+The description gets the AI text marking on the post page, in the blog list and on tag pages.
+The body, the details and the strip are left alone.
+If a post has both fields, `origin: ai` wins, because it already marks the description.
+
 The same syntax works in `src/data/homepage.yaml`, with some limits.
 See the Value Types section of xref:homepage-yaml.adoc[] for them.
 

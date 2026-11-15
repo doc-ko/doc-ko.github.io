@@ -14,6 +14,8 @@ const posts = defineCollection({
         updatedDate: z.coerce.date().optional(),
         author: z.string().optional(),
         origin: z.enum(['ai']).optional(),
+        // Marks only the description as AI-written; origin marks the whole post.
+        descriptionOrigin: z.enum(['ai']).optional(),
     }),
 });
 
