@@ -4,7 +4,7 @@ pubDate: 2026-10-24
 description: "The three pen-drawn devices a post on this site can use, each shown live next to the Markdown that makes it."
 tags: ["site", "markdown", "ai-generated"]
 author: "Claude Sonnet 5.5"
-postOrigin: ai
+origin: ai
 ---
 
 This site draws its boxes and highlights the way a pen would, on a grid of dots. A post can use three of those devices without any special setup. Each one below appears as it renders, followed by the Markdown behind it.

@@ -5,7 +5,7 @@ import Tag from '../components/Tag.astro';
 import 'katex/dist/katex.min.css';
 const { frontmatter, slug, description } = Astro.props;
 const tags = frontmatter.tags ?? [];
-const origin = frontmatter.postOrigin === 'ai' ? 'ai' : undefined;
+const origin = frontmatter.origin === 'ai' ? 'ai' : undefined;
 const descriptionOrigin = origin ?? (frontmatter.descriptionOrigin === 'ai' ? 'ai' : undefined);
 const machineDate = frontmatter.pubDate ? new Date(frontmatter.pubDate).toISOString().slice(0, 10) : '';
 const detailItems = [

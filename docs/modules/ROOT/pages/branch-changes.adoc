@@ -101,7 +101,7 @@ The keys are documented in xref:homepage-yaml.adoc[].
 
 === AI-Generated Text Marking
 
-Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, `origin: ai` in a page's frontmatter, or `postOrigin: ai` in a post's.
+Text can be declared AI-generated with `:ai[...]`, an `:::ai` block, or `origin: ai` in a page's frontmatter.
 Marked text has a faint dashed line above and below it, AI posts in lists get the same rules and a strip, and code blocks, display maths, images and notes get a cross-hatched strip with "AI" instead of the text marking.
 A marked phrase can carry a note that shows on hover, tap, or keyboard focus.
 `src/lib/remarkAiText.js` holds the plugin, and `src/lib/markdownPlugins.js` lists it with the other Markdown plugins.
