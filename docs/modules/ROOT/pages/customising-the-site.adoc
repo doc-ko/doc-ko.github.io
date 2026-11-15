@@ -310,22 +310,23 @@ A whole paragraph the model wrote.
 :::
 ----
 
-To mark a whole Markdown page, add `origin: ai` to its frontmatter.
-This works with both `MarkdownLayout.astro` and `MarkdownPostLayout.astro`, and marks the page body but not the title.
-On `MarkdownPostLayout.astro` pages it also marks the description and the Role, Audience, and Outcome details.
+To mark a whole Markdown page such as About, add `origin: ai` to its frontmatter.
+It marks the page body but not the title.
+For a post, the same field is called `postOrigin: ai`, so that it sits beside `descriptionOrigin` below.
+On a post it also marks the description and the Role, Audience, and Outcome details.
 The date, tools, and tags are not marked.
 
 Code blocks, display maths and images inside marked text keep their normal look, because the text marking would make them hard to read.
 Notes get the same treatment, except that a note's body text takes the AI colour like the rest of the text.
 Instead, each of these boxes gets a strip of cross-hatching down its left edge with "AI" written on it, and the pen frame of a code block or note is drawn in the AI colour.
 On the homepage, add `origin: ai` to an item in `notes` to give that whole note the same strip and frame.
-Posts marked with `origin: ai` also show in the blog list and on tag pages with the AI text marking and the strip.
+Posts marked with `postOrigin: ai` also show in the blog list and on tag pages with the AI text marking and the strip.
 In the list the strip sits inside each entry, between the pencil line and the text, rather than in the margin.
 
-To mark only a post's description, for example when you wrote the post and a model drafted the summary, add `descriptionOrigin: ai` to its frontmatter instead of `origin: ai`.
+To mark only a post's description, for example when you wrote the post and a model drafted the summary, add `descriptionOrigin: ai` to its frontmatter instead of `postOrigin: ai`.
 The description gets the AI text marking on the post page, in the blog list and on tag pages.
 The body, the details and the strip are left alone.
-If a post has both fields, `origin: ai` wins, because it already marks the description.
+If a post has both fields, `postOrigin: ai` wins, because it already marks the description.
 
 The same syntax works in `src/data/homepage.yaml`, with some limits.
 See the Value Types section of xref:homepage-yaml.adoc[] for them.
@@ -363,7 +364,7 @@ The look is set by five variables in `src/styles/tokens.css`:
 ----
 
 The marking is text in a cooler blue-grey than the rest of the site, with a thin dashed overline and underline, drawn on every line of the text, so wrapped lines get a pair each.
-This also applies inside `:::ai` blocks and `origin: ai` pages, line by line.
+This also applies inside `:::ai` blocks and `origin: ai` pages and `postOrigin: ai` posts, line by line.
 Headings keep their own text colour, but their lines take the AI tone.
 A link in marked text keeps the AI lines above it, and its gold underline is drawn over the AI underline so the two don't mix.
 The gold comes from `--link-line-solid` in `tokens.css`, a version of the link underline colour without transparency.
