@@ -65,13 +65,13 @@ notes:
     notation: "Refining"
     body: >-
       Adding a visual design language, with ability to clearly mark AI-written content.
-  - origin: ai
+  - aiAuthored: true
     kind: "Placeholder"
     title: "Copy"
     notation: "copy ≈ previous site + AI"
     body: >-
       Wording is borrowed from the previous site and will be rewritten.
-  - origin: ai
+  - aiAuthored: true
     kind: "Missing"
     title: "Content"
     notation: "TODO"
