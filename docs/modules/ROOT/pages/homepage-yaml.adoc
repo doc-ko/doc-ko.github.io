@@ -30,6 +30,10 @@ Plain::
 Used as-is.
 No Markdown is processed.
 
+Boolean::
+`true` or `false`, written without quotes.
+Leave the key out for `false`.
+
 Raw HTML is not allowed in Markdown values.
 
 === AI-marked text
@@ -228,9 +232,9 @@ Each item:
 | Markdown (block)
 | Note text.
 
-| `origin`
-| Plain
-| Set to `ai` to mark the whole note as AI-generated.
+| `aiAuthored`
+| Boolean
+| Set to `true` to mark the whole note as written by AI.
 It gets the hatched "AI" strip, an AI-coloured frame and the AI text marking, so its fields need no `:ai[...]`.
 Optional.
 |===
